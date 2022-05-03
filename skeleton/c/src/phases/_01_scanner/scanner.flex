@@ -94,8 +94,8 @@ static Position currentPosition = {1, 1};
     }
 %}
 
-D = [0-9]       //Decimal
-H = [0-9A-Fa-f] //Hex
+D = [0-9][0-9]*       //Decimal
+H = [0-9A-Fa-f][0-9A-Fa-f]* //Hex
 
 %%
 
@@ -136,8 +136,8 @@ array         return ARRAY;
 "}"             return RCURL;
 
 //Token-Wert
-[a-zA-Z_][a-zA-Z0-9_]*   return IDENT;
-(D|H) INTLIT;
+[a-zA-Z_][a-zA-Z0-9_]*      return IDENT;
+(D|H)                       return INTLIT;
 
 //Sonstiges
 ":"             return COLON;
