@@ -52,6 +52,16 @@ Die allermeisten Linux Distributionen werden mit gcc in einer C11-kompatiblen Ve
 Unter Ubuntu können Sie alle Voraussetzungen mit dem folgenden Befehl installieren:
     sudo apt install cmake flex bison
 
+MacOS: Um das Projekt über die Kommandozeile bauen zu können benötigen sie die Xcode Kommandozeilentools.
+Darüber hinaus benötigen auch Sie CMake, Flex und Bison.
+Dies können Sie über
+    sudo brew install cmake flex bison
+
+XCode enthält bereits Versionen von Flex und Bison, die jedoch nicht aktuell genug sind.
+Die CMake-Builddatei (CMakeLists.txt) enthält Code, der dafür sorgt, dass die Versionen verwendet werden, die manuell über Brew installiert wurde.
+Achten Sie darauf, dass im Make-Log (siehe Punkt 4) eine Bisonversion neuer als 3.0 aufgeführt wird.
+Falls sie einen Syntaxfehler im Zusammenhang mit dem Codefragment '%code' angezeigt bekommen, nutzen Sie eine veraltete Bisonversion.
+
 
 3. IDE-Nutzung
 
