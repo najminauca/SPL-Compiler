@@ -1,0 +1,65 @@
+//Einlesen eines Arrays in main, Sortieren in einer Prozedur
+type arr = array [5] of int;
+
+proc main() {
+    var i: int;
+    var j: int;
+    var a: arr;
+    var return: arr;
+
+    j := 0;
+    while(j < 5) {
+        readi(i);
+        a[j] := i;
+        j := j + 1;
+    }
+
+    sort(a);
+
+    i := 0;
+    while(i < 5) {
+        printi(a[i]);
+        i := i + 1;
+    }
+}
+
+proc sort(ref a: arr) {
+    var i: int;
+    var j: int;
+    var temp: int;
+    
+    i := 0;
+    j := 0;
+    while(i < 5) {
+        j := i;
+        while(j < 5) {
+            if(a[j] < a[i]) {
+                temp := a[j];
+                a[j] := a[i];
+                a[i] := temp;
+            }
+            j := j + 1;
+        }
+        i := i + 1;
+    }
+}
+
+//Berechnung von n!
+proc factorial(ref n: int, ref return: int) { //Loop
+    var temp: int;
+    var i: int;
+    i := 1;
+    while(n - i > 0) {
+        temp := n * (n - i);
+        i := i + 1;
+    }
+
+    return := temp;
+}
+
+proc factorialRec(ref n: int) {
+    if(n > 0) {
+        n := n * (n - 1);
+        factorialRec(n);
+    }
+}

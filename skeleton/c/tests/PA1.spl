@@ -1,0 +1,19 @@
+proc main() {
+    var a: int;
+    var b: int;
+    var i: int;
+
+    readi(i);
+    a := i;
+
+    readi(i);
+    b := i;
+
+    sum(a, b);
+}
+
+proc sum(ref a: int, ref b: int) {
+    var c: int;
+    c := a + b;
+    printi(c);
+}
