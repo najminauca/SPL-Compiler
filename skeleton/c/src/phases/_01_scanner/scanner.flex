@@ -138,7 +138,11 @@ static Position currentPosition = {1, 1};
 "]"         { return symbol(RBRACK); }
 "["         { return symbol(LBRACK); }
 
-0|0*[1-9][0-9]*|"'".*"'"   { return symbolIntVal(INTLIT, atoi(yytext)); }
+'\\n'   { return symbolIntVal(INTLIT, 10); }
+
+'.' { return symbolIntVal(INTLIT, yytext[1]); }
+
+0|0*[1-9][0-9]*   { return symbolIntVal(INTLIT, atoi(yytext)); }
 
 [a-zA-Z_]([a-zA-Z0-9_])*        { return symbolIdentVal(IDENT, newIdentifier(yytext)); }
 
