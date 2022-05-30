@@ -58,19 +58,19 @@ void yyerror(Program**, char *);
 %token	<identVal>	IDENT
 %token	<intVal>	INTLIT
 
-%type   <expression>            exp
+%type   <expression>            exp rel_exp add_exp mul_exp unary_exp primary_exp
 %type   <variable>              variable
-%type   <statement>             stm
-//%type   <typeExpression>
-%type   <globalDeclaration>     global_dec
+%type   <statement>             stm empty_stm assign_stm compound_stm if_stm while_stm call_proc
+%type   <typeExpression>        type
+%type   <globalDeclaration>     global_dec proc_dec global_var
 %type   <variableDeclaration>   local_var_dec
 %type   <parameterDeclaration>  par_dec
 
 %type   <statementList>         stm_list
-%type   <expressionList>        exp_list
+%type   <expressionList>        arg_list
 %type   <variableList>          local_var_list
 %type   <parameterList>         par_list
-%type   <globalDeclarationList> program
+%type   <globalDeclarationList> program global_list
 
 %precedence "then"
 %precedence ELSE
@@ -92,7 +92,7 @@ type                : IDENT
 global_dec          : global_var
                     | proc_dec
                     ;
-global_var          : TYPE IDENT EQ type SEMIC
+global_var          : TYPE type EQ type SEMIC
                     ;
 proc_dec            : PROC IDENT LPAREN par_list RPAREN LCURL local_var_list stm_list RCURL
 
@@ -122,7 +122,6 @@ stm                 : empty_stm
                     | if_stm
                     | while_stm
                     | call_proc
-                    | array_stm
                     ;
 
 empty_stm           : SEMIC
@@ -138,13 +137,11 @@ while_stm           : WHILE LPAREN exp RPAREN stm
 assign_stm          : variable ASGN exp SEMIC
                     ;
 call_proc           : IDENT LPAREN RPAREN SEMIC
-                    | IDENT LPAREN exp_list RPAREN SEMIC
-                    ;
-array_stm           : variable array_index ASGN exp SEMIC
+                    | IDENT LPAREN arg_list RPAREN SEMIC
                     ;
 
-exp_list            : exp
-                    | exp COMMA exp_list
+arg_list            : exp
+                    | exp COMMA arg_list
                     ;
 
 exp                 : rel_exp
@@ -171,10 +168,6 @@ unary_exp           : primary_exp
 primary_exp         : INTLIT
                     | variable
                     | LPAREN rel_exp RPAREN
-                    | array_exp
-                    ;
-
-array_exp           : variable array_index
                     ;
 
 array_index         : LBRACK add_exp RBRACK
@@ -182,6 +175,7 @@ array_index         : LBRACK add_exp RBRACK
                     ;
 
 variable            : IDENT
+                    | IDENT array_index
                     ;
 %%
 

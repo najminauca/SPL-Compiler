@@ -88,7 +88,7 @@ add_executable(
         src/util/memory.c
         src/util/ascii_table.c
         src/util/string_ops.c
-)
+        src/absyn/absyn.c)
 
 add_custom_target( _generated_source_folder_dummy_target
         COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/generated-sources/phases/_01_scanner

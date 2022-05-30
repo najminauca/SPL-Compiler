@@ -16,4 +16,6 @@
 #include "variable_declaration.h"
 #include "variables.h"
 
+/*GlobalDeclaration *newTypeDeclaration(int line, Identifier *name, TypeExpression *ty);
+TypeExpression *newNamedTypeExpression(int line, Identifier *name);*/
 #endif /* SPL_ABSYN_H_ */

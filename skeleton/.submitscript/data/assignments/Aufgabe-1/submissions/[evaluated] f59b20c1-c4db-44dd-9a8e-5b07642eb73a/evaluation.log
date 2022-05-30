@@ -1,0 +1,1813 @@
+[2022-05-30 10:43:00.805477] Start of evaluation log for submission 'f59b20c1-c4db-44dd-9a8e-5b07642eb73a'.
+[2022-05-30 10:43:00.805759] Team member: ('Antariksa', 'Najmi', '5311215')
+[2022-05-30 10:43:00.805931] Team member: ('Ahadriu', 'Hicham', '5337972')
+[2022-05-30 10:43:00.831876] Preparing the sandbox
+[2022-05-30 10:43:01.628043] Unpacking submission in sandbox
+[2022-05-30 10:43:02.104483] Building the test subject
+[2022-05-30 10:43:02.105147] Identified the C variant.
+[2022-05-30 10:43:02.249396] Preparing C solution for building with cmake
+[2022-05-30 10:43:02.857475] CMake log:
+-- The C compiler identification is GNU 9.4.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Found BISON: /usr/bin/bison (found version "3.5.1") 
+-- Found FLEX: /usr/bin/flex (found version "2.6.4") 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/solution/c/build
+[2022-05-30 10:43:02.857594] Building C solution with make
+[2022-05-30 10:43:04.900793] Make log:
+Scanning dependencies of target _generated_source_folder_dummy_target
+[  0%] Built target _generated_source_folder_dummy_target
+[  3%] [FLEX][SCANNER] Building scanner with flex 2.6.4
+[  6%] [BISON][PARSER] Building parser with bison 3.5.1
+/home/solution/c/src/phases/_02_03_parser/parser.y:85.22: warning: empty rule for typed nonterminal, and no action [-Wother]
+   85 | global_list         :
+      |                      ^
+/home/solution/c/src/phases/_02_03_parser/parser.y:86.23-44: warning: type clash on default action: <globalDeclarationList> != <globalDeclaration> [-Wother]
+   86 |                     | global_dec global_list
+      |                       ^~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:89.23-27: warning: type clash on default action: <typeExpression> != <identVal> [-Wother]
+   89 | type                : IDENT
+      |                       ^~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:90.23-56: warning: type clash on default action: <typeExpression> != <noVal> [-Wother]
+   90 |                     | ARRAY LBRACK INTLIT RBRACK OF type
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:95.23-45: warning: type clash on default action: <globalDeclaration> != <noVal> [-Wother]
+   95 | global_var          : TYPE type EQ type SEMIC
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:97.23-91: warning: type clash on default action: <globalDeclaration> != <noVal> [-Wother]
+   97 | proc_dec            : PROC IDENT LPAREN par_list RPAREN LCURL local_v...
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:99.22: warning: empty rule for typed nonterminal, and no action [-Wother]
+   99 | par_list            :
+      |                      ^
+/home/solution/c/src/phases/_02_03_parser/parser.y:102.23-29: warning: type clash on default action: <parameterList> != <parameterDeclaration> [-Wother]
+  102 | non_empty_par       : par_dec
+      |                       ^~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:103.23-49: warning: type clash on default action: <parameterList> != <parameterDeclaration> [-Wother]
+  103 |                     | par_dec COMMA non_empty_par
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:105.23-42: warning: type clash on default action: <parameterDeclaration> != <noVal> [-Wother]
+  105 | par_dec             : REF IDENT COLON type
+      |                       ^~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:106.23-38: warning: type clash on default action: <parameterDeclaration> != <identVal> [-Wother]
+  106 |                     | IDENT COLON type
+      |                       ^~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:109.22: warning: empty rule for typed nonterminal, and no action [-Wother]
+  109 | local_var_list      :
+      |                      ^
+/home/solution/c/src/phases/_02_03_parser/parser.y:110.23-50: warning: type clash on default action: <variableList> != <variableDeclaration> [-Wother]
+  110 |                     | local_var_dec local_var_list
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:112.23-51: warning: type clash on default action: <variableDeclaration> != <noVal> [-Wother]
+  112 | local_var_dec       : VAR variable COLON type SEMIC
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:115.22: warning: empty rule for typed nonterminal, and no action [-Wother]
+  115 | stm_list            :
+      |                      ^
+/home/solution/c/src/phases/_02_03_parser/parser.y:116.23-34: warning: type clash on default action: <statementList> != <statement> [-Wother]
+  116 |                     | stm stm_list
+      |                       ^~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:127.23-27: warning: type clash on default action: <statement> != <noVal> [-Wother]
+  127 | empty_stm           : SEMIC
+      |                       ^~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:129.23-42: warning: type clash on default action: <statement> != <noVal> [-Wother]
+  129 | compound_stm        : LCURL stm_list RCURL
+      |                       ^~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:131.23-60: warning: type clash on default action: <statement> != <noVal> [-Wother]
+  131 | if_stm              : IF LPAREN exp RPAREN stm  %prec "then"
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:132.23-55: warning: type clash on default action: <statement> != <noVal> [-Wother]
+  132 |                     | IF LPAREN exp RPAREN stm ELSE stm
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:134.23-49: warning: type clash on default action: <statement> != <noVal> [-Wother]
+  134 | while_stm           : WHILE LPAREN exp RPAREN stm
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:135.23-56: warning: type clash on default action: <statement> != <noVal> [-Wother]
+  135 |                     | DO stm WHILE LPAREN exp RPAREN stm
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:137.23-45: warning: type clash on default action: <statement> != <variable> [-Wother]
+  137 | assign_stm          : variable ASGN exp SEMIC
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:139.23-47: warning: type clash on default action: <statement> != <identVal> [-Wother]
+  139 | call_proc           : IDENT LPAREN RPAREN SEMIC
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:140.23-56: warning: type clash on default action: <statement> != <identVal> [-Wother]
+  140 |                     | IDENT LPAREN arg_list RPAREN SEMIC
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:143.23-25: warning: type clash on default action: <expressionList> != <expression> [-Wother]
+  143 | arg_list            : exp
+      |                       ^~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:144.23-40: warning: type clash on default action: <expressionList> != <expression> [-Wother]
+  144 |                     | exp COMMA arg_list
+      |                       ^~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:166.23-37: warning: type clash on default action: <expression> != <noVal> [-Wother]
+  166 |                     | MINUS unary_exp
+      |                       ^~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:168.23-28: warning: type clash on default action: <expression> != <intVal> [-Wother]
+  168 | primary_exp         : INTLIT
+      |                       ^~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:169.23-30: warning: type clash on default action: <expression> != <variable> [-Wother]
+  169 |                     | variable
+      |                       ^~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:170.23-43: warning: type clash on default action: <expression> != <noVal> [-Wother]
+  170 |                     | LPAREN rel_exp RPAREN
+      |                       ^~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:177.23-27: warning: type clash on default action: <variable> != <identVal> [-Wother]
+  177 | variable            : IDENT
+      |                       ^~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:178.23-39: warning: type clash on default action: <variable> != <identVal> [-Wother]
+  178 |                     | IDENT array_index
+      |                       ^~~~~~~~~~~~~~~~~
+Scanning dependencies of target spl
+[  6%] [BISON][PARSER] Building parser with bison 3.5.1
+/home/solution/c/src/phases/_02_03_parser/parser.y:85.22: warning: empty rule for typed nonterminal, and no action [-Wother]
+   85 | global_list         :
+      |                      ^
+/home/solution/c/src/phases/_02_03_parser/parser.y:86.23-44: warning: type clash on default action: <globalDeclarationList> != <globalDeclaration> [-Wother]
+   86 |                     | global_dec global_list
+      |                       ^~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:89.23-27: warning: type clash on default action: <typeExpression> != <identVal> [-Wother]
+   89 | type                : IDENT
+      |                       ^~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:90.23-56: warning: type clash on default action: <typeExpression> != <noVal> [-Wother]
+   90 |                     | ARRAY LBRACK INTLIT RBRACK OF type
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:95.23-45: warning: type clash on default action: <globalDeclaration> != <noVal> [-Wother]
+   95 | global_var          : TYPE type EQ type SEMIC
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:97.23-91: warning: type clash on default action: <globalDeclaration> != <noVal> [-Wother]
+   97 | proc_dec            : PROC IDENT LPAREN par_list RPAREN LCURL local_v...
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:99.22: warning: empty rule for typed nonterminal, and no action [-Wother]
+   99 | par_list            :
+      |                      ^
+/home/solution/c/src/phases/_02_03_parser/parser.y:102.23-29: warning: type clash on default action: <parameterList> != <parameterDeclaration> [-Wother]
+  102 | non_empty_par       : par_dec
+      |                       ^~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:103.23-49: warning: type clash on default action: <parameterList> != <parameterDeclaration> [-Wother]
+  103 |                     | par_dec COMMA non_empty_par
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:105.23-42: warning: type clash on default action: <parameterDeclaration> != <noVal> [-Wother]
+  105 | par_dec             : REF IDENT COLON type
+      |                       ^~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:106.23-38: warning: type clash on default action: <parameterDeclaration> != <identVal> [-Wother]
+  106 |                     | IDENT COLON type
+      |                       ^~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:109.22: warning: empty rule for typed nonterminal, and no action [-Wother]
+  109 | local_var_list      :
+      |                      ^
+/home/solution/c/src/phases/_02_03_parser/parser.y:110.23-50: warning: type clash on default action: <variableList> != <variableDeclaration> [-Wother]
+  110 |                     | local_var_dec local_var_list
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:112.23-51: warning: type clash on default action: <variableDeclaration> != <noVal> [-Wother]
+  112 | local_var_dec       : VAR variable COLON type SEMIC
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:115.22: warning: empty rule for typed nonterminal, and no action [-Wother]
+  115 | stm_list            :
+      |                      ^
+/home/solution/c/src/phases/_02_03_parser/parser.y:116.23-34: warning: type clash on default action: <statementList> != <statement> [-Wother]
+  116 |                     | stm stm_list
+      |                       ^~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:127.23-27: warning: type clash on default action: <statement> != <noVal> [-Wother]
+  127 | empty_stm           : SEMIC
+      |                       ^~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:129.23-42: warning: type clash on default action: <statement> != <noVal> [-Wother]
+  129 | compound_stm        : LCURL stm_list RCURL
+      |                       ^~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:131.23-60: warning: type clash on default action: <statement> != <noVal> [-Wother]
+  131 | if_stm              : IF LPAREN exp RPAREN stm  %prec "then"
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:132.23-55: warning: type clash on default action: <statement> != <noVal> [-Wother]
+  132 |                     | IF LPAREN exp RPAREN stm ELSE stm
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:134.23-49: warning: type clash on default action: <statement> != <noVal> [-Wother]
+  134 | while_stm           : WHILE LPAREN exp RPAREN stm
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:135.23-56: warning: type clash on default action: <statement> != <noVal> [-Wother]
+  135 |                     | DO stm WHILE LPAREN exp RPAREN stm
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:137.23-45: warning: type clash on default action: <statement> != <variable> [-Wother]
+  137 | assign_stm          : variable ASGN exp SEMIC
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:139.23-47: warning: type clash on default action: <statement> != <identVal> [-Wother]
+  139 | call_proc           : IDENT LPAREN RPAREN SEMIC
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:140.23-56: warning: type clash on default action: <statement> != <identVal> [-Wother]
+  140 |                     | IDENT LPAREN arg_list RPAREN SEMIC
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:143.23-25: warning: type clash on default action: <expressionList> != <expression> [-Wother]
+  143 | arg_list            : exp
+      |                       ^~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:144.23-40: warning: type clash on default action: <expressionList> != <expression> [-Wother]
+  144 |                     | exp COMMA arg_list
+      |                       ^~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:166.23-37: warning: type clash on default action: <expression> != <noVal> [-Wother]
+  166 |                     | MINUS unary_exp
+      |                       ^~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:168.23-28: warning: type clash on default action: <expression> != <intVal> [-Wother]
+  168 | primary_exp         : INTLIT
+      |                       ^~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:169.23-30: warning: type clash on default action: <expression> != <variable> [-Wother]
+  169 |                     | variable
+      |                       ^~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:170.23-43: warning: type clash on default action: <expression> != <noVal> [-Wother]
+  170 |                     | LPAREN rel_exp RPAREN
+      |                       ^~~~~~~~~~~~~~~~~~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:177.23-27: warning: type clash on default action: <variable> != <identVal> [-Wother]
+  177 | variable            : IDENT
+      |                       ^~~~~
+/home/solution/c/src/phases/_02_03_parser/parser.y:178.23-39: warning: type clash on default action: <variable> != <identVal> [-Wother]
+  178 |                     | IDENT array_index
+      |                       ^~~~~~~~~~~~~~~~~
+[  9%] Building C object CMakeFiles/spl.dir/generated-sources/phases/_02_03_parser/parser.c.o
+[  9%] [FLEX][SCANNER] Building scanner with flex 2.6.4
+[ 12%] Building C object CMakeFiles/spl.dir/generated-sources/phases/_01_scanner/scanner.c.o
+[ 15%] Building C object CMakeFiles/spl.dir/src/absyn/expressions.c.o
+/home/solution/c/src/absyn/expressions.c: In function 'isOperatorArithmetic':
+/home/solution/c/src/absyn/expressions.c:14:42: warning: unused parameter 'operator' [-Wunused-parameter]
+   14 | bool isOperatorArithmetic(BinaryOperator operator) {
+      |                           ~~~~~~~~~~~~~~~^~~~~~~~
+/home/solution/c/src/absyn/expressions.c: In function 'isOperatorComparison':
+/home/solution/c/src/absyn/expressions.c:18:42: warning: unused parameter 'operator' [-Wunused-parameter]
+   18 | bool isOperatorComparison(BinaryOperator operator) {
+      |                           ~~~~~~~~~~~~~~~^~~~~~~~
+/home/solution/c/src/absyn/expressions.c: In function 'flipComparisonOperator':
+/home/solution/c/src/absyn/expressions.c:22:54: warning: unused parameter 'operator' [-Wunused-parameter]
+   22 | BinaryOperator flipComparisonOperator(BinaryOperator operator) {
+      |                                       ~~~~~~~~~~~~~~~^~~~~~~~
+[ 18%] Building C object CMakeFiles/spl.dir/src/absyn/global_declarations.c.o
+[ 21%] Building C object CMakeFiles/spl.dir/src/absyn/lists.c.o
+[ 25%] Building C object CMakeFiles/spl.dir/src/absyn/parameter_declaration.c.o
+[ 28%] Building C object CMakeFiles/spl.dir/src/absyn/position.c.o
+[ 31%] Building C object CMakeFiles/spl.dir/src/absyn/program.c.o
+[ 34%] Building C object CMakeFiles/spl.dir/src/absyn/statements.c.o
+[ 37%] Building C object CMakeFiles/spl.dir/src/absyn/type_expressions.c.o
+[ 40%] Building C object CMakeFiles/spl.dir/src/absyn/variable_declaration.c.o
+[ 43%] Building C object CMakeFiles/spl.dir/src/absyn/variables.c.o
+[ 46%] Building C object CMakeFiles/spl.dir/src/absyn/printing/printing_helpers.c.o
+[ 50%] Building C object CMakeFiles/spl.dir/src/phases/_04a_tablebuild/tablebuild.c.o
+/home/solution/c/src/phases/_04a_tablebuild/tablebuild.c: In function 'buildSymbolTable':
+/home/solution/c/src/phases/_04a_tablebuild/tablebuild.c:28:40: warning: unused parameter 'program' [-Wunused-parameter]
+   28 | SymbolTable *buildSymbolTable(Program *program, bool showSymbolTables) {
+      |                               ~~~~~~~~~^~~~~~~
+/home/solution/c/src/phases/_04a_tablebuild/tablebuild.c:28:54: warning: unused parameter 'showSymbolTables' [-Wunused-parameter]
+   28 | SymbolTable *buildSymbolTable(Program *program, bool showSymbolTables) {
+      |                                                      ^
+At top level:
+/home/solution/c/src/phases/_04a_tablebuild/tablebuild.c:22:13: warning: 'printSymbolTableAtEndOfProcedure' defined but not used [-Wunused-function]
+   22 | static void printSymbolTableAtEndOfProcedure(Identifier *name, Entry *procedureEntry) {
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[ 53%] Building C object CMakeFiles/spl.dir/src/phases/_04b_semant/procedurebodycheck.c.o
+/home/solution/c/src/phases/_04b_semant/procedurebodycheck.c: In function 'checkProcedures':
+/home/solution/c/src/phases/_04b_semant/procedurebodycheck.c:12:31: warning: unused parameter 'program' [-Wunused-parameter]
+   12 | void checkProcedures(Program *program, SymbolTable *globalTable) {
+      |                      ~~~~~~~~~^~~~~~~
+/home/solution/c/src/phases/_04b_semant/procedurebodycheck.c:12:53: warning: unused parameter 'globalTable' [-Wunused-parameter]
+   12 | void checkProcedures(Program *program, SymbolTable *globalTable) {
+      |                                        ~~~~~~~~~~~~~^~~~~~~~~~~
+[ 56%] Building C object CMakeFiles/spl.dir/src/phases/_05_varalloc/varalloc.c.o
+/home/solution/c/src/phases/_05_varalloc/varalloc.c: In function 'allocVars':
+/home/solution/c/src/phases/_05_varalloc/varalloc.c:177:84: warning: unused parameter 'ershovOptimization' [-Wunused-parameter]
+  177 | void allocVars(Program *program, SymbolTable *globalTable, bool showVarAlloc, bool ershovOptimization) {
+      |                                                                                    ^
+[ 59%] Building C object CMakeFiles/spl.dir/src/phases/_05_varalloc/stack_layout.c.o
+[ 62%] Building C object CMakeFiles/spl.dir/src/phases/_06_codegen/codegen.c.o
+/home/solution/c/src/phases/_06_codegen/codegen.c: In function 'genCode':
+/home/solution/c/src/phases/_06_codegen/codegen.c:37:23: warning: unused parameter 'program' [-Wunused-parameter]
+   37 | void genCode(Program *program, SymbolTable *globalTable, FILE *out, bool ershovOptimization) {
+      |              ~~~~~~~~~^~~~~~~
+/home/solution/c/src/phases/_06_codegen/codegen.c:37:45: warning: unused parameter 'globalTable' [-Wunused-parameter]
+   37 | void genCode(Program *program, SymbolTable *globalTable, FILE *out, bool ershovOptimization) {
+      |                                ~~~~~~~~~~~~~^~~~~~~~~~~
+/home/solution/c/src/phases/_06_codegen/codegen.c:37:74: warning: unused parameter 'ershovOptimization' [-Wunused-parameter]
+   37 | void genCode(Program *program, SymbolTable *globalTable, FILE *out, bool ershovOptimization) {
+      |                                                                          ^
+[ 65%] Building C object CMakeFiles/spl.dir/src/phases/_06_codegen/codeprint.c.o
+[ 68%] Building C object CMakeFiles/spl.dir/src/main.c.o
+[ 71%] Building C object CMakeFiles/spl.dir/src/command_line_options.c.o
+[ 75%] Building C object CMakeFiles/spl.dir/src/table/identifier.c.o
+[ 78%] Building C object CMakeFiles/spl.dir/src/table/table.c.o
+[ 81%] Building C object CMakeFiles/spl.dir/src/table/entry.c.o
+[ 84%] Building C object CMakeFiles/spl.dir/src/types/types.c.o
+[ 87%] Building C object CMakeFiles/spl.dir/src/util/errors.c.o
+[ 90%] Building C object CMakeFiles/spl.dir/src/util/memory.c.o
+[ 93%] Building C object CMakeFiles/spl.dir/src/util/ascii_table.c.o
+[ 96%] Building C object CMakeFiles/spl.dir/src/util/string_ops.c.o
+[100%] Linking C executable spl
+[100%] Built target spl
+[2022-05-30 10:43:05.051890] Beginning evaluation.
+[2022-05-30 10:43:05.052114] Evaluating acker.spl with the submitted solution.
+[2022-05-30 10:43:05.214275] Test subject results match (Success).
+[2022-05-30 10:43:05.226232] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+1,215c1
+< Program(
+<   ProcedureDeclaration(
+<     ackermann,
+<     Parameters(
+<       ParameterDeclaration(
+<         i,
+<         NamedTypeExpression(
+<           int),
+<         false),
+<       ParameterDeclaration(
+<         j,
+<         NamedTypeExpression(
+<           int),
+<         false),
+<       ParameterDeclaration(
+<         k,
+<         NamedTypeExpression(
+<           int),
+<         true)),
+<     Variables(
+<       VariableDeclaration(
+<         a,
+<         NamedTypeExpression(
+<           int))),
+<     Body(
+<       IfStatement(
+<         BinaryExpression(
+<           EQU,
+<           VariableExpression(
+<             NamedVariable(
+<               i)),
+<           IntLiteral(
+<             0)),
+<         CompoundStatement(
+<           AssignStatement(
+<             NamedVariable(
+<               k),
+<             BinaryExpression(
+<               ADD,
+<               VariableExpression(
+<                 NamedVariable(
+<                   j)),
+<               IntLiteral(
+<                 1)))),
+<         CompoundStatement(
+<           IfStatement(
+<             BinaryExpression(
+<               EQU,
+<               VariableExpression(
+[2022-05-30 10:43:05.226853] Test not passed.
+[2022-05-30 10:43:05.227251] Running Score: 0/1
+
+[2022-05-30 10:43:05.227310] Evaluating arrayasgn.spl with the submitted solution.
+[2022-05-30 10:43:05.375395] Test subject results match (Success).
+[2022-05-30 10:43:05.388062] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+1,29c1
+< Program(
+<   TypeDeclaration(
+<     A,
+<     ArrayTypeExpression(
+<       NamedTypeExpression(
+<         int),
+<       10)),
+<   ProcedureDeclaration(
+<     main,
+<     Parameters(),
+<     Variables(
+<       VariableDeclaration(
+<         a,
+<         NamedTypeExpression(
+<           A)),
+<       VariableDeclaration(
+<         b,
+<         NamedTypeExpression(
+<           A))),
+<     Body(
+<       AssignStatement(
+<         NamedVariable(
+<           b),
+<         VariableExpression(
+<           NamedVariable(
+<             a))),
+<       CallStatement(
+<         exit,
+<         Arguments()))))
+---
+> NULL
+\ No newline at end of file
+[2022-05-30 10:43:05.389036] Test not passed.
+[2022-05-30 10:43:05.389065] Running Score: 0/2
+
+[2022-05-30 10:43:05.389098] Evaluating arrayparm.spl with the submitted solution.
+[2022-05-30 10:43:05.534300] Test subject results match (Success).
+[2022-05-30 10:43:05.546889] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+1,35c1
+< Program(
+<   TypeDeclaration(
+<     A,
+<     ArrayTypeExpression(
+<       NamedTypeExpression(
+<         int),
+<       10)),
+<   ProcedureDeclaration(
+<     p,
+<     Parameters(
+<       ParameterDeclaration(
+<         x,
+<         NamedTypeExpression(
+<           A),
+<         false)),
+<     Variables(),
+<     Body()),
+<   ProcedureDeclaration(
+<     main,
+<     Parameters(),
+<     Variables(
+<       VariableDeclaration(
+<         a,
+<         NamedTypeExpression(
+<           A))),
+<     Body(
+<       CallStatement(
+<         p,
+<         Arguments(
+<           VariableExpression(
+<             NamedVariable(
+<               a)))),
+<       CallStatement(
+<         exit,
+<         Arguments()))))
+---
+> NULL
+\ No newline at end of file
+[2022-05-30 10:43:05.547171] Test not passed.
+[2022-05-30 10:43:05.547191] Running Score: 0/3
+
+[2022-05-30 10:43:05.547223] Evaluating assignment_without_semicolon.spl with the submitted solution.
+[2022-05-30 10:43:05.702431] Test subject results match (Compiler Failure).
+[2022-05-30 10:43:05.702479] Exit code matches the expected exit code (100).
+[2022-05-30 10:43:05.702522] Test passed.
+[2022-05-30 10:43:05.702544] Running Score: 1/4
+
+[2022-05-30 10:43:05.702573] Evaluating bigtest.spl with the submitted solution.
+[2022-05-30 10:43:05.858441] Test subject results match (Success).
+[2022-05-30 10:43:05.873834] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+1,1513c1
+< Program(
+<   TypeDeclaration(
+<     myInt,
+<     NamedTypeExpression(
+<       int)),
+<   ProcedureDeclaration(
+<     callbyval,
+<     Parameters(
+<       ParameterDeclaration(
+<         x,
+<         NamedTypeExpression(
+<           int),
+<         false),
+<       ParameterDeclaration(
+<         y,
+<         NamedTypeExpression(
+<           myInt),
+<         false)),
+<     Variables(),
+<     Body(
+<       AssignStatement(
+<         NamedVariable(
+<           x),
+<         BinaryExpression(
+<           ADD,
+<           VariableExpression(
+<             NamedVariable(
+<               x)),
+<           IntLiteral(
+<             1))),
+<       AssignStatement(
+<         NamedVariable(
+<           y),
+<         BinaryExpression(
+<           ADD,
+<           VariableExpression(
+<             NamedVariable(
+<               y)),
+<           IntLiteral(
+<             1))))),
+<   TypeDeclaration(
+<     vektor,
+<     ArrayTypeExpression(
+<       NamedTypeExpression(
+<         myInt),
+<       10)),
+<   ProcedureDeclaration(
+<     callbyref,
+<     Parameters(
+[2022-05-30 10:43:05.874185] Test not passed.
+[2022-05-30 10:43:05.874205] Running Score: 1/5
+
+[2022-05-30 10:43:05.874238] Evaluating bits.spl with the submitted solution.
+[2022-05-30 10:43:06.025948] Test subject results match (Success).
+[2022-05-30 10:43:06.036332] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+1,148c1
+< Program(
+<   ProcedureDeclaration(
+<     main,
+<     Parameters(),
+<     Variables(
+<       VariableDeclaration(
+<         arr,
+<         ArrayTypeExpression(
+<           NamedTypeExpression(
+<             int),
+<           32)),
+<       VariableDeclaration(
+<         eing,
+<         NamedTypeExpression(
+<           int)),
+<       VariableDeclaration(
+<         i,
+<         NamedTypeExpression(
+<           int))),
+<     Body(
+<       AssignStatement(
+<         NamedVariable(
+<           eing),
+<         IntLiteral(
+<           123456789)),
+<       AssignStatement(
+<         NamedVariable(
+<           i),
+<         IntLiteral(
+<           0)),
+<       WhileStatement(
+<         BinaryExpression(
+<           LST,
+<           VariableExpression(
+<             NamedVariable(
+<               i)),
+<           IntLiteral(
+<             32)),
+<         CompoundStatement(
+<           AssignStatement(
+<             ArrayAccess(
+<               NamedVariable(
+<                 arr),
+<               VariableExpression(
+<                 NamedVariable(
+<                   i))),
+<             BinaryExpression(
+<               SUB,
+<               VariableExpression(
+[2022-05-30 10:43:06.037140] Test not passed.
+[2022-05-30 10:43:06.037320] Running Score: 1/6
+
+[2022-05-30 10:43:06.037367] Evaluating call_without_semicolon.spl with the submitted solution.
+[2022-05-30 10:43:06.185034] Test subject results match (Compiler Failure).
+[2022-05-30 10:43:06.185084] Exit code matches the expected exit code (100).
+[2022-05-30 10:43:06.185120] Test passed.
+[2022-05-30 10:43:06.185140] Running Score: 2/7
+
+[2022-05-30 10:43:06.185188] Evaluating drawTest.spl with the submitted solution.
+[2022-05-30 10:43:06.345513] Test subject results match (Success).
+[2022-05-30 10:43:06.356801] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+1,92c1
+< Program(
+<   ProcedureDeclaration(
+<     main,
+<     Parameters(),
+<     Variables(),
+<     Body(
+<       CallStatement(
+<         clearAll,
+<         Arguments(
+<           IntLiteral(
+<             0))),
+<       CallStatement(
+<         drawLine,
+<         Arguments(
+<           IntLiteral(
+<             0),
+<           IntLiteral(
+<             0),
+<           IntLiteral(
+<             639),
+<           IntLiteral(
+<             479),
+<           IntLiteral(
+<             16711935))),
+<       CallStatement(
+<         drawLine,
+<         Arguments(
+<           IntLiteral(
+<             0),
+<           IntLiteral(
+<             479),
+<           IntLiteral(
+<             639),
+<           IntLiteral(
+<             0),
+<           IntLiteral(
+<             16776960))),
+<       CallStatement(
+<         drawCircle,
+<         Arguments(
+<           IntLiteral(
+<             320),
+<           IntLiteral(
+<             240),
+<           IntLiteral(
+<             40),
+<           IntLiteral(
+<             65535))),
+<       CallStatement(
+[2022-05-30 10:43:06.357142] Test not passed.
+[2022-05-30 10:43:06.357182] Running Score: 2/8
+
+[2022-05-30 10:43:06.357218] Evaluating gcd.spl with the submitted solution.
+[2022-05-30 10:43:06.508830] Test subject results match (Success).
+[2022-05-30 10:43:06.521940] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+1,142c1
+< Program(
+<   ProcedureDeclaration(
+<     main,
+<     Parameters(),
+<     Variables(
+<       VariableDeclaration(
+<         a,
+<         NamedTypeExpression(
+<           int)),
+<       VariableDeclaration(
+<         b,
+<         NamedTypeExpression(
+<           int)),
+<       VariableDeclaration(
+<         c,
+<         NamedTypeExpression(
+<           int))),
+<     Body(
+<       AssignStatement(
+<         NamedVariable(
+<           a),
+<         IntLiteral(
+<           10164)),
+<       AssignStatement(
+<         NamedVariable(
+<           b),
+<         IntLiteral(
+<           2646)),
+<       CallStatement(
+<         gcd,
+<         Arguments(
+<           VariableExpression(
+<             NamedVariable(
+<               a)),
+<           VariableExpression(
+<             NamedVariable(
+<               b)),
+<           VariableExpression(
+<             NamedVariable(
+<               c)))),
+<       CallStatement(
+<         printi,
+<         Arguments(
+<           VariableExpression(
+<             NamedVariable(
+<               a)))),
+<       CallStatement(
+<         printc,
+<         Arguments(
+[2022-05-30 10:43:06.522028] Test not passed.
+[2022-05-30 10:43:06.522039] Running Score: 2/9
+
+[2022-05-30 10:43:06.522058] Evaluating global_variable.spl with the submitted solution.
+[2022-05-30 10:43:06.676981] Test subject results match (Compiler Failure).
+[2022-05-30 10:43:06.677027] Exit code matches the expected exit code (100).
+[2022-05-30 10:43:06.677063] Test passed.
+[2022-05-30 10:43:06.677083] Running Score: 3/10
+
+[2022-05-30 10:43:06.677111] Evaluating lambda.spl with the submitted solution.
+[2022-05-30 10:43:06.844083] Test subject results match (Success).
+[2022-05-30 10:43:06.865222] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+1,9461c1
+< Program(
+<   TypeDeclaration(
+<     LineBuffer,
+<     ArrayTypeExpression(
+<       NamedTypeExpression(
+<         int),
+<       4096)),
+<   TypeDeclaration(
+<     Term,
+<     ArrayTypeExpression(
+<       NamedTypeExpression(
+<         int),
+<       2)),
+<   TypeDeclaration(
+<     Memory,
+<     ArrayTypeExpression(
+<       NamedTypeExpression(
+<         Term),
+<       65535)),
+<   TypeDeclaration(
+<     DeBrujinEntry,
+<     ArrayTypeExpression(
+<       NamedTypeExpression(
+<         int),
+<       32)),
+<   TypeDeclaration(
+<     DeBrujinMap,
+<     ArrayTypeExpression(
+<       NamedTypeExpression(
+<         DeBrujinEntry),
+<       2048)),
+<   ProcedureDeclaration(
+<     printLine,
+<     Parameters(
+<       ParameterDeclaration(
+<         buffer,
+<         NamedTypeExpression(
+<           LineBuffer),
+<         true)),
+<     Variables(
+<       VariableDeclaration(
+<         i,
+<         NamedTypeExpression(
+<           int)),
+<       VariableDeclaration(
+<         continue,
+<         NamedTypeExpression(
+<           int))),
+<     Body(
+[2022-05-30 10:43:06.868555] Test not passed.
+[2022-05-30 10:43:06.868795] Running Score: 3/11
+
+[2022-05-30 10:43:06.868895] Evaluating multiply.spl with the submitted solution.
+[2022-05-30 10:43:07.019373] Test subject results match (Success).
+[2022-05-30 10:43:07.029555] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+1,118c1
+< Program(
+<   ProcedureDeclaration(
+<     main,
+<     Parameters(),
+<     Variables(
+<       VariableDeclaration(
+<         i,
+<         NamedTypeExpression(
+<           int)),
+<       VariableDeclaration(
+<         j,
+<         NamedTypeExpression(
+<           int)),
+<       VariableDeclaration(
+<         n,
+<         NamedTypeExpression(
+<           int))),
+<     Body(
+<       AssignStatement(
+<         NamedVariable(
+<           n),
+<         IntLiteral(
+<           10)),
+<       AssignStatement(
+<         NamedVariable(
+<           i),
+<         IntLiteral(
+<           0)),
+<       WhileStatement(
+<         BinaryExpression(
+<           LSE,
+<           VariableExpression(
+<             NamedVariable(
+<               i)),
+<           VariableExpression(
+<             NamedVariable(
+<               n))),
+<         CompoundStatement(
+<           AssignStatement(
+<             NamedVariable(
+<               j),
+<             IntLiteral(
+<               0)),
+<           WhileStatement(
+<             BinaryExpression(
+<               LSE,
+<               VariableExpression(
+<                 NamedVariable(
+<                   j)),
+[2022-05-30 10:43:07.032070] Test not passed.
+[2022-05-30 10:43:07.032100] Running Score: 3/12
+
+[2022-05-30 10:43:07.032134] Evaluating partind1.spl with the submitted solution.
+[2022-05-30 10:43:07.175254] Test subject results match (Success).
+[2022-05-30 10:43:07.189324] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+1,223c1
+< Program(
+<   TypeDeclaration(
+<     A,
+<     ArrayTypeExpression(
+<       NamedTypeExpression(
+<         int),
+<       7)),
+<   TypeDeclaration(
+<     B,
+<     ArrayTypeExpression(
+<       NamedTypeExpression(
+<         A),
+<       5)),
+<   ProcedureDeclaration(
+<     p,
+<     Parameters(
+<       ParameterDeclaration(
+<         x,
+<         NamedTypeExpression(
+<           A),
+<         true)),
+<     Variables(
+<       VariableDeclaration(
+<         i,
+<         NamedTypeExpression(
+<           int))),
+<     Body(
+<       AssignStatement(
+<         NamedVariable(
+<           i),
+<         IntLiteral(
+<           0)),
+<       WhileStatement(
+<         BinaryExpression(
+<           LST,
+<           VariableExpression(
+<             NamedVariable(
+<               i)),
+<           IntLiteral(
+<             7)),
+<         CompoundStatement(
+<           AssignStatement(
+<             ArrayAccess(
+<               NamedVariable(
+<                 x),
+<               VariableExpression(
+<                 NamedVariable(
+<                   i))),
+<             VariableExpression(
+[2022-05-30 10:43:07.189661] Test not passed.
+[2022-05-30 10:43:07.189684] Running Score: 3/13
+
+[2022-05-30 10:43:07.189722] Evaluating partind2.spl with the submitted solution.
+[2022-05-30 10:43:07.341745] Test subject results match (Success).
+[2022-05-30 10:43:07.352763] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+1,341c1
+< Program(
+<   TypeDeclaration(
+<     A,
+<     ArrayTypeExpression(
+<       NamedTypeExpression(
+<         int),
+<       7)),
+<   TypeDeclaration(
+<     B,
+<     ArrayTypeExpression(
+<       NamedTypeExpression(
+<         A),
+<       5)),
+<   TypeDeclaration(
+<     C,
+<     ArrayTypeExpression(
+<       NamedTypeExpression(
+<         B),
+<       3)),
+<   ProcedureDeclaration(
+<     p,
+<     Parameters(
+<       ParameterDeclaration(
+<         x,
+<         NamedTypeExpression(
+<           B),
+<         true)),
+<     Variables(
+<       VariableDeclaration(
+<         i,
+<         NamedTypeExpression(
+<           int)),
+<       VariableDeclaration(
+<         j,
+<         NamedTypeExpression(
+<           int))),
+<     Body(
+<       AssignStatement(
+<         NamedVariable(
+<           i),
+<         IntLiteral(
+<           0)),
+<       WhileStatement(
+<         BinaryExpression(
+<           LST,
+<           VariableExpression(
+<             NamedVariable(
+<               i)),
+<           IntLiteral(
+[2022-05-30 10:43:07.353097] Test not passed.
+[2022-05-30 10:43:07.353117] Running Score: 3/14
+
+[2022-05-30 10:43:07.353151] Evaluating queens.spl with the submitted solution.
+[2022-05-30 10:43:07.499534] Test subject results match (Success).
+[2022-05-30 10:43:07.511309] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+1,492c1
+< Program(
+<   TypeDeclaration(
+<     A8,
+<     ArrayTypeExpression(
+<       NamedTypeExpression(
+<         int),
+<       8)),
+<   TypeDeclaration(
+<     A15,
+<     ArrayTypeExpression(
+<       NamedTypeExpression(
+<         int),
+<       15)),
+<   ProcedureDeclaration(
+<     main,
+<     Parameters(),
+<     Variables(
+<       VariableDeclaration(
+<         row,
+<         NamedTypeExpression(
+<           A8)),
+<       VariableDeclaration(
+<         col,
+<         NamedTypeExpression(
+<           A8)),
+<       VariableDeclaration(
+<         diag1,
+<         NamedTypeExpression(
+<           A15)),
+<       VariableDeclaration(
+<         diag2,
+<         NamedTypeExpression(
+<           A15)),
+<       VariableDeclaration(
+<         i,
+<         NamedTypeExpression(
+<           int))),
+<     Body(
+<       AssignStatement(
+<         NamedVariable(
+<           i),
+<         IntLiteral(
+<           0)),
+<       WhileStatement(
+<         BinaryExpression(
+<           LST,
+<           VariableExpression(
+<             NamedVariable(
+<               i)),
+[2022-05-30 10:43:07.511754] Test not passed.
+[2022-05-30 10:43:07.511781] Running Score: 3/15
+
+[2022-05-30 10:43:07.511813] Evaluating reftest.spl with the submitted solution.
+[2022-05-30 10:43:07.660918] Test subject results match (Success).
+[2022-05-30 10:43:07.672728] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+1,33c1
+< Program(
+<   ProcedureDeclaration(
+<     p,
+<     Parameters(
+<       ParameterDeclaration(
+<         x,
+<         NamedTypeExpression(
+<           int),
+<         true)),
+<     Variables(),
+<     Body()),
+<   ProcedureDeclaration(
+<     main,
+<     Parameters(),
+<     Variables(
+<       VariableDeclaration(
+<         a,
+<         NamedTypeExpression(
+<           int))),
+<     Body(
+<       CallStatement(
+<         p,
+<         Arguments(
+<           BinaryExpression(
+<             ADD,
+<             VariableExpression(
+<               NamedVariable(
+<                 a)),
+<             IntLiteral(
+<               1)))),
+<       CallStatement(
+<         exit,
+<         Arguments()))))
+---
+> NULL
+\ No newline at end of file
+[2022-05-30 10:43:07.673023] Test not passed.
+[2022-05-30 10:43:07.673044] Running Score: 3/16
+
+[2022-05-30 10:43:07.673081] Evaluating sierpinski.spl with the submitted solution.
+[2022-05-30 10:43:07.827241] Test subject results match (Success).
+[2022-05-30 10:43:07.839995] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+1,1567c1
+< Program(
+<   ProcedureDeclaration(
+<     plot,
+<     Parameters(
+<       ParameterDeclaration(
+<         px,
+<         NamedTypeExpression(
+<           int),
+<         true),
+<       ParameterDeclaration(
+<         py,
+<         NamedTypeExpression(
+<           int),
+<         true),
+<       ParameterDeclaration(
+<         x,
+<         NamedTypeExpression(
+<           int),
+<         false),
+<       ParameterDeclaration(
+<         y,
+<         NamedTypeExpression(
+<           int),
+<         false)),
+<     Variables(
+<       VariableDeclaration(
+<         fromCol,
+<         NamedTypeExpression(
+<           int)),
+<       VariableDeclaration(
+<         fromRow,
+<         NamedTypeExpression(
+<           int)),
+<       VariableDeclaration(
+<         toCol,
+<         NamedTypeExpression(
+<           int)),
+<       VariableDeclaration(
+<         toRow,
+<         NamedTypeExpression(
+<           int))),
+<     Body(
+<       AssignStatement(
+<         NamedVariable(
+<           fromCol),
+<         BinaryExpression(
+<           ADD,
+<           BinaryExpression(
+<             DIV,
+[2022-05-30 10:43:07.840920] Test not passed.
+[2022-05-30 10:43:07.840950] Running Score: 3/17
+
+[2022-05-30 10:43:07.840983] Evaluating swap.spl with the submitted solution.
+[2022-05-30 10:43:07.990142] Test subject results match (Success).
+[2022-05-30 10:43:08.002668] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+1,117c1
+< Program(
+<   ProcedureDeclaration(
+<     swap,
+<     Parameters(
+<       ParameterDeclaration(
+<         n,
+<         NamedTypeExpression(
+<           int),
+<         true),
+<       ParameterDeclaration(
+<         m,
+<         NamedTypeExpression(
+<           int),
+<         true)),
+<     Variables(
+<       VariableDeclaration(
+<         k,
+<         NamedTypeExpression(
+<           int))),
+<     Body(
+<       AssignStatement(
+<         NamedVariable(
+<           k),
+<         VariableExpression(
+<           NamedVariable(
+<             n))),
+<       AssignStatement(
+<         NamedVariable(
+<           n),
+<         VariableExpression(
+<           NamedVariable(
+<             m))),
+<       AssignStatement(
+<         NamedVariable(
+<           m),
+<         VariableExpression(
+<           NamedVariable(
+<             k))))),
+<   ProcedureDeclaration(
+<     main,
+<     Parameters(),
+<     Variables(
+<       VariableDeclaration(
+<         i,
+<         NamedTypeExpression(
+<           int)),
+<       VariableDeclaration(
+<         j,
+<         NamedTypeExpression(
+[2022-05-30 10:43:08.003012] Test not passed.
+[2022-05-30 10:43:08.003033] Running Score: 3/18
+
+[2022-05-30 10:43:08.003066] Evaluating test1.spl with the submitted solution.
+[2022-05-30 10:43:08.156881] Test subject results match (Success).
+[2022-05-30 10:43:08.167900] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+1,43c1
+< Program(
+<   ProcedureDeclaration(
+<     main,
+<     Parameters(),
+<     Variables(
+<       VariableDeclaration(
+<         x,
+<         NamedTypeExpression(
+<           int)),
+<       VariableDeclaration(
+<         y,
+<         NamedTypeExpression(
+<           int))),
+<     Body(
+<       AssignStatement(
+<         NamedVariable(
+<           x),
+<         IntLiteral(
+<           3)),
+<       AssignStatement(
+<         NamedVariable(
+<           y),
+<         IntLiteral(
+<           5)),
+<       CallStatement(
+<         printi,
+<         Arguments(
+<           BinaryExpression(
+<             ADD,
+<             VariableExpression(
+<               NamedVariable(
+<                 x)),
+<             VariableExpression(
+<               NamedVariable(
+<                 y))))),
+<       CallStatement(
+<         printc,
+<         Arguments(
+<           IntLiteral(
+<             10))),
+<       CallStatement(
+<         exit,
+<         Arguments()))))
+---
+> NULL
+\ No newline at end of file
+[2022-05-30 10:43:08.168230] Test not passed.
+[2022-05-30 10:43:08.168334] Running Score: 3/19
+
+[2022-05-30 10:43:08.168385] Evaluating test2.spl with the submitted solution.
+[2022-05-30 10:43:08.314318] Test subject results match (Success).
+[2022-05-30 10:43:08.326825] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+1,85c1
+< Program(
+<   ProcedureDeclaration(
+<     summe,
+<     Parameters(
+<       ParameterDeclaration(
+<         n,
+<         NamedTypeExpression(
+<           int),
+<         false),
+<       ParameterDeclaration(
+<         m,
+<         NamedTypeExpression(
+<           int),
+<         false),
+<       ParameterDeclaration(
+<         s,
+<         NamedTypeExpression(
+<           int),
+<         true)),
+<     Variables(),
+<     Body(
+<       AssignStatement(
+<         NamedVariable(
+<           s),
+<         BinaryExpression(
+<           ADD,
+<           VariableExpression(
+<             NamedVariable(
+<               n)),
+<           VariableExpression(
+<             NamedVariable(
+<               m)))))),
+<   ProcedureDeclaration(
+<     main,
+<     Parameters(),
+<     Variables(
+<       VariableDeclaration(
+<         x,
+<         NamedTypeExpression(
+<           int)),
+<       VariableDeclaration(
+<         y,
+<         NamedTypeExpression(
+<           int)),
+<       VariableDeclaration(
+<         s,
+<         NamedTypeExpression(
+<           int))),
+<     Body(
+[2022-05-30 10:43:08.327193] Test not passed.
+[2022-05-30 10:43:08.327218] Running Score: 3/20
+
+[2022-05-30 10:43:08.327251] Evaluating test3.spl with the submitted solution.
+[2022-05-30 10:43:08.475062] Test subject results match (Success).
+[2022-05-30 10:43:08.487651] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+1,399c1
+< Program(
+<   TypeDeclaration(
+<     A,
+<     ArrayTypeExpression(
+<       NamedTypeExpression(
+<         int),
+<       10)),
+<   ProcedureDeclaration(
+<     sort,
+<     Parameters(
+<       ParameterDeclaration(
+<         a,
+<         NamedTypeExpression(
+<           A),
+<         true)),
+<     Variables(
+<       VariableDeclaration(
+<         i,
+<         NamedTypeExpression(
+<           int)),
+<       VariableDeclaration(
+<         j,
+<         NamedTypeExpression(
+<           int)),
+<       VariableDeclaration(
+<         t,
+<         NamedTypeExpression(
+<           int))),
+<     Body(
+<       AssignStatement(
+<         NamedVariable(
+<           i),
+<         IntLiteral(
+<           9)),
+<       WhileStatement(
+<         BinaryExpression(
+<           GRE,
+<           VariableExpression(
+<             NamedVariable(
+<               i)),
+<           IntLiteral(
+<             0)),
+<         CompoundStatement(
+<           AssignStatement(
+<             NamedVariable(
+<               j),
+<             IntLiteral(
+<               1)),
+<           WhileStatement(
+[2022-05-30 10:43:08.487992] Test not passed.
+[2022-05-30 10:43:08.488012] Running Score: 3/21
+
+[2022-05-30 10:43:08.488045] Evaluating test4.spl with the submitted solution.
+[2022-05-30 10:43:08.635411] Test subject results match (Success).
+[2022-05-30 10:43:08.645821] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+1,166c1
+< Program(
+<   ProcedureDeclaration(
+<     fak1,
+<     Parameters(
+<       ParameterDeclaration(
+<         n,
+<         NamedTypeExpression(
+<           int),
+<         false),
+<       ParameterDeclaration(
+<         m,
+<         NamedTypeExpression(
+<           int),
+<         true)),
+<     Variables(),
+<     Body(
+<       AssignStatement(
+<         NamedVariable(
+<           m),
+<         IntLiteral(
+<           1)),
+<       WhileStatement(
+<         BinaryExpression(
+<           NEQ,
+<           VariableExpression(
+<             NamedVariable(
+<               n)),
+<           IntLiteral(
+<             0)),
+<         CompoundStatement(
+<           AssignStatement(
+<             NamedVariable(
+<               m),
+<             BinaryExpression(
+<               MUL,
+<               VariableExpression(
+<                 NamedVariable(
+<                   m)),
+<               VariableExpression(
+<                 NamedVariable(
+<                   n)))),
+<           AssignStatement(
+<             NamedVariable(
+<               n),
+<             BinaryExpression(
+<               SUB,
+<               VariableExpression(
+<                 NamedVariable(
+<                   n)),
+[2022-05-30 10:43:08.648389] Test not passed.
+[2022-05-30 10:43:08.648422] Running Score: 3/22
+
+[2022-05-30 10:43:08.648462] Evaluating test5.spl with the submitted solution.
+[2022-05-30 10:43:08.798294] Test subject results match (Success).
+[2022-05-30 10:43:08.809375] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+1,105c1
+< Program(
+<   ProcedureDeclaration(
+<     main,
+<     Parameters(),
+<     Variables(
+<       VariableDeclaration(
+<         i,
+<         NamedTypeExpression(
+<           int))),
+<     Body(
+<       AssignStatement(
+<         NamedVariable(
+<           i),
+<         IntLiteral(
+<           2)),
+<       AssignStatement(
+<         NamedVariable(
+<           i),
+<         BinaryExpression(
+<           ADD,
+<           VariableExpression(
+<             NamedVariable(
+<               i)),
+<           BinaryExpression(
+<             ADD,
+<             VariableExpression(
+<               NamedVariable(
+<                 i)),
+<             BinaryExpression(
+<               ADD,
+<               VariableExpression(
+<                 NamedVariable(
+<                   i)),
+<               BinaryExpression(
+<                 ADD,
+<                 VariableExpression(
+<                   NamedVariable(
+<                     i)),
+<                 BinaryExpression(
+<                   ADD,
+<                   VariableExpression(
+<                     NamedVariable(
+<                       i)),
+<                   BinaryExpression(
+<                     ADD,
+<                     VariableExpression(
+<                       NamedVariable(
+<                         i)),
+<                     BinaryExpression(
+[2022-05-30 10:43:08.809712] Test not passed.
+[2022-05-30 10:43:08.809732] Running Score: 3/23
+
+[2022-05-30 10:43:08.809775] Evaluating test6.spl with the submitted solution.
+[2022-05-30 10:43:08.960933] Test subject results match (Success).
+[2022-05-30 10:43:08.971867] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+1,110c1
+< Program(
+<   ProcedureDeclaration(
+<     main,
+<     Parameters(),
+<     Variables(
+<       VariableDeclaration(
+<         i,
+<         NamedTypeExpression(
+<           int))),
+<     Body(
+<       AssignStatement(
+<         NamedVariable(
+<           i),
+<         IntLiteral(
+<           2)),
+<       AssignStatement(
+<         NamedVariable(
+<           i),
+<         BinaryExpression(
+<           ADD,
+<           VariableExpression(
+<             NamedVariable(
+<               i)),
+<           BinaryExpression(
+<             ADD,
+<             VariableExpression(
+<               NamedVariable(
+<                 i)),
+<             BinaryExpression(
+<               ADD,
+<               VariableExpression(
+<                 NamedVariable(
+<                   i)),
+<               BinaryExpression(
+<                 ADD,
+<                 VariableExpression(
+<                   NamedVariable(
+<                     i)),
+<                 BinaryExpression(
+<                   ADD,
+<                   VariableExpression(
+<                     NamedVariable(
+<                       i)),
+<                   BinaryExpression(
+<                     ADD,
+<                     VariableExpression(
+<                       NamedVariable(
+<                         i)),
+<                     BinaryExpression(
+[2022-05-30 10:43:08.972209] Test not passed.
+[2022-05-30 10:43:08.972332] Running Score: 3/24
+
+[2022-05-30 10:43:08.972383] Evaluating test7.spl with the submitted solution.
+[2022-05-30 10:43:09.119086] Test subject results match (Success).
+[2022-05-30 10:43:09.129930] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+1,54c1
+< Program(
+<   ProcedureDeclaration(
+<     main,
+<     Parameters(),
+<     Variables(
+<       VariableDeclaration(
+<         a,
+<         ArrayTypeExpression(
+<           NamedTypeExpression(
+<             int),
+<           3))),
+<     Body(
+<       AssignStatement(
+<         ArrayAccess(
+<           NamedVariable(
+<             a),
+<           IntLiteral(
+<             0)),
+<         IntLiteral(
+<           10)),
+<       AssignStatement(
+<         ArrayAccess(
+<           NamedVariable(
+<             a),
+<           IntLiteral(
+<             1)),
+<         IntLiteral(
+<           11)),
+<       AssignStatement(
+<         ArrayAccess(
+<           NamedVariable(
+<             a),
+<           IntLiteral(
+<             2)),
+<         IntLiteral(
+<           12)),
+<       CallStatement(
+<         printc,
+<         Arguments(
+<           IntLiteral(
+<             111))),
+<       CallStatement(
+<         printc,
+<         Arguments(
+<           IntLiteral(
+<             107))),
+<       CallStatement(
+<         printc,
+<         Arguments(
+[2022-05-30 10:43:09.130375] Test not passed.
+[2022-05-30 10:43:09.130401] Running Score: 3/25
+
+[2022-05-30 10:43:09.130435] Evaluating test8.spl with the submitted solution.
+[2022-05-30 10:43:09.274309] Test subject results match (Success).
+[2022-05-30 10:43:09.284982] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+1,66c1
+< Program(
+<   ProcedureDeclaration(
+<     main,
+<     Parameters(),
+<     Variables(
+<       VariableDeclaration(
+<         a,
+<         ArrayTypeExpression(
+<           NamedTypeExpression(
+<             int),
+<           3))),
+<     Body(
+<       AssignStatement(
+<         ArrayAccess(
+<           NamedVariable(
+<             a),
+<           BinaryExpression(
+<             SUB,
+<             IntLiteral(
+<               0),
+<             IntLiteral(
+<               1))),
+<         IntLiteral(
+<           9)),
+<       AssignStatement(
+<         ArrayAccess(
+<           NamedVariable(
+<             a),
+<           IntLiteral(
+<             0)),
+<         IntLiteral(
+<           10)),
+<       AssignStatement(
+<         ArrayAccess(
+<           NamedVariable(
+<             a),
+<           IntLiteral(
+<             1)),
+<         IntLiteral(
+<           11)),
+<       AssignStatement(
+<         ArrayAccess(
+<           NamedVariable(
+<             a),
+<           IntLiteral(
+<             2)),
+<         IntLiteral(
+<           12)),
+<       CallStatement(
+[2022-05-30 10:43:09.285941] Test not passed.
+[2022-05-30 10:43:09.285972] Running Score: 3/26
+
+[2022-05-30 10:43:09.286005] Evaluating test9.spl with the submitted solution.
+[2022-05-30 10:43:09.445597] Test subject results match (Success).
+[2022-05-30 10:43:09.455433] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+1,62c1
+< Program(
+<   ProcedureDeclaration(
+<     main,
+<     Parameters(),
+<     Variables(
+<       VariableDeclaration(
+<         a,
+<         ArrayTypeExpression(
+<           NamedTypeExpression(
+<             int),
+<           3))),
+<     Body(
+<       AssignStatement(
+<         ArrayAccess(
+<           NamedVariable(
+<             a),
+<           IntLiteral(
+<             0)),
+<         IntLiteral(
+<           10)),
+<       AssignStatement(
+<         ArrayAccess(
+<           NamedVariable(
+<             a),
+<           IntLiteral(
+<             1)),
+<         IntLiteral(
+<           11)),
+<       AssignStatement(
+<         ArrayAccess(
+<           NamedVariable(
+<             a),
+<           IntLiteral(
+<             2)),
+<         IntLiteral(
+<           12)),
+<       AssignStatement(
+<         ArrayAccess(
+<           NamedVariable(
+<             a),
+<           IntLiteral(
+<             3)),
+<         IntLiteral(
+<           13)),
+<       CallStatement(
+<         printc,
+<         Arguments(
+<           IntLiteral(
+<             111))),
+[2022-05-30 10:43:09.456272] Test not passed.
+[2022-05-30 10:43:09.456314] Running Score: 3/27
+
+[2022-05-30 10:43:09.456358] Evaluating threedim.spl with the submitted solution.
+[2022-05-30 10:43:09.610612] Test subject results match (Success).
+[2022-05-30 10:43:09.621704] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+1,288c1
+< Program(
+<   TypeDeclaration(
+<     V,
+<     ArrayTypeExpression(
+<       NamedTypeExpression(
+<         int),
+<       5)),
+<   TypeDeclaration(
+<     M,
+<     ArrayTypeExpression(
+<       NamedTypeExpression(
+<         V),
+<       5)),
+<   TypeDeclaration(
+<     A,
+<     ArrayTypeExpression(
+<       NamedTypeExpression(
+<         M),
+<       5)),
+<   ProcedureDeclaration(
+<     main,
+<     Parameters(),
+<     Variables(
+<       VariableDeclaration(
+<         a,
+<         NamedTypeExpression(
+<           A)),
+<       VariableDeclaration(
+<         i,
+<         NamedTypeExpression(
+<           int)),
+<       VariableDeclaration(
+<         j,
+<         NamedTypeExpression(
+<           int)),
+<       VariableDeclaration(
+<         k,
+<         NamedTypeExpression(
+<           int))),
+<     Body(
+<       AssignStatement(
+<         NamedVariable(
+<           i),
+<         IntLiteral(
+<           0)),
+<       WhileStatement(
+<         BinaryExpression(
+<           LST,
+<           VariableExpression(
+[2022-05-30 10:43:09.622055] Test not passed.
+[2022-05-30 10:43:09.622075] Running Score: 3/28
+
+[2022-05-30 10:43:09.622107] Evaluating time.spl with the submitted solution.
+[2022-05-30 10:43:09.765875] Test subject results match (Success).
+[2022-05-30 10:43:09.777366] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+1,95c1
+< Program(
+<   ProcedureDeclaration(
+<     main,
+<     Parameters(),
+<     Variables(
+<       VariableDeclaration(
+<         s,
+<         NamedTypeExpression(
+<           int)),
+<       VariableDeclaration(
+<         t,
+<         NamedTypeExpression(
+<           int))),
+<     Body(
+<       AssignStatement(
+<         NamedVariable(
+<           s),
+<         IntLiteral(
+<           0)),
+<       WhileStatement(
+<         BinaryExpression(
+<           LST,
+<           VariableExpression(
+<             NamedVariable(
+<               s)),
+<           IntLiteral(
+<             10)),
+<         CompoundStatement(
+<           CallStatement(
+<             time,
+<             Arguments(
+<               VariableExpression(
+<                 NamedVariable(
+<                   t)))),
+<           IfStatement(
+<             BinaryExpression(
+<               NEQ,
+<               VariableExpression(
+<                 NamedVariable(
+<                   s)),
+<               VariableExpression(
+<                 NamedVariable(
+<                   t))),
+<             CompoundStatement(
+<               CallStatement(
+<                 printc,
+<                 Arguments(
+<                   IntLiteral(
+<                     116))),
+[2022-05-30 10:43:09.777824] Test not passed.
+[2022-05-30 10:43:09.777850] Running Score: 3/29
+
+[2022-05-30 10:43:09.777882] Evaluating trailing_argument_comma.spl with the submitted solution.
+[2022-05-30 10:43:09.926329] Test subject results match (Compiler Failure).
+[2022-05-30 10:43:09.926375] Exit code matches the expected exit code (100).
+[2022-05-30 10:43:09.926408] Test passed.
+[2022-05-30 10:43:09.926427] Running Score: 4/30
+
+[2022-05-30 10:43:09.926458] Evaluating trailing_parameter_comma.spl with the submitted solution.
+[2022-05-30 10:43:10.077134] Test subject results match (Compiler Failure).
+[2022-05-30 10:43:10.078002] Exit code matches the expected exit code (100).
+[2022-05-30 10:43:10.078055] Test passed.
+[2022-05-30 10:43:10.078076] Running Score: 5/31
+
+[2022-05-30 10:43:10.078105] Evaluating twodim.spl with the submitted solution.
+[2022-05-30 10:43:10.233961] Test subject results match (Success).
+[2022-05-30 10:43:10.246022] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+1,181c1
+< Program(
+<   TypeDeclaration(
+<     A,
+<     ArrayTypeExpression(
+<       ArrayTypeExpression(
+<         NamedTypeExpression(
+<           int),
+<         5),
+<       5)),
+<   ProcedureDeclaration(
+<     main,
+<     Parameters(),
+<     Variables(
+<       VariableDeclaration(
+<         a,
+<         NamedTypeExpression(
+<           A)),
+<       VariableDeclaration(
+<         i,
+<         NamedTypeExpression(
+<           int)),
+<       VariableDeclaration(
+<         j,
+<         NamedTypeExpression(
+<           int))),
+<     Body(
+<       AssignStatement(
+<         NamedVariable(
+<           i),
+<         IntLiteral(
+<           0)),
+<       WhileStatement(
+<         BinaryExpression(
+<           LST,
+<           VariableExpression(
+<             NamedVariable(
+<               i)),
+<           IntLiteral(
+<             5)),
+<         CompoundStatement(
+<           AssignStatement(
+<             NamedVariable(
+<               j),
+<             IntLiteral(
+<               0)),
+<           WhileStatement(
+<             BinaryExpression(
+<               LST,
+<               VariableExpression(
+[2022-05-30 10:43:10.246498] Test not passed.
+[2022-05-30 10:43:10.246527] Running Score: 5/32
+
+[2022-05-30 10:43:10.246562] Evaluating unary_plus.spl with the submitted solution.
+[2022-05-30 10:43:10.390284] Test subject results match (Compiler Failure).
+[2022-05-30 10:43:10.390572] Exit code matches the expected exit code (100).
+[2022-05-30 10:43:10.390625] Test passed.
+[2022-05-30 10:43:10.390646] Running Score: 6/33
+
+[2022-05-30 10:43:10.390742] Final score: 6/33 (18%). 
+[2022-05-30 10:43:10.392178] 100% are needed to pass.
+[2022-05-30 10:43:10.662812] You have NOT PASSED this assignment.
+[2022-05-30 10:43:10.663132] You can try again. Deadline: 12.06.2022 23:59
+
