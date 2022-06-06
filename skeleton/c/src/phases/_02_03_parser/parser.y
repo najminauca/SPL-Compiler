@@ -25,7 +25,7 @@ void yyerror(Program**, char *);
 }
 
 %token-table
-%expect 0 //TODO Change?
+%expect 1 //TODO Change?
 %parse-param {Program** program}
 
 %union {
@@ -69,113 +69,111 @@ void yyerror(Program**, char *);
 %type   <statementList>         stm_list
 %type   <expressionList>        arg_list
 %type   <variableList>          local_var_list
-%type   <parameterList>         par_list
+%type   <parameterList>         par_list non_empty_par
 %type   <globalDeclarationList> program global_list
-
-%precedence "then"
-%precedence ELSE
+%type   <intVal>                array_index
 
 %start			program
 
 %%
 
-program             : global_list
+program             : global_list { *program = newProgram(newPosition(0,0),$1); }
                     ;
 
-global_list         :
-                    | global_dec global_list
+global_list         : { $$ = emptyGlobalDeclarationList(); }
+                    | global_dec global_list { $$ = newGlobalDeclarationList($1,$2); }
                     ;
 
-type                : IDENT
-                    | ARRAY LBRACK INTLIT RBRACK OF type
+type                : IDENT { $$ = newNamedTypeExpression($1.position,$1.val); }
+                    | ARRAY array_index OF type { $$ = newArrayTypeExpression($1.position, $2.val, $4); }
                     ;
-global_dec          : global_var
-                    | proc_dec
+global_dec          : global_var { $$ = $1; }
+                    | proc_dec { $$ = $1; }
                     ;
-global_var          : TYPE type EQ type SEMIC
+global_var          : TYPE IDENT EQ type SEMIC { $$ = newTypeDeclaration($1.position,$2.val,$4); }
                     ;
-proc_dec            : PROC IDENT LPAREN par_list RPAREN LCURL local_var_list stm_list RCURL
+proc_dec            : PROC IDENT LPAREN par_list RPAREN LCURL local_var_list stm_list RCURL { $$ = newProcedureDeclaration($1.position,$2.val,$4,$7,$8); }
 
-par_list            :
-                    | non_empty_par
+par_list            : { $$ = emptyParameterList(); }
+                    | non_empty_par { $$ = $1; }
                     ;
-non_empty_par       : par_dec
-                    | par_dec COMMA non_empty_par
+non_empty_par       : par_dec { $$ = newParameterList($1,emptyParameterList()); }
+                    | par_dec COMMA non_empty_par { $$ = newParameterList($1,$3); }
                     ;
-par_dec             : REF IDENT COLON type
-                    | IDENT COLON type
-                    ;
-
-local_var_list      :
-                    | local_var_dec local_var_list
-                    ;
-local_var_dec       : VAR variable COLON type SEMIC
+par_dec             : REF IDENT COLON type { $$ = newParameterDeclaration($1.position,$2.val,$4,true); }
+                    | IDENT COLON type { $$ = newParameterDeclaration($1.position,$1.val,$3,false); }
                     ;
 
-stm_list            :
-                    | stm stm_list
+local_var_list      : { $$ = emptyVariableList(); }
+                    | local_var_dec local_var_list { $$ = newVariableList($1,$2); }
+                    ;
+local_var_dec       : VAR IDENT COLON type SEMIC { $$ = newVariableDeclaration($1.position,$2.val,$4); }
                     ;
 
-stm                 : empty_stm
-                    | assign_stm
-                    | compound_stm
-                    | if_stm
-                    | while_stm
-                    | call_proc
+stm_list            : { $$ = emptyStatementList(); }
+                    | stm stm_list { $$ = newStatementList($1,$2); }
                     ;
 
-empty_stm           : SEMIC
-                    ;
-compound_stm        : LCURL stm_list RCURL
-                    ;
-if_stm              : IF LPAREN exp RPAREN stm  %prec "then"
-                    | IF LPAREN exp RPAREN stm ELSE stm
-                    ;
-while_stm           : WHILE LPAREN exp RPAREN stm
-                    | DO stm WHILE LPAREN exp RPAREN stm
-                    ;
-assign_stm          : variable ASGN exp SEMIC
-                    ;
-call_proc           : IDENT LPAREN RPAREN SEMIC
-                    | IDENT LPAREN arg_list RPAREN SEMIC
+stm                 : empty_stm { $$ = $1; }
+                    | assign_stm { $$ = $1; }
+                    | compound_stm { $$ = $1; }
+                    | if_stm { $$ = $1; }
+                    | while_stm { $$ = $1; }
+                    | call_proc { $$ = $1; }
                     ;
 
-arg_list            : exp
-                    | exp COMMA arg_list
+empty_stm           : SEMIC { $$ = newEmptyStatement($1.position); }
+                    ;
+compound_stm        : LCURL stm_list RCURL { $$ = newCompoundStatement($1.position, $2); }
+                    ;
+if_stm              : IF LPAREN exp RPAREN stm { $$ = newIfStatement($1.position,$3,$5,newEmptyStatement($1.position)); }
+                    | IF LPAREN exp RPAREN stm ELSE stm { $$ = newIfStatement($1.position,$3,$5,$7); }
+                    ;
+while_stm           : WHILE LPAREN exp RPAREN stm { $$ = newWhileStatement($1.position,$3,$5); }
+                    | DO stm WHILE LPAREN exp RPAREN { $$ = newWhileStatement($1.position,$5,$2); }
+                    ;
+assign_stm          : variable ASGN exp SEMIC { $$ = newAssignStatement($1->position,$1,$3); }
+                    ;
+call_proc           : IDENT LPAREN RPAREN SEMIC { $$ = newCallStatement($1.position,$1.val,emptyExpressionList()); }
+                    | IDENT LPAREN arg_list RPAREN SEMIC { $$ = newCallStatement($1.position,$1.val,$3); }
                     ;
 
-exp                 : rel_exp
-                    ;
-rel_exp             : add_exp
-                    | add_exp EQ add_exp
-                    | add_exp NE add_exp
-                    | add_exp LT add_exp
-                    | add_exp LE add_exp
-                    | add_exp GT add_exp
-                    | add_exp GE add_exp
-                    ;
-add_exp             : mul_exp
-                    | add_exp PLUS mul_exp
-                    | add_exp MINUS mul_exp
-                    ;
-mul_exp             : unary_exp
-                    | mul_exp STAR unary_exp
-                    | mul_exp SLASH unary_exp
-                    ;
-unary_exp           : primary_exp
-                    | MINUS unary_exp
-                    ;
-primary_exp         : INTLIT
-                    | variable
-                    | LPAREN rel_exp RPAREN
+arg_list            : exp { $$ = newExpressionList($1,emptyExpressionList()); }
+                    | exp COMMA arg_list { $$ = newExpressionList($1,$3); }
                     ;
 
-array_index         : LBRACK add_exp RBRACK
-                    | LBRACK add_exp RBRACK array_index
+exp                 : rel_exp { $$ = $1; }
+                    ;
+rel_exp             : add_exp { $$ = $1; }
+                    | add_exp EQ add_exp { $$ = newBinaryExpression($1->position,ABSYN_OP_EQU,$1,$3); }
+                    | add_exp NE add_exp { $$ = newBinaryExpression($1->position,ABSYN_OP_NEQ,$1,$3); }
+                    | add_exp LT add_exp { $$ = newBinaryExpression($1->position,ABSYN_OP_LST,$1,$3); }
+                    | add_exp LE add_exp { $$ = newBinaryExpression($1->position,ABSYN_OP_LSE,$1,$3); }
+                    | add_exp GT add_exp { $$ = newBinaryExpression($1->position,ABSYN_OP_GRT,$1,$3); }
+                    | add_exp GE add_exp { $$ = newBinaryExpression($1->position,ABSYN_OP_GRE,$1,$3); }
+                    ;
+add_exp             : mul_exp { $$ = $1; }
+                    | add_exp PLUS mul_exp { $$ = newBinaryExpression($1->position,ABSYN_OP_ADD,$1,$3); }
+                    | add_exp MINUS mul_exp { $$ = newBinaryExpression($1->position,ABSYN_OP_SUB,$1,$3); }
+                    ;
+mul_exp             : unary_exp { $$ = $1; }
+                    | mul_exp STAR unary_exp { $$ = newBinaryExpression($1->position,ABSYN_OP_MUL,$1,$3); }
+                    | mul_exp SLASH unary_exp { $$ = newBinaryExpression($1->position,ABSYN_OP_DIV,$1,$3); }
+                    ;
+unary_exp           : primary_exp { $$ = $1; }
+                    | MINUS unary_exp { $$ = newBinaryExpression($1.position,ABSYN_OP_SUB,newIntLiteral($1.position,0),$2); }
+                    ;
+primary_exp         : INTLIT { $$ = newIntLiteral($1.position, $1.val); }
+                    | variable { $$ = newVariableExpression($1->position,$1); }
+                    | LPAREN rel_exp RPAREN { $$ = $2; }
                     ;
 
-variable            : IDENT
-                    | IDENT array_index
+array_index         : LBRACK INTLIT RBRACK { $$ = $2; }
+                    | LBRACK INTLIT RBRACK array_index { $$.val = $2.val*$4.val; }
+                    ;
+
+variable            : IDENT { $$ = newNamedVariable($1.position,$1.val); }
+                    | variable LBRACK add_exp RBRACK { $$ = newArrayAccess($1->position,$1,$3); }
                     ;
 %%
 
