@@ -1,3 +1,4 @@
+[2022-06-06 13:17:23.446518] Bootstrap log:
 Identified Python 3.8.10 at /usr/bin/python3.8
 [Bootstrap] Identified pip 22.1.1 from /home/tokimpoi/.local/lib/python3.8/site-packages/pip (python 3.8)' at /usr/bin/python3.8 -m pip
 [Bootstrap] Identified 'pipenv, version 2022.5.2' at /usr/bin/python3.8 -m pipenv
@@ -9,42 +10,50 @@ To activate this project's virtualenv, run pipenv shell.
 Alternatively, run a command inside the virtualenv with pipenv run.
 [Bootstrap] Running the script in a virtual environment.
 /usr/bin/python3.8 -m pipenv run python3 ./main.py
-=== Welcome ===
-Please review the currently saved information about your team:
- 1 - First name: Najmi; Last name: Antariksa; Matriculation number: 5311215
- 2 - First name: Hicham; Last name: Ahadriu; Matriculation number: 5337972
-Is this information up to date? [Y/n] 
-Do you want to submit a solution now? [Y/n] 
-=== Submitting ===
-Please choose the assignment you want to submit. 
- 1 - Aufgabe-1
- 2 - Aufgabe-2
-Please enter the id of your selection: 
 
-Selected variant 'C SPL Compiler' for assignment 'Aufgabe-1'.
-=== Building submission ===
-Running 'cmake . && make'.
-=== Building submission finished ===
-=== Cleaning directory for submission ===
-=== Cleaning directory finished ===
-=== Starting Upload ===
-=== Upload finished ===
-=== BEGIN Upload Log
-[2022-06-06 13:18:58.239534] Received submission 6b6b7cb9-3c8d-4366-92bc-e55f1bef3b62
+[2022-06-06 13:17:23.446557] === Welcome ===
+[2022-06-06 13:17:23.533239] Please review the currently saved information about your team:
+[2022-06-06 13:17:23.533624]  1 - First name: Najmi; Last name: Antariksa; Matriculation number: 5311215
+[2022-06-06 13:17:23.533682]  2 - First name: Hicham; Last name: Ahadriu; Matriculation number: 5337972
+[2022-06-06 13:18:52.249946] 
+[2022-06-06 13:18:53.969990] 
+[2022-06-06 13:18:53.970184] === Submitting ===
+[2022-06-06 13:18:55.822832] 
+[2022-06-06 13:18:55.823324] 
+[2022-06-06 13:18:55.823355] Selected variant 'C SPL Compiler' for assignment 'Aufgabe-1'.
+[2022-06-06 13:18:55.858966] === Building submission ===
+[2022-06-06 13:18:55.859000] Running 'cmake . && make'.
+[2022-06-06 13:18:55.859012] === Building submission finished ===
+[2022-06-06 13:18:58.055430] === Cleaning directory for submission ===
+[2022-06-06 13:18:58.069462] === Cleaning directory finished ===
+[2022-06-06 13:18:58.097143] === Starting Upload ===
+[2022-06-06 13:18:58.221421] === Upload finished ===
+[2022-06-06 13:18:58.221489] === BEGIN Upload Log
+[2022-06-06 13:18:58.221531] [2022-06-06 13:18:58.239534] Received submission 6b6b7cb9-3c8d-4366-92bc-e55f1bef3b62
 [2022-06-06 13:18:58.240022] Ip: 10.196.105.203
 [2022-06-06 13:18:58.240234] Team members: [('Antariksa', 'Najmi', '5311215'), ('Ahadriu', 'Hicham', '5337972')]
 [2022-06-06 13:18:58.250971] Your submission was ACCEPTED for course 'Compilerbau-ss22', assignment 'Aufgabe-1'.
 [2022-06-06 13:18:58.251194] Your submission has the id 6b6b7cb9-3c8d-4366-92bc-e55f1bef3b62.
 [2022-06-06 13:18:58.251794] It will be evaluated shortly. Please check back soon for your results.
 
-=== END Upload Log
-Successfully submitted your solution. Please see the upload log above for more details.
-Polling for results (Press CTRL + C to abort)..........
+[2022-06-06 13:18:58.221571] === END Upload Log
+[2022-06-06 13:18:58.221609] Successfully submitted your solution. Please see the upload log above for more details.
+[2022-06-06 13:18:58.224035] Polling for results (Press CTRL + C to abort).
+[2022-06-06 13:18:58.312745] .
+[2022-06-06 13:18:59.412534] .
+[2022-06-06 13:19:00.499315] .
+[2022-06-06 13:19:01.582328] .
+[2022-06-06 13:19:02.667918] .
+[2022-06-06 13:19:03.770191] .
+[2022-06-06 13:19:04.898958] .
+[2022-06-06 13:19:05.983861] .
+[2022-06-06 13:19:07.080587] .
+[2022-06-06 13:19:08.277570] 
 === Evaluation results for submission '6b6b7cb9-3c8d-4366-92bc-e55f1bef3b62' retrieved. ===
-You achieved the score 33/33 (100%).
-You have PASSED this assignment.
-Do you want to view the evaluation log now? [Y/n] === BEGIN Evaluation Log
-[2022-06-06 13:18:58.252849] Start of evaluation log for submission '6b6b7cb9-3c8d-4366-92bc-e55f1bef3b62'.
+[2022-06-06 13:19:08.277662] You achieved the score 33/33 (100%).
+[2022-06-06 13:19:08.277705] You have PASSED this assignment.
+[2022-06-06 13:19:17.866962] === BEGIN Evaluation Log
+[2022-06-06 13:19:17.868158] [2022-06-06 13:18:58.252849] Start of evaluation log for submission '6b6b7cb9-3c8d-4366-92bc-e55f1bef3b62'.
 [2022-06-06 13:18:58.253237] Team member: ('Antariksa', 'Najmi', '5311215')
 [2022-06-06 13:18:58.253414] Team member: ('Ahadriu', 'Hicham', '5337972')
 [2022-06-06 13:18:58.281202] Preparing the sandbox
@@ -352,7 +361,6 @@ At top level:
 [2022-06-06 13:19:07.618372] 100% are needed to pass.
 [2022-06-06 13:19:07.882853] You have PASSED this assignment.
 
-=== END Evaluation Log
-NOTE: This evaluation log is also available at '/home/tokimpoi/compilerbau/skeleton/.submitscript/data/assignments/Aufgabe-1/submissions/[evaluated] 6b6b7cb9-3c8d-4366-92bc-e55f1bef3b62/evaluation.log'
-
-Do you want to submit another solution? [Y/n] 
+[2022-06-06 13:19:17.868294] === END Evaluation Log
+[2022-06-06 13:19:17.868447] NOTE: This evaluation log is also available at '/home/tokimpoi/compilerbau/skeleton/.submitscript/data/assignments/Aufgabe-1/submissions/[evaluated] 6b6b7cb9-3c8d-4366-92bc-e55f1bef3b62/evaluation.log'
+[2022-06-06 13:19:17.868587] 

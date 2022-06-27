@@ -1,0 +1,368 @@
+[2022-06-06 13:15:45.971839] Bootstrap log:
+Identified Python 3.8.10 at /usr/bin/python3.8
+[Bootstrap] Identified pip 22.1.1 from /home/tokimpoi/.local/lib/python3.8/site-packages/pip (python 3.8)' at /usr/bin/python3.8 -m pip
+[Bootstrap] Identified 'pipenv, version 2022.5.2' at /usr/bin/python3.8 -m pipenv
+[Bootstrap] Running '/usr/bin/python3.8 -m pipenv install --python 3.8' to ensure the existence of a virtual environment.
+[Bootstrap] This may take a moment.
+Installing dependencies from Pipfile.lock (df9bb1)...
+  🐍   ▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉ 0/0 — 00:00:00
+To activate this project's virtualenv, run pipenv shell.
+Alternatively, run a command inside the virtualenv with pipenv run.
+[Bootstrap] Running the script in a virtual environment.
+/usr/bin/python3.8 -m pipenv run python3 ./main.py
+
+[2022-06-06 13:15:45.971880] === Welcome ===
+[2022-06-06 13:15:46.074204] Please review the currently saved information about your team:
+[2022-06-06 13:15:46.074682]  1 - First name: Najmi; Last name: Antariksa; Matriculation number: 5311215
+[2022-06-06 13:15:46.074733]  2 - First name: Hicham; Last name: Ahadriu; Matriculation number: 5337972
+[2022-06-06 13:15:48.849267] 
+[2022-06-06 13:15:50.305477] 
+[2022-06-06 13:15:50.305578] === Submitting ===
+[2022-06-06 13:15:52.287440] 
+[2022-06-06 13:15:52.287759] 
+[2022-06-06 13:15:52.287781] Selected variant 'C SPL Compiler' for assignment 'Aufgabe-1'.
+[2022-06-06 13:15:52.328035] === Building submission ===
+[2022-06-06 13:15:52.328100] Running 'cmake . && make'.
+[2022-06-06 13:15:52.328122] === Building submission finished ===
+[2022-06-06 13:15:54.918792] === Cleaning directory for submission ===
+[2022-06-06 13:15:54.933073] === Cleaning directory finished ===
+[2022-06-06 13:15:54.963273] === Starting Upload ===
+[2022-06-06 13:15:55.152570] === Upload finished ===
+[2022-06-06 13:15:55.152594] === BEGIN Upload Log
+[2022-06-06 13:15:55.152605] [2022-06-06 13:15:55.084866] Received submission edf0f0d2-7b24-4a87-a1b0-bf123f3097ad
+[2022-06-06 13:15:55.085647] Ip: 10.196.105.203
+[2022-06-06 13:15:55.085885] Team members: [('Antariksa', 'Najmi', '5311215'), ('Ahadriu', 'Hicham', '5337972')]
+[2022-06-06 13:15:55.146418] Your submission was ACCEPTED for course 'Compilerbau-ss22', assignment 'Aufgabe-1'.
+[2022-06-06 13:15:55.146761] Your submission has the id edf0f0d2-7b24-4a87-a1b0-bf123f3097ad.
+[2022-06-06 13:15:55.147427] It will be evaluated shortly. Please check back soon for your results.
+
+[2022-06-06 13:15:55.152616] === END Upload Log
+[2022-06-06 13:15:55.152627] Successfully submitted your solution. Please see the upload log above for more details.
+[2022-06-06 13:15:55.153381] Polling for results (Press CTRL + C to abort).
+[2022-06-06 13:15:55.221469] .
+[2022-06-06 13:15:56.291123] .
+[2022-06-06 13:15:57.360576] .
+[2022-06-06 13:15:58.436300] .
+[2022-06-06 13:15:59.519352] .
+[2022-06-06 13:16:00.603269] .
+[2022-06-06 13:16:01.687585] .
+[2022-06-06 13:16:02.771892] .
+[2022-06-06 13:16:03.861731] .
+[2022-06-06 13:16:04.946391] .
+[2022-06-06 13:16:06.031310] .
+[2022-06-06 13:16:07.230865] 
+=== Evaluation results for submission 'edf0f0d2-7b24-4a87-a1b0-bf123f3097ad' retrieved. ===
+[2022-06-06 13:16:07.230965] You achieved the score 33/33 (100%).
+[2022-06-06 13:16:07.231008] You have PASSED this assignment.
+[2022-06-06 13:16:30.800069] === BEGIN Evaluation Log
+[2022-06-06 13:16:30.801204] [2022-06-06 13:15:55.148484] Start of evaluation log for submission 'edf0f0d2-7b24-4a87-a1b0-bf123f3097ad'.
+[2022-06-06 13:15:55.148865] Team member: ('Antariksa', 'Najmi', '5311215')
+[2022-06-06 13:15:55.149089] Team member: ('Ahadriu', 'Hicham', '5337972')
+[2022-06-06 13:15:55.194681] Preparing the sandbox
+[2022-06-06 13:15:56.633321] Unpacking submission in sandbox
+[2022-06-06 13:15:57.118849] Building the test subject
+[2022-06-06 13:15:57.119503] Identified the C variant.
+[2022-06-06 13:15:57.276344] Preparing C solution for building with cmake
+[2022-06-06 13:15:58.280086] CMake log:
+-- The C compiler identification is GNU 9.4.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Found BISON: /usr/bin/bison (found version "3.5.1") 
+-- Found FLEX: /usr/bin/flex (found version "2.6.4") 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/solution/c/build
+[2022-06-06 13:15:58.280201] Building C solution with make
+[2022-06-06 13:16:00.388449] Make log:
+Scanning dependencies of target _generated_source_folder_dummy_target
+[  0%] Built target _generated_source_folder_dummy_target
+[  3%] [FLEX][SCANNER] Building scanner with flex 2.6.4
+[  6%] [BISON][PARSER] Building parser with bison 3.5.1
+Scanning dependencies of target spl
+[  6%] [BISON][PARSER] Building parser with bison 3.5.1
+[  9%] Building C object CMakeFiles/spl.dir/generated-sources/phases/_02_03_parser/parser.c.o
+[  9%] [FLEX][SCANNER] Building scanner with flex 2.6.4
+[ 12%] Building C object CMakeFiles/spl.dir/generated-sources/phases/_01_scanner/scanner.c.o
+[ 15%] Building C object CMakeFiles/spl.dir/src/absyn/expressions.c.o
+/home/solution/c/src/absyn/expressions.c: In function 'isOperatorArithmetic':
+/home/solution/c/src/absyn/expressions.c:14:42: warning: unused parameter 'operator' [-Wunused-parameter]
+   14 | bool isOperatorArithmetic(BinaryOperator operator) {
+      |                           ~~~~~~~~~~~~~~~^~~~~~~~
+/home/solution/c/src/absyn/expressions.c: In function 'isOperatorComparison':
+/home/solution/c/src/absyn/expressions.c:18:42: warning: unused parameter 'operator' [-Wunused-parameter]
+   18 | bool isOperatorComparison(BinaryOperator operator) {
+      |                           ~~~~~~~~~~~~~~~^~~~~~~~
+/home/solution/c/src/absyn/expressions.c: In function 'flipComparisonOperator':
+/home/solution/c/src/absyn/expressions.c:22:54: warning: unused parameter 'operator' [-Wunused-parameter]
+   22 | BinaryOperator flipComparisonOperator(BinaryOperator operator) {
+      |                                       ~~~~~~~~~~~~~~~^~~~~~~~
+[ 18%] Building C object CMakeFiles/spl.dir/src/absyn/global_declarations.c.o
+[ 21%] Building C object CMakeFiles/spl.dir/src/absyn/lists.c.o
+[ 25%] Building C object CMakeFiles/spl.dir/src/absyn/parameter_declaration.c.o
+[ 28%] Building C object CMakeFiles/spl.dir/src/absyn/position.c.o
+[ 31%] Building C object CMakeFiles/spl.dir/src/absyn/program.c.o
+[ 34%] Building C object CMakeFiles/spl.dir/src/absyn/statements.c.o
+[ 37%] Building C object CMakeFiles/spl.dir/src/absyn/type_expressions.c.o
+[ 40%] Building C object CMakeFiles/spl.dir/src/absyn/variable_declaration.c.o
+[ 43%] Building C object CMakeFiles/spl.dir/src/absyn/variables.c.o
+[ 46%] Building C object CMakeFiles/spl.dir/src/absyn/printing/printing_helpers.c.o
+[ 50%] Building C object CMakeFiles/spl.dir/src/phases/_04a_tablebuild/tablebuild.c.o
+/home/solution/c/src/phases/_04a_tablebuild/tablebuild.c: In function 'buildSymbolTable':
+/home/solution/c/src/phases/_04a_tablebuild/tablebuild.c:28:40: warning: unused parameter 'program' [-Wunused-parameter]
+   28 | SymbolTable *buildSymbolTable(Program *program, bool showSymbolTables) {
+      |                               ~~~~~~~~~^~~~~~~
+/home/solution/c/src/phases/_04a_tablebuild/tablebuild.c:28:54: warning: unused parameter 'showSymbolTables' [-Wunused-parameter]
+   28 | SymbolTable *buildSymbolTable(Program *program, bool showSymbolTables) {
+      |                                                      ^
+At top level:
+/home/solution/c/src/phases/_04a_tablebuild/tablebuild.c:22:13: warning: 'printSymbolTableAtEndOfProcedure' defined but not used [-Wunused-function]
+   22 | static void printSymbolTableAtEndOfProcedure(Identifier *name, Entry *procedureEntry) {
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[ 53%] Building C object CMakeFiles/spl.dir/src/phases/_04b_semant/procedurebodycheck.c.o
+/home/solution/c/src/phases/_04b_semant/procedurebodycheck.c: In function 'checkProcedures':
+/home/solution/c/src/phases/_04b_semant/procedurebodycheck.c:12:31: warning: unused parameter 'program' [-Wunused-parameter]
+   12 | void checkProcedures(Program *program, SymbolTable *globalTable) {
+      |                      ~~~~~~~~~^~~~~~~
+/home/solution/c/src/phases/_04b_semant/procedurebodycheck.c:12:53: warning: unused parameter 'globalTable' [-Wunused-parameter]
+   12 | void checkProcedures(Program *program, SymbolTable *globalTable) {
+      |                                        ~~~~~~~~~~~~~^~~~~~~~~~~
+[ 56%] Building C object CMakeFiles/spl.dir/src/phases/_05_varalloc/varalloc.c.o
+/home/solution/c/src/phases/_05_varalloc/varalloc.c: In function 'allocVars':
+/home/solution/c/src/phases/_05_varalloc/varalloc.c:177:84: warning: unused parameter 'ershovOptimization' [-Wunused-parameter]
+  177 | void allocVars(Program *program, SymbolTable *globalTable, bool showVarAlloc, bool ershovOptimization) {
+      |                                                                                    ^
+[ 59%] Building C object CMakeFiles/spl.dir/src/phases/_05_varalloc/stack_layout.c.o
+[ 62%] Building C object CMakeFiles/spl.dir/src/phases/_06_codegen/codegen.c.o
+/home/solution/c/src/phases/_06_codegen/codegen.c: In function 'genCode':
+/home/solution/c/src/phases/_06_codegen/codegen.c:37:23: warning: unused parameter 'program' [-Wunused-parameter]
+   37 | void genCode(Program *program, SymbolTable *globalTable, FILE *out, bool ershovOptimization) {
+      |              ~~~~~~~~~^~~~~~~
+/home/solution/c/src/phases/_06_codegen/codegen.c:37:45: warning: unused parameter 'globalTable' [-Wunused-parameter]
+   37 | void genCode(Program *program, SymbolTable *globalTable, FILE *out, bool ershovOptimization) {
+      |                                ~~~~~~~~~~~~~^~~~~~~~~~~
+/home/solution/c/src/phases/_06_codegen/codegen.c:37:74: warning: unused parameter 'ershovOptimization' [-Wunused-parameter]
+   37 | void genCode(Program *program, SymbolTable *globalTable, FILE *out, bool ershovOptimization) {
+      |                                                                          ^
+[ 65%] Building C object CMakeFiles/spl.dir/src/phases/_06_codegen/codeprint.c.o
+[ 68%] Building C object CMakeFiles/spl.dir/src/main.c.o
+[ 71%] Building C object CMakeFiles/spl.dir/src/command_line_options.c.o
+[ 75%] Building C object CMakeFiles/spl.dir/src/table/identifier.c.o
+[ 78%] Building C object CMakeFiles/spl.dir/src/table/table.c.o
+[ 81%] Building C object CMakeFiles/spl.dir/src/table/entry.c.o
+[ 84%] Building C object CMakeFiles/spl.dir/src/types/types.c.o
+[ 87%] Building C object CMakeFiles/spl.dir/src/util/errors.c.o
+[ 90%] Building C object CMakeFiles/spl.dir/src/util/memory.c.o
+[ 93%] Building C object CMakeFiles/spl.dir/src/util/ascii_table.c.o
+[ 96%] Building C object CMakeFiles/spl.dir/src/util/string_ops.c.o
+[100%] Linking C executable spl
+[100%] Built target spl
+[2022-06-06 13:16:00.533144] Beginning evaluation.
+[2022-06-06 13:16:00.533421] Evaluating acker.spl with the submitted solution.
+[2022-06-06 13:16:00.688675] Test subject results match (Success).
+[2022-06-06 13:16:00.703431] Outputs match.
+[2022-06-06 13:16:00.703504] Test passed.
+[2022-06-06 13:16:00.703521] Running Score: 1/1
+
+[2022-06-06 13:16:00.703554] Evaluating arrayasgn.spl with the submitted solution.
+[2022-06-06 13:16:00.846239] Test subject results match (Success).
+[2022-06-06 13:16:00.858700] Outputs match.
+[2022-06-06 13:16:00.858787] Test passed.
+[2022-06-06 13:16:00.858805] Running Score: 2/2
+
+[2022-06-06 13:16:00.858833] Evaluating arrayparm.spl with the submitted solution.
+[2022-06-06 13:16:01.003041] Test subject results match (Success).
+[2022-06-06 13:16:01.015049] Outputs match.
+[2022-06-06 13:16:01.015115] Test passed.
+[2022-06-06 13:16:01.015132] Running Score: 3/3
+
+[2022-06-06 13:16:01.015161] Evaluating assignment_without_semicolon.spl with the submitted solution.
+[2022-06-06 13:16:01.158277] Test subject results match (Compiler Failure).
+[2022-06-06 13:16:01.158322] Exit code matches the expected exit code (100).
+[2022-06-06 13:16:01.158358] Test passed.
+[2022-06-06 13:16:01.160994] Running Score: 4/4
+
+[2022-06-06 13:16:01.161036] Evaluating bigtest.spl with the submitted solution.
+[2022-06-06 13:16:01.320216] Test subject results match (Success).
+[2022-06-06 13:16:01.331531] Outputs match.
+[2022-06-06 13:16:01.331689] Test passed.
+[2022-06-06 13:16:01.331713] Running Score: 5/5
+
+[2022-06-06 13:16:01.331740] Evaluating bits.spl with the submitted solution.
+[2022-06-06 13:16:01.471506] Test subject results match (Success).
+[2022-06-06 13:16:01.483922] Outputs match.
+[2022-06-06 13:16:01.484004] Test passed.
+[2022-06-06 13:16:01.484027] Running Score: 6/6
+
+[2022-06-06 13:16:01.484067] Evaluating call_without_semicolon.spl with the submitted solution.
+[2022-06-06 13:16:01.647264] Test subject results match (Compiler Failure).
+[2022-06-06 13:16:01.648546] Exit code matches the expected exit code (100).
+[2022-06-06 13:16:01.648596] Test passed.
+[2022-06-06 13:16:01.648614] Running Score: 7/7
+
+[2022-06-06 13:16:01.648639] Evaluating drawTest.spl with the submitted solution.
+[2022-06-06 13:16:01.808118] Test subject results match (Success).
+[2022-06-06 13:16:01.819873] Outputs match.
+[2022-06-06 13:16:01.819951] Test passed.
+[2022-06-06 13:16:01.819968] Running Score: 8/8
+
+[2022-06-06 13:16:01.820002] Evaluating gcd.spl with the submitted solution.
+[2022-06-06 13:16:01.974096] Test subject results match (Success).
+[2022-06-06 13:16:01.985678] Outputs match.
+[2022-06-06 13:16:01.985750] Test passed.
+[2022-06-06 13:16:01.985767] Running Score: 9/9
+
+[2022-06-06 13:16:01.985796] Evaluating global_variable.spl with the submitted solution.
+[2022-06-06 13:16:02.140712] Test subject results match (Compiler Failure).
+[2022-06-06 13:16:02.140765] Exit code matches the expected exit code (100).
+[2022-06-06 13:16:02.140799] Test passed.
+[2022-06-06 13:16:02.140819] Running Score: 10/10
+
+[2022-06-06 13:16:02.140848] Evaluating lambda.spl with the submitted solution.
+[2022-06-06 13:16:02.318631] Test subject results match (Success).
+[2022-06-06 13:16:02.335378] Outputs match.
+[2022-06-06 13:16:02.335568] Test passed.
+[2022-06-06 13:16:02.335593] Running Score: 11/11
+
+[2022-06-06 13:16:02.335622] Evaluating multiply.spl with the submitted solution.
+[2022-06-06 13:16:02.491288] Test subject results match (Success).
+[2022-06-06 13:16:02.504001] Outputs match.
+[2022-06-06 13:16:02.504140] Test passed.
+[2022-06-06 13:16:02.504169] Running Score: 12/12
+
+[2022-06-06 13:16:02.504202] Evaluating partind1.spl with the submitted solution.
+[2022-06-06 13:16:02.659578] Test subject results match (Success).
+[2022-06-06 13:16:02.671678] Outputs match.
+[2022-06-06 13:16:02.671763] Test passed.
+[2022-06-06 13:16:02.671781] Running Score: 13/13
+
+[2022-06-06 13:16:02.671814] Evaluating partind2.spl with the submitted solution.
+[2022-06-06 13:16:02.824999] Test subject results match (Success).
+[2022-06-06 13:16:02.835639] Outputs match.
+[2022-06-06 13:16:02.836283] Test passed.
+[2022-06-06 13:16:02.836322] Running Score: 14/14
+
+[2022-06-06 13:16:02.836354] Evaluating queens.spl with the submitted solution.
+[2022-06-06 13:16:02.996363] Test subject results match (Success).
+[2022-06-06 13:16:03.008226] Outputs match.
+[2022-06-06 13:16:03.008304] Test passed.
+[2022-06-06 13:16:03.008322] Running Score: 15/15
+
+[2022-06-06 13:16:03.008352] Evaluating reftest.spl with the submitted solution.
+[2022-06-06 13:16:03.153945] Test subject results match (Success).
+[2022-06-06 13:16:03.165650] Outputs match.
+[2022-06-06 13:16:03.165724] Test passed.
+[2022-06-06 13:16:03.165741] Running Score: 16/16
+
+[2022-06-06 13:16:03.165772] Evaluating sierpinski.spl with the submitted solution.
+[2022-06-06 13:16:03.314333] Test subject results match (Success).
+[2022-06-06 13:16:03.325985] Outputs match.
+[2022-06-06 13:16:03.326174] Test passed.
+[2022-06-06 13:16:03.326203] Running Score: 17/17
+
+[2022-06-06 13:16:03.326234] Evaluating swap.spl with the submitted solution.
+[2022-06-06 13:16:03.484071] Test subject results match (Success).
+[2022-06-06 13:16:03.495924] Outputs match.
+[2022-06-06 13:16:03.495995] Test passed.
+[2022-06-06 13:16:03.496103] Running Score: 18/18
+
+[2022-06-06 13:16:03.496144] Evaluating test1.spl with the submitted solution.
+[2022-06-06 13:16:03.640319] Test subject results match (Success).
+[2022-06-06 13:16:03.652209] Outputs match.
+[2022-06-06 13:16:03.652277] Test passed.
+[2022-06-06 13:16:03.652295] Running Score: 19/19
+
+[2022-06-06 13:16:03.652332] Evaluating test2.spl with the submitted solution.
+[2022-06-06 13:16:03.794027] Test subject results match (Success).
+[2022-06-06 13:16:03.806940] Outputs match.
+[2022-06-06 13:16:03.807004] Test passed.
+[2022-06-06 13:16:03.807022] Running Score: 20/20
+
+[2022-06-06 13:16:03.807049] Evaluating test3.spl with the submitted solution.
+[2022-06-06 13:16:03.952891] Test subject results match (Success).
+[2022-06-06 13:16:03.962369] Outputs match.
+[2022-06-06 13:16:03.962445] Test passed.
+[2022-06-06 13:16:03.962463] Running Score: 21/21
+
+[2022-06-06 13:16:03.962492] Evaluating test4.spl with the submitted solution.
+[2022-06-06 13:16:04.116467] Test subject results match (Success).
+[2022-06-06 13:16:04.127273] Outputs match.
+[2022-06-06 13:16:04.127350] Test passed.
+[2022-06-06 13:16:04.127371] Running Score: 22/22
+
+[2022-06-06 13:16:04.127399] Evaluating test5.spl with the submitted solution.
+[2022-06-06 13:16:04.273444] Test subject results match (Success).
+[2022-06-06 13:16:04.284521] Outputs match.
+[2022-06-06 13:16:04.284589] Test passed.
+[2022-06-06 13:16:04.284606] Running Score: 23/23
+
+[2022-06-06 13:16:04.284635] Evaluating test6.spl with the submitted solution.
+[2022-06-06 13:16:04.425908] Test subject results match (Success).
+[2022-06-06 13:16:04.437611] Outputs match.
+[2022-06-06 13:16:04.437691] Test passed.
+[2022-06-06 13:16:04.437709] Running Score: 24/24
+
+[2022-06-06 13:16:04.437737] Evaluating test7.spl with the submitted solution.
+[2022-06-06 13:16:04.585867] Test subject results match (Success).
+[2022-06-06 13:16:04.597441] Outputs match.
+[2022-06-06 13:16:04.597509] Test passed.
+[2022-06-06 13:16:04.597526] Running Score: 25/25
+
+[2022-06-06 13:16:04.597554] Evaluating test8.spl with the submitted solution.
+[2022-06-06 13:16:04.744966] Test subject results match (Success).
+[2022-06-06 13:16:04.754522] Outputs match.
+[2022-06-06 13:16:04.755039] Test passed.
+[2022-06-06 13:16:04.755071] Running Score: 26/26
+
+[2022-06-06 13:16:04.755099] Evaluating test9.spl with the submitted solution.
+[2022-06-06 13:16:04.900085] Test subject results match (Success).
+[2022-06-06 13:16:04.911494] Outputs match.
+[2022-06-06 13:16:04.911578] Test passed.
+[2022-06-06 13:16:04.911604] Running Score: 27/27
+
+[2022-06-06 13:16:04.911644] Evaluating threedim.spl with the submitted solution.
+[2022-06-06 13:16:05.065952] Test subject results match (Success).
+[2022-06-06 13:16:05.077364] Outputs match.
+[2022-06-06 13:16:05.077437] Test passed.
+[2022-06-06 13:16:05.077536] Running Score: 28/28
+
+[2022-06-06 13:16:05.077582] Evaluating time.spl with the submitted solution.
+[2022-06-06 13:16:05.219788] Test subject results match (Success).
+[2022-06-06 13:16:05.232262] Outputs match.
+[2022-06-06 13:16:05.232332] Test passed.
+[2022-06-06 13:16:05.232349] Running Score: 29/29
+
+[2022-06-06 13:16:05.232377] Evaluating trailing_argument_comma.spl with the submitted solution.
+[2022-06-06 13:16:05.375287] Test subject results match (Compiler Failure).
+[2022-06-06 13:16:05.375330] Exit code matches the expected exit code (100).
+[2022-06-06 13:16:05.375358] Test passed.
+[2022-06-06 13:16:05.375374] Running Score: 30/30
+
+[2022-06-06 13:16:05.375399] Evaluating trailing_parameter_comma.spl with the submitted solution.
+[2022-06-06 13:16:05.530197] Test subject results match (Compiler Failure).
+[2022-06-06 13:16:05.530348] Exit code matches the expected exit code (100).
+[2022-06-06 13:16:05.530388] Test passed.
+[2022-06-06 13:16:05.530404] Running Score: 31/31
+
+[2022-06-06 13:16:05.530428] Evaluating twodim.spl with the submitted solution.
+[2022-06-06 13:16:05.677135] Test subject results match (Success).
+[2022-06-06 13:16:05.687700] Outputs match.
+[2022-06-06 13:16:05.687784] Test passed.
+[2022-06-06 13:16:05.687805] Running Score: 32/32
+
+[2022-06-06 13:16:05.687833] Evaluating unary_plus.spl with the submitted solution.
+[2022-06-06 13:16:05.833087] Test subject results match (Compiler Failure).
+[2022-06-06 13:16:05.833129] Exit code matches the expected exit code (100).
+[2022-06-06 13:16:05.833157] Test passed.
+[2022-06-06 13:16:05.833195] Running Score: 33/33
+
+[2022-06-06 13:16:05.833276] Final score: 33/33 (100%). 
+[2022-06-06 13:16:05.833394] 100% are needed to pass.
+[2022-06-06 13:16:06.038754] You have PASSED this assignment.
+
+[2022-06-06 13:16:30.801345] === END Evaluation Log
+[2022-06-06 13:16:30.801450] NOTE: This evaluation log is also available at '/home/tokimpoi/compilerbau/skeleton/.submitscript/data/assignments/Aufgabe-1/submissions/[evaluated] edf0f0d2-7b24-4a87-a1b0-bf123f3097ad/evaluation.log'
+[2022-06-06 13:16:30.801631] 
