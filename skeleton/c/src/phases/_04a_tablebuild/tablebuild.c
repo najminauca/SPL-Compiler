@@ -15,9 +15,7 @@
 
 SymbolTable *globalTable;
 SymbolTable *localTable;
-Entry *varEntry;
-Entry *typeEntry;
-Entry *procEntry;
+bool showBool;
 
 /**
  * Prints the local symbol table of a procedure together with a heading-line
@@ -31,27 +29,18 @@ static void printSymbolTableAtEndOfProcedure(Identifier *name, Entry *procedureE
     printf("\n");
 }
 
-SymbolTable *buildSymbolTable(Program *program, bool showSymbolTables) {
-    Entry *entry;
-
-    intType = newPrimitiveType("int", INT_BYTE_SIZE);
-    boolType = newPrimitiveType("boolean", BOOL_BYTE_SIZE);
-
-    globalTable = initializeGlobalTable();
-
-    //TODO (assignment 4a): Initialize a symbol table with all predefined symbols and fill it with user-defined symbols
-    notImplemented();
-}
-
 //Check each type expression
 Type * checkType(TypeExpression *typeExpression, SymbolTable *table) {
+    Position pos = typeExpression->position;
+    Identifier * name;
     switch(typeExpression->kind) {
         case TYPEEXPRESSION_NAMEDTYPEEXPRESSION :
-            if(lookup(table, typeExpression->u.namedTypeExpression.name) == NULL) {
-                undefinedType(typeExpression->position, typeExpression->u.namedTypeExpression.name);
+            name = typeExpression->u.namedTypeExpression.name;
+            if(lookup(table, name) == NULL) {
+                undefinedType(pos, name);
             }
-            if(lookup(table,typeExpression->u.namedTypeExpression.name)->kind != ENTRY_KIND_TYPE) {
-                notAType(typeExpression->position, typeExpression->u.namedTypeExpression.name);
+            if(lookup(table,name)->kind != ENTRY_KIND_TYPE) {
+                notAType(pos, name);
             }
             return typeExpression->dataType;
         case TYPEEXPRESSION_ARRAYTYPEEXPRESSION :
@@ -61,53 +50,102 @@ Type * checkType(TypeExpression *typeExpression, SymbolTable *table) {
 
 //Check each variable declaration
 void checkVariable(VariableDeclaration *variableDeclaration, SymbolTable *table) {
-    if(lookup(table, variableDeclaration->name) != NULL) {
-        redeclarationAsVariable(variableDeclaration->position, variableDeclaration->name);
-    } else if(lookup(table, variableDeclaration->name)->u.varEntry.type->kind != ENTRY_KIND_VAR) {
-        notAVariable(variableDeclaration->position, variableDeclaration->name);
-    } else {
-        varEntry = newVarEntry(checkType(variableDeclaration->typeExpression, table), false);
+    Position pos = variableDeclaration->position;
+    Identifier * name = variableDeclaration->name;
+
+    Entry *e = lookup(table, name);
+    if(e != NULL) {
+        redeclarationAsVariable(pos, name);
+    }
+    if(e->u.varEntry.type->kind != ENTRY_KIND_VAR) {
+        notAVariable(pos, name);
+    }
+
+    Entry * varEntry = newVarEntry(checkType(variableDeclaration->typeExpression, table), false);
+    Entry * enterVar = enter(table, name, varEntry);
+    if(enterVar == NULL) {
+        redeclarationAsParameter(pos, name);
     }
 }
 
 //Check each parameter declaration
 ParameterTypeList * checkParam(ParameterDeclarationList *parameterDeclarationList, SymbolTable *table) {
-    Entry *param;
+    Position pos = parameterDeclarationList->head->position;
+    Identifier * name = parameterDeclarationList->head->name;
+
     if(parameterDeclarationList->isEmpty) {
         return emptyParameterTypeList();
-    } else {
-        if(lookup(table, parameterDeclarationList->head->name) != NULL) {
-            redeclarationAsParameter(parameterDeclarationList->head->position, parameterDeclarationList->head->name);
-        } else if(lookup(table, parameterDeclarationList->head->name)->u.varEntry.type->kind == TYPE_KIND_ARRAY) {
-            notAType(parameterDeclarationList->head->position, parameterDeclarationList->head->name);
-        } else {
-                newVarEntry(checkType(parameterDeclarationList->head->typeExpression, table), parameterDeclarationList->head->isReference);
-            }
-        }
     }
+    if(lookup(table, name) != NULL) {
+        redeclarationAsParameter(pos, name);
+    }
+
+    Entry *param = newVarEntry(checkType(parameterDeclarationList->head->typeExpression, table), parameterDeclarationList->head->isReference);
+    Entry * enterParam = enter(table, name, param);
+    if(enterParam == NULL) {
+        redeclarationAsParameter(pos, name);
+    }
+
+    return newParameterTypeList(parameterDeclarationList->head, checkParam(parameterDeclarationList->tail, table));
 }
 
 void checkGlobalDec(GlobalDeclaration *glob_dec, SymbolTable *table) {
     switch(glob_dec->kind) {
         case DECLARATION_TYPEDECLARATION :
             if(lookup(table, glob_dec->name) != NULL) {
-                //error
+                //type redeclaration
                 redeclarationAsType(glob_dec->position, glob_dec->name);
             }
-            typeEntry = newTypeEntry(checkType(glob_dec->u.typeDeclaration.typeExpression, table));
+
+            Entry * typeEntry = newTypeEntry(checkType(glob_dec->u.typeDeclaration.typeExpression, table));
+            Entry * enterType = enter(table, glob_dec->name, typeEntry);
+            if(enterType == NULL) {
+                redeclarationAsType(glob_dec->position, glob_dec->name);
+            }
             break;
         case DECLARATION_PROCEDUREDECLARATION :
             if(lookup(table, glob_dec->name) != NULL) {
-                //error
+                //procedure redeclaration
                 redeclarationAsProcedure(glob_dec->position, glob_dec->name);
-            } else if(lookup(table, glob_dec->name) == NULL) {
-                localTable = newTable(table);
-                VariableDeclarationList  *variableDeclarationList = glob_dec->u.procedureDeclaration.variables;
-                while(!variableDeclarationList->isEmpty) {
-                    checkVariable(variableDeclarationList->head, localTable);
-                    variableDeclarationList = variableDeclarationList->tail;
-                }
-                procEntry = newProcEntry(checkParam(glob_dec->u.procedureDeclaration.parameters, localTable), localTable);
+            }
+
+            localTable = newTable(table);
+            VariableDeclarationList  *variableDeclarationList = glob_dec->u.procedureDeclaration.variables;
+            while(!variableDeclarationList->isEmpty) {
+                checkVariable(variableDeclarationList->head, localTable);
+                variableDeclarationList = variableDeclarationList->tail;
+            }
+
+            Entry * procEntry = newProcEntry(checkParam(glob_dec->u.procedureDeclaration.parameters, localTable), localTable);
+            Entry * enterProc = enter(table, glob_dec->name, procEntry);
+            if(enterProc == NULL) {
+                redeclarationAsProcedure(glob_dec->position, glob_dec->name);
             }
     }
+    if(showBool) {
+        showTable(table);
+    }
+}
+
+SymbolTable *buildSymbolTable(Program *program, bool showSymbolTables) {
+    intType = newPrimitiveType("int", INT_BYTE_SIZE);
+    boolType = newPrimitiveType("boolean", BOOL_BYTE_SIZE);
+    showBool = showSymbolTables;
+    globalTable = initializeGlobalTable();
+
+    while(program->declarations != NULL) {
+        checkGlobalDec(program->declarations->head, globalTable);
+        program->declarations = program->declarations->tail;
+    }
+
+    Entry * main = lookup(globalTable, newIdentifier("main"));
+    if(main == NULL) {
+        mainIsMissing();
+    } else if(main->kind != ENTRY_KIND_PROC) {
+        mainIsNotAProcedure();
+    } else if(!main->u.procEntry.parameterTypes->isEmpty) {
+        mainMustNotHaveParameters();
+    }
+    return globalTable;
+    //TODO (assignment 4a): Initialize a symbol table with all predefined symbols and fill it with user-defined symbols
 }
