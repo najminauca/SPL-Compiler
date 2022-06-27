@@ -36,57 +36,59 @@ Type * checkType(TypeExpression *typeExpression, SymbolTable *table) {
     switch(typeExpression->kind) {
         case TYPEEXPRESSION_NAMEDTYPEEXPRESSION :
             name = typeExpression->u.namedTypeExpression.name;
-            if(lookup(table, name) == NULL) {
+            Entry * typeEntry = lookup(table, name);
+            if(typeEntry == NULL) {
                 undefinedType(pos, name);
             }
-            if(lookup(table,name)->kind != ENTRY_KIND_TYPE) {
+            if(typeEntry->kind != ENTRY_KIND_TYPE) {
                 notAType(pos, name);
             }
-            return typeExpression->dataType;
+            return typeEntry->u.typeEntry.type;
         case TYPEEXPRESSION_ARRAYTYPEEXPRESSION :
             return newArrayType(typeExpression->u.arrayTypeExpression.arraySize, checkType(typeExpression->u.arrayTypeExpression.baseType, table));
     }
 }
 
 //Check each variable declaration
-void checkVariable(VariableDeclaration *variableDeclaration, SymbolTable *table) {
+Type * checkVariable(VariableDeclaration *variableDeclaration, SymbolTable *table) {
     Position pos = variableDeclaration->position;
     Identifier * name = variableDeclaration->name;
 
-    Entry *e = lookup(table, name);
-    if(e != NULL) {
+    Entry * varEntry = lookup(table, name);
+    if(varEntry != NULL && varEntry->u.varEntry.type->kind == ENTRY_KIND_VAR) {
         redeclarationAsVariable(pos, name);
     }
-    if(e->u.varEntry.type->kind != ENTRY_KIND_VAR) {
-        notAVariable(pos, name);
-    }
 
-    Entry * varEntry = newVarEntry(checkType(variableDeclaration->typeExpression, table), false);
+    varEntry = newVarEntry(checkType(variableDeclaration->typeExpression, table), false);
     Entry * enterVar = enter(table, name, varEntry);
     if(enterVar == NULL) {
         redeclarationAsParameter(pos, name);
     }
+    return varEntry->u.varEntry.type;
 }
 
 //Check each parameter declaration
 ParameterTypeList * checkParam(ParameterDeclarationList *parameterDeclarationList, SymbolTable *table) {
-    Position pos = parameterDeclarationList->head->position;
-    Identifier * name = parameterDeclarationList->head->name;
+    Position pos;
+    Identifier * name;
 
     if(parameterDeclarationList->isEmpty) {
         return emptyParameterTypeList();
-    }
+    } else {
+        pos = parameterDeclarationList->head->position;
+        name = parameterDeclarationList->head->name;
+    };
     if(lookup(table, name) != NULL) {
         redeclarationAsParameter(pos, name);
     }
 
-    Entry *param = newVarEntry(checkType(parameterDeclarationList->head->typeExpression, table), parameterDeclarationList->head->isReference);
+    Entry * param = newVarEntry(checkType(parameterDeclarationList->head->typeExpression, table), parameterDeclarationList->head->isReference);
     Entry * enterParam = enter(table, name, param);
     if(enterParam == NULL) {
         redeclarationAsParameter(pos, name);
     }
-
-    return newParameterTypeList(parameterDeclarationList->head, checkParam(parameterDeclarationList->tail, table));
+    ParameterTypeList * parameterTypeList = newParameterTypeList(parameterDeclarationList->head, checkParam(parameterDeclarationList->tail, table));
+    return parameterTypeList;
 }
 
 void checkGlobalDec(GlobalDeclaration *glob_dec, SymbolTable *table) {
@@ -122,9 +124,6 @@ void checkGlobalDec(GlobalDeclaration *glob_dec, SymbolTable *table) {
                 redeclarationAsProcedure(glob_dec->position, glob_dec->name);
             }
     }
-    if(showBool) {
-        showTable(table);
-    }
 }
 
 SymbolTable *buildSymbolTable(Program *program, bool showSymbolTables) {
@@ -133,9 +132,10 @@ SymbolTable *buildSymbolTable(Program *program, bool showSymbolTables) {
     showBool = showSymbolTables;
     globalTable = initializeGlobalTable();
 
-    while(program->declarations != NULL) {
-        checkGlobalDec(program->declarations->head, globalTable);
-        program->declarations = program->declarations->tail;
+    GlobalDeclarationList * globalDeclarationList = program->declarations;
+    while(globalDeclarationList->head != NULL) {
+        checkGlobalDec(globalDeclarationList->head, globalTable);
+        globalDeclarationList = globalDeclarationList->tail;
     }
 
     Entry * main = lookup(globalTable, newIdentifier("main"));
