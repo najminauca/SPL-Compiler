@@ -31,17 +31,19 @@ static void printSymbolTableAtEndOfProcedure(Identifier *name, Entry *procedureE
 
 //Check each type expression
 Type * checkType(TypeExpression *typeExpression, SymbolTable *table) {
-    Position pos = typeExpression->position;
+    Position position;
     Identifier * name;
+    Entry * typeEntry;
     switch(typeExpression->kind) {
         case TYPEEXPRESSION_NAMEDTYPEEXPRESSION :
+            position = typeExpression->position;
             name = typeExpression->u.namedTypeExpression.name;
-            Entry * typeEntry = lookup(table, name);
+            typeEntry = lookup(table, name);
             if(typeEntry == NULL) {
-                undefinedType(pos, name);
+                undefinedType(position, name);
             }
             if(typeEntry->kind != ENTRY_KIND_TYPE) {
-                notAType(pos, name);
+                notAType(position, name);
             }
             return typeEntry->u.typeEntry.type;
         case TYPEEXPRESSION_ARRAYTYPEEXPRESSION :
@@ -50,65 +52,62 @@ Type * checkType(TypeExpression *typeExpression, SymbolTable *table) {
 }
 
 //Check each variable declaration
-Type * checkVariable(VariableDeclaration *variableDeclaration, SymbolTable *table) {
-    Position pos = variableDeclaration->position;
+void checkVariable(VariableDeclaration *variableDeclaration, SymbolTable *table) {
+    Position position = variableDeclaration->position;
     Identifier * name = variableDeclaration->name;
 
     Entry * varEntry = lookup(table, name);
     if(varEntry != NULL && varEntry->u.varEntry.type->kind == ENTRY_KIND_VAR) {
-        redeclarationAsVariable(pos, name);
+        redeclarationAsVariable(position, name);
     }
 
     varEntry = newVarEntry(checkType(variableDeclaration->typeExpression, table), false);
     Entry * enterVar = enter(table, name, varEntry);
     if(enterVar == NULL) {
-        redeclarationAsParameter(pos, name);
+        redeclarationAsParameter(position, name);
     }
-    return varEntry->u.varEntry.type;
 }
 
 //Check each parameter declaration
 ParameterTypeList * checkParam(ParameterDeclarationList *parameterDeclarationList, SymbolTable *table) {
-    Position pos;
-    Identifier * name;
-
     if(parameterDeclarationList->isEmpty) {
         return emptyParameterTypeList();
-    } else {
-        pos = parameterDeclarationList->head->position;
-        name = parameterDeclarationList->head->name;
-    };
+    }
+
+    Position position = parameterDeclarationList->head->position;
+    Identifier * name = parameterDeclarationList->head->name;
     if(lookup(table, name) != NULL) {
-        redeclarationAsParameter(pos, name);
+        redeclarationAsParameter(position, name);
     }
 
     Entry * param = newVarEntry(checkType(parameterDeclarationList->head->typeExpression, table), parameterDeclarationList->head->isReference);
     Entry * enterParam = enter(table, name, param);
     if(enterParam == NULL) {
-        redeclarationAsParameter(pos, name);
+        redeclarationAsParameter(position, name);
     }
-    ParameterTypeList * parameterTypeList = newParameterTypeList(parameterDeclarationList->head, checkParam(parameterDeclarationList->tail, table));
-    return parameterTypeList;
+    return newParameterTypeList(newParameterType(param->u.varEntry.type, param->u.varEntry.isRef), checkParam(parameterDeclarationList->tail, table));
 }
 
 void checkGlobalDec(GlobalDeclaration *glob_dec, SymbolTable *table) {
+    Position position = glob_dec->position;
+    Identifier * name = glob_dec->name;
     switch(glob_dec->kind) {
         case DECLARATION_TYPEDECLARATION :
-            if(lookup(table, glob_dec->name) != NULL) {
+            if(lookup(table, name) != NULL) {
                 //type redeclaration
-                redeclarationAsType(glob_dec->position, glob_dec->name);
+                redeclarationAsType(position, name);
             }
 
             Entry * typeEntry = newTypeEntry(checkType(glob_dec->u.typeDeclaration.typeExpression, table));
-            Entry * enterType = enter(table, glob_dec->name, typeEntry);
+            Entry * enterType = enter(table, name, typeEntry);
             if(enterType == NULL) {
-                redeclarationAsType(glob_dec->position, glob_dec->name);
+                redeclarationAsType(position, name);
             }
             break;
         case DECLARATION_PROCEDUREDECLARATION :
-            if(lookup(table, glob_dec->name) != NULL) {
+            if(lookup(table, name) != NULL) {
                 //procedure redeclaration
-                redeclarationAsProcedure(glob_dec->position, glob_dec->name);
+                redeclarationAsProcedure(position, name);
             }
 
             localTable = newTable(table);
@@ -119,10 +118,11 @@ void checkGlobalDec(GlobalDeclaration *glob_dec, SymbolTable *table) {
             }
 
             Entry * procEntry = newProcEntry(checkParam(glob_dec->u.procedureDeclaration.parameters, localTable), localTable);
-            Entry * enterProc = enter(table, glob_dec->name, procEntry);
+            Entry * enterProc = enter(table, name, procEntry);
             if(enterProc == NULL) {
-                redeclarationAsProcedure(glob_dec->position, glob_dec->name);
+                redeclarationAsProcedure(position, name);
             }
+            if(showBool) printSymbolTableAtEndOfProcedure(glob_dec->name, procEntry);
     }
 }
 
