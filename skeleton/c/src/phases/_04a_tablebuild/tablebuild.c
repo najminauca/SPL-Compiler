@@ -133,7 +133,7 @@ SymbolTable *buildSymbolTable(Program *program, bool showSymbolTables) {
     globalTable = initializeGlobalTable();
 
     GlobalDeclarationList * globalDeclarationList = program->declarations;
-    while(globalDeclarationList->head != NULL) {
+    while(!globalDeclarationList->isEmpty) {
         checkGlobalDec(globalDeclarationList->head, globalTable);
         globalDeclarationList = globalDeclarationList->tail;
     }

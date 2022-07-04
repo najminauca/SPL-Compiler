@@ -87,6 +87,7 @@ int main(int argc, char *argv[]) {
         exit(0);
     }
 
+    //breakpoint
     SymbolTable *globalTable = buildSymbolTable(program, options->phaseOption == PHASE_TABLES);
     if (options->phaseOption == PHASE_TABLES) exit(0);
 
