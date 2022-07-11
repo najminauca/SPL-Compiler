@@ -19,7 +19,7 @@ bool isLeafProcedure(StackLayout *stackLayout) {
 
 int getFrameSize(StackLayout *stackLayout) {
     int old = isLeafProcedure(stackLayout) ? 4 : 2 * 4; //if no procedure call = 4 (old fp) | otherwise = 4 + 4 (old fp + return address)
-    int var = (stackLayout->localVarAreaSize != 0) ? stackLayout->localVarAreaSize : 0; //if empty = 0
+    int var = stackLayout->localVarAreaSize; //if empty = 0
     int out = (stackLayout->outgoingAreaSize != -1) ? stackLayout->outgoingAreaSize : 0;    //if empty = 0
     //TODO (assignment 5): Implement this function properly
     return var + out + old;
@@ -32,8 +32,7 @@ int getOldFramePointerOffSet(StackLayout *stackLayout) {
 }
 
 int getOldReturnAddressOffset(StackLayout *stackLayout) {
-    int retOff = (stackLayout->localVarAreaSize != 0) ? -(stackLayout->localVarAreaSize + 8) : -8; //minus so the offset is correct in --vars
     //TODO (assignment 5): Implement this function properly
-    return retOff;
+    return -(stackLayout->localVarAreaSize + 8);    //minus so the offset is correct in --vars
 }
 

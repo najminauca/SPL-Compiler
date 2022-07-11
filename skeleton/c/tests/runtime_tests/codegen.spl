@@ -1,0 +1,798 @@
+	.import	printi
+	.import	printc
+	.import	readi
+	.import	readc
+	.import	exit
+	.import	time
+	.import	clearAll
+	.import	setPixel
+	.import	drawLine
+	.import	drawCircle
+	.import	_indexError
+
+	.code
+	.align	4
+	.export callbyval
+callbyval:
+	sub	$29,$29,4		; sp <- sp - frame size
+	stw	$25,$29,0		; fp alt speichern relativ zu sp
+	add	$25,$29,4		; fp neu <- sp neu + framesize
+	add	$8,$25,0
+	add	$9,$25,0
+	ldw	$9,$9,0
+	add	$10,$0,1
+	add	$9,$9,$10
+	stw	$9,$8,0
+	add	$8,$25,4
+	add	$9,$25,4
+	ldw	$9,$9,0
+	add	$10,$0,1
+	add	$9,$9,$10
+	stw	$9,$8,0
+	ldw	$31,$29,0		; wiederherstellen fp
+	add	$29,$29,4		; release frame (sp <- sp + framesize)
+	jr	$31			; return
+	.export callbyref
+callbyref:
+	sub	$29,$29,4		; sp <- sp - frame size
+	stw	$25,$29,0		; fp alt speichern relativ zu sp
+	add	$25,$29,4		; fp neu <- sp neu + framesize
+	add	$8,$25,0
+	ldw	$8,$8,0
+	add	$9,$25,0
+	ldw	$9,$9,0
+	ldw	$9,$9,0
+	add	$10,$0,1
+	add	$9,$9,$10
+	stw	$9,$8,0
+	add	$8,$25,4
+	ldw	$8,$8,0
+	add	$9,$25,4
+	ldw	$9,$9,0
+	ldw	$9,$9,0
+	add	$10,$0,1
+	add	$9,$9,$10
+	stw	$9,$8,0
+	ldw	$31,$29,0		; wiederherstellen fp
+	add	$29,$29,4		; release frame (sp <- sp + framesize)
+	jr	$31			; return
+	.export callArray
+callArray:
+	sub	$29,$29,4		; sp <- sp - frame size
+	stw	$25,$29,0		; fp alt speichern relativ zu sp
+	add	$25,$29,4		; fp neu <- sp neu + framesize
+	add	$8,$25,0
+	ldw	$8,$8,0
+	add	$9,$0,0
+	add	$10,$0,4
+	bgeu	$9,$10,index error
+	mul	$9,$9,4
+	add	$8,$8,$9
+	add	$9,$0,99
+	stw	$9,$8,0
+	add	$8,$25,0
+	ldw	$8,$8,0
+	add	$9,$0,4
+	add	$10,$0,4
+	bgeu	$9,$10,index error
+	mul	$9,$9,4
+	add	$8,$8,$9
+	add	$9,$0,66
+	stw	$9,$8,0
+	ldw	$31,$29,0		; wiederherstellen fp
+	add	$29,$29,4		; release frame (sp <- sp + framesize)
+	jr	$31			; return
+	.export callRecursive
+callRecursive:
+	sub	$29,$29,16		; sp <- sp - frame size
+	stw	$25,$29,12		; fp alt speichern relativ zu sp
+	add	$25,$29,16		; fp neu <- sp neu + framesize
+	stw	$31,$25,-8		; return adr speichern relativ zu fp
+	add	$8,$25,0
+	ldw	$8,$8,0
+	add	$9,$0,10
+	bgt	$8,$9,L1
+L1:
+	add	$8,$25,4
+	ldw	$8,$8,0
+	add	$9,$25,4
+	ldw	$9,$9,0
+	ldw	$9,$9,0
+	add	$10,$25,0
+	ldw	$10,$10,0
+	add	$9,$9,$10
+	stw	$9,$8,0
+	add	$8,$25,0
+	add	$9,$25,0
+	ldw	$9,$9,0
+	add	$10,$0,1
+	add	$9,$9,$10
+	stw	$9,$8,0
+	ldw	$31,$25,-8		; wiederherstellen return
+	ldw	$31,$29,12		; wiederherstellen fp
+	add	$29,$29,16		; release frame (sp <- sp + framesize)
+	jr	$31			; return
+	.export manyargs
+manyargs:
+	sub	$29,$29,24		; sp <- sp - frame size
+	stw	$25,$29,20		; fp alt speichern relativ zu sp
+	add	$25,$29,24		; fp neu <- sp neu + framesize
+	stw	$31,$25,-8		; return adr speichern relativ zu fp
+	add	$8,$25,0
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,4
+	stw	$8,$29,4		; Save arg 1
+	add	$8,$25,0
+	ldw	$8,$8,0
+	add	$9,$0,0
+	ble	$8,$9,L2
+	add	$8,$25,0
+	ldw	$8,$8,0
+	add	$9,$0,1
+	sub	$8,$8,$9
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,12
+	ldw	$8,$8,0
+	ldw	$8,$8,0
+	stw	$8,$29,4		; Save arg 1
+	add	$8,$25,8
+	ldw	$8,$8,0
+	stw	$8,$29,8		; Save arg 2
+	add	$8,$25,4
+	stw	$8,$29,12		; Save arg 3
+L2:
+	add	$8,$25,0
+	ldw	$8,$8,0
+	add	$9,$0,0
+	bne	$8,$9,L3
+	add	$8,$25,0
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,4
+	ldw	$8,$8,0
+	stw	$8,$29,4		; Save arg 1
+	add	$8,$0,0
+	stw	$8,$29,8		; Save arg 2
+	add	$8,$0,67
+	stw	$8,$29,12		; Save arg 3
+L3:
+	add	$8,$25,0
+	ldw	$8,$8,0
+	add	$9,$0,1
+	bne	$8,$9,L4
+	add	$8,$25,0
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,4
+	ldw	$8,$8,0
+	stw	$8,$29,4		; Save arg 1
+	add	$8,$0,1
+	stw	$8,$29,8		; Save arg 2
+	add	$8,$0,69
+	stw	$8,$29,12		; Save arg 3
+L4:
+	add	$8,$25,0
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,32
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,4
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,10
+	stw	$8,$29,0		; Save arg 0
+	ldw	$31,$25,-8		; wiederherstellen return
+	ldw	$31,$29,20		; wiederherstellen fp
+	add	$29,$29,24		; release frame (sp <- sp + framesize)
+	jr	$31			; return
+	.export hide
+hide:
+	sub	$29,$29,12		; sp <- sp - frame size
+	stw	$25,$29,0		; fp alt speichern relativ zu sp
+	add	$25,$29,12		; fp neu <- sp neu + framesize
+	ldw	$31,$29,0		; wiederherstellen fp
+	add	$29,$29,12		; release frame (sp <- sp + framesize)
+	jr	$31			; return
+	.export main
+main:
+	sub	$29,$29,4664		; sp <- sp - frame size
+	stw	$25,$29,20		; fp alt speichern relativ zu sp
+	add	$25,$29,4664		; fp neu <- sp neu + framesize
+	stw	$31,$25,-4648		; return adr speichern relativ zu fp
+	add	$8,$0,1
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,-4
+	add	$9,$0,1
+	add	$10,$0,2
+	sub	$9,$9,$10
+	add	$10,$0,3
+	sub	$9,$9,$10
+	stw	$9,$8,0
+	add	$8,$25,-8
+	add	$9,$0,1
+	add	$10,$0,2
+	add	$11,$0,0
+	add	$12,$25,-4
+	ldw	$12,$12,0
+	sub	$11,$11,$12
+	mul	$10,$10,$11
+	add	$9,$9,$10
+	add	$10,$0,7
+	add	$11,$0,77
+	sub	$10,$10,$11
+	add	$11,$0,7
+	div	$10,$10,$11
+	add	$11,$0,5
+	div	$10,$10,$11
+	add	$11,$0,2
+	add	$12,$0,1
+	add	$13,$0,2
+	add	$14,$0,4
+	add	$15,$0,5
+	add	$16,$0,4
+	add	$17,$0,3
+	add	$18,$0,2
+	add	$19,$0,1
+	add	$20,$0,1
+	add	$21,$0,3
+	add	$22,$0,4
+	add	$23,$0,5
+	sub	$22,$22,$23
+	sub	$21,$21,$22
+	add	$20,$20,$21
+	mul	$19,$19,$20
+	sub	$18,$18,$19
+	add	$17,$17,$18
+	sub	$16,$16,$17
+	add	$15,$15,$16
+	sub	$14,$14,$15
+	add	$13,$13,$14
+	sub	$12,$12,$13
+	mul	$11,$11,$12
+	mul	$10,$10,$11
+	sub	$9,$9,$10
+	stw	$9,$8,0
+	add	$8,$25,-4
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,-8
+	ldw	$8,$8,0
+	stw	$8,$29,4		; Save arg 1
+	add	$8,$0,0
+	add	$9,$0,4
+	sub	$8,$8,$9
+	stw	$8,$29,8		; Save arg 2
+	add	$8,$0,25
+	stw	$8,$29,12		; Save arg 3
+	add	$8,$25,-4
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,32
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,-8
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,10
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,-4
+	add	$9,$0,43690
+	stw	$9,$8,0
+	add	$8,$25,-8
+	add	$9,$0,48059
+	add	$10,$0,65
+	add	$11,$0,2
+	mul	$10,$10,$11
+	sub	$9,$9,$10
+	stw	$9,$8,0
+	add	$8,$25,-4
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,-8
+	ldw	$8,$8,0
+	stw	$8,$29,4		; Save arg 1
+	add	$8,$0,43690
+	stw	$8,$29,8		; Save arg 2
+	add	$8,$0,47929
+	stw	$8,$29,12		; Save arg 3
+	add	$8,$25,-4
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,32
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,-8
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,10
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,-4
+	add	$9,$0,0
+	add	$10,$0,1
+	sub	$9,$9,$10
+	stw	$9,$8,0
+	add	$8,$25,-8
+	add	$9,$0,32
+	stw	$9,$8,0
+	add	$8,$25,-504
+	add	$9,$0,0
+	add	$10,$0,0
+	sub	$9,$9,$10
+	add	$10,$0,40
+	bgeu	$9,$10,index error
+	mul	$9,$9,40
+	add	$8,$8,$9
+	add	$9,$0,7
+	add	$10,$0,4
+	bgeu	$9,$10,index error
+	mul	$9,$9,4
+	add	$8,$8,$9
+	add	$9,$25,-4
+	ldw	$9,$9,0
+	add	$10,$0,0
+	add	$11,$25,-4
+	ldw	$11,$11,0
+	sub	$10,$10,$11
+	sub	$9,$9,$10
+	stw	$9,$8,0
+	add	$8,$25,-504
+	add	$9,$0,0
+	add	$10,$25,-4
+	ldw	$10,$10,0
+	sub	$9,$9,$10
+	add	$10,$0,40
+	bgeu	$9,$10,index error
+	mul	$9,$9,40
+	add	$8,$8,$9
+	add	$9,$0,8
+	add	$10,$0,4
+	bgeu	$9,$10,index error
+	mul	$9,$9,4
+	add	$8,$8,$9
+	add	$9,$0,135
+	stw	$9,$8,0
+	add	$8,$25,-504
+	add	$9,$0,1
+	add	$10,$0,1
+	add	$9,$9,$10
+	add	$10,$0,40
+	bgeu	$9,$10,index error
+	mul	$9,$9,40
+	add	$8,$8,$9
+	add	$9,$0,9
+	add	$10,$0,4
+	bgeu	$9,$10,index error
+	mul	$9,$9,4
+	add	$8,$8,$9
+	add	$9,$0,10
+	stw	$9,$8,0
+	add	$8,$25,-504
+	add	$9,$0,0
+	add	$10,$0,40
+	bgeu	$9,$10,index error
+	mul	$9,$9,40
+	add	$8,$8,$9
+	add	$9,$0,7
+	add	$10,$0,4
+	bgeu	$9,$10,index error
+	mul	$9,$9,4
+	add	$8,$8,$9
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,-504
+	add	$9,$0,1
+	add	$10,$0,40
+	bgeu	$9,$10,index error
+	mul	$9,$9,40
+	add	$8,$8,$9
+	add	$9,$0,8
+	add	$10,$0,4
+	bgeu	$9,$10,index error
+	mul	$9,$9,4
+	add	$8,$8,$9
+	ldw	$8,$8,0
+	stw	$8,$29,4		; Save arg 1
+	add	$8,$0,0
+	add	$9,$0,2
+	sub	$8,$8,$9
+	stw	$8,$29,8		; Save arg 2
+	add	$8,$0,135
+	stw	$8,$29,12		; Save arg 3
+	add	$8,$25,-504
+	add	$9,$0,0
+	add	$10,$0,40
+	bgeu	$9,$10,index error
+	mul	$9,$9,40
+	add	$8,$8,$9
+	add	$9,$0,7
+	add	$10,$0,4
+	bgeu	$9,$10,index error
+	mul	$9,$9,4
+	add	$8,$8,$9
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,32
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,-504
+	add	$9,$0,1
+	add	$10,$0,40
+	bgeu	$9,$10,index error
+	mul	$9,$9,40
+	add	$8,$8,$9
+	add	$9,$0,8
+	add	$10,$0,4
+	bgeu	$9,$10,index error
+	mul	$9,$9,4
+	add	$8,$8,$9
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,10
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,2
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,-4
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,-8
+	ldw	$8,$8,0
+	stw	$8,$29,4		; Save arg 1
+	add	$8,$25,-4
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,-8
+	ldw	$8,$8,0
+	stw	$8,$29,4		; Save arg 1
+	add	$8,$0,0
+	add	$9,$0,1
+	sub	$8,$8,$9
+	stw	$8,$29,8		; Save arg 2
+	add	$8,$0,32
+	stw	$8,$29,12		; Save arg 3
+	add	$8,$25,-4
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,32
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,-8
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,10
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,-4
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,-8
+	stw	$8,$29,4		; Save arg 1
+	add	$8,$25,-4
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,-8
+	ldw	$8,$8,0
+	stw	$8,$29,4		; Save arg 1
+	add	$8,$0,0
+	stw	$8,$29,8		; Save arg 2
+	add	$8,$0,33
+	stw	$8,$29,12		; Save arg 3
+	add	$8,$25,-4
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,32
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,-8
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,10
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,-544
+	add	$9,$0,0
+	add	$10,$0,4
+	bgeu	$9,$10,index error
+	mul	$9,$9,4
+	add	$8,$8,$9
+	add	$9,$0,5
+	stw	$9,$8,0
+	add	$8,$25,-544
+	add	$9,$0,1
+	add	$10,$0,4
+	bgeu	$9,$10,index error
+	mul	$9,$9,4
+	add	$8,$8,$9
+	add	$9,$0,4
+	stw	$9,$8,0
+	add	$8,$25,-544
+	add	$9,$0,2
+	add	$10,$0,4
+	bgeu	$9,$10,index error
+	mul	$9,$9,4
+	add	$8,$8,$9
+	add	$9,$0,3
+	stw	$9,$8,0
+	add	$8,$25,-544
+	add	$9,$0,3
+	add	$10,$0,4
+	bgeu	$9,$10,index error
+	mul	$9,$9,4
+	add	$8,$8,$9
+	add	$9,$0,2
+	stw	$9,$8,0
+	add	$8,$25,-544
+	add	$9,$0,4
+	add	$10,$0,4
+	bgeu	$9,$10,index error
+	mul	$9,$9,4
+	add	$8,$8,$9
+	add	$9,$0,1
+	stw	$9,$8,0
+	add	$8,$25,-544
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,-544
+	add	$9,$0,0
+	add	$10,$0,4
+	bgeu	$9,$10,index error
+	mul	$9,$9,4
+	add	$8,$8,$9
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,-544
+	add	$9,$0,4
+	add	$10,$0,4
+	bgeu	$9,$10,index error
+	mul	$9,$9,4
+	add	$8,$8,$9
+	ldw	$8,$8,0
+	stw	$8,$29,4		; Save arg 1
+	add	$8,$0,99
+	stw	$8,$29,8		; Save arg 2
+	add	$8,$0,66
+	stw	$8,$29,12		; Save arg 3
+	add	$8,$25,-544
+	add	$9,$0,0
+	add	$10,$0,4
+	bgeu	$9,$10,index error
+	mul	$9,$9,4
+	add	$8,$8,$9
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,32
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,-544
+	add	$9,$0,4
+	add	$10,$0,4
+	bgeu	$9,$10,index error
+	mul	$9,$9,4
+	add	$8,$8,$9
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,10
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,-4
+	add	$9,$0,1
+	stw	$9,$8,0
+	add	$8,$25,-8
+	add	$9,$0,1
+	stw	$9,$8,0
+	add	$8,$25,-4
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,-8
+	stw	$8,$29,4		; Save arg 1
+	add	$8,$25,-4
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,-8
+	ldw	$8,$8,0
+	stw	$8,$29,4		; Save arg 1
+	add	$8,$0,1
+	stw	$8,$29,8		; Save arg 2
+	add	$8,$0,67
+	stw	$8,$29,12		; Save arg 3
+	add	$8,$25,-4
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,32
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,-8
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,10
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,3
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,-4
+	add	$9,$0,0
+	stw	$9,$8,0
+L5:
+	add	$8,$25,-4
+	ldw	$8,$8,0
+	add	$9,$0,3
+	bgt	$8,$9,L6
+	j	L5
+L6:
+	add	$8,$25,-4
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,-48
+	add	$9,$0,0
+	add	$10,$0,4
+	bgeu	$9,$10,index error
+	mul	$9,$9,4
+	add	$8,$8,$9
+	ldw	$8,$8,0
+	stw	$8,$29,4		; Save arg 1
+	add	$8,$0,4
+	stw	$8,$29,8		; Save arg 2
+	add	$8,$0,221
+	stw	$8,$29,12		; Save arg 3
+	add	$8,$25,-4
+	add	$9,$0,0
+	stw	$9,$8,0
+	add	$8,$25,-8
+	add	$9,$0,1
+	stw	$9,$8,0
+	add	$8,$25,-4
+	ldw	$8,$8,0
+	add	$9,$25,-8
+	ldw	$9,$9,0
+	bne	$8,$9,L7
+	add	$8,$25,-4
+	ldw	$8,$8,0
+	add	$9,$25,-8
+	ldw	$9,$9,0
+	add	$10,$0,1
+	sub	$9,$9,$10
+	beq	$8,$9,L8
+	j	L9
+L8:
+	j	L8
+	j	L10
+L7:
+	j	L7
+	add	$8,$0,10
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,4
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,1
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,3
+	stw	$8,$29,4		; Save arg 1
+	add	$8,$25,-4640
+	stw	$8,$29,8		; Save arg 2
+	add	$8,$25,-8
+	stw	$8,$29,12		; Save arg 3
+	add	$8,$0,10
+	stw	$8,$29,0		; Save arg 0
+	ldw	$31,$25,-4648		; wiederherstellen return
+	ldw	$31,$29,20		; wiederherstellen fp
+	add	$29,$29,4664		; release frame (sp <- sp + framesize)
+	jr	$31			; return
+	.export ausgabe
+ausgabe:
+	sub	$29,$29,12		; sp <- sp - frame size
+	stw	$25,$29,8		; fp alt speichern relativ zu sp
+	add	$25,$29,12		; fp neu <- sp neu + framesize
+	stw	$31,$25,-8		; return adr speichern relativ zu fp
+	add	$8,$0,10
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,84
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,101
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,115
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,116
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,32
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,0
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,10
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,61
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,61
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,61
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,61
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,61
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,61
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,61
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,61
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,10
+	stw	$8,$29,0		; Save arg 0
+	ldw	$31,$25,-8		; wiederherstellen return
+	ldw	$31,$29,8		; wiederherstellen fp
+	add	$29,$29,12		; release frame (sp <- sp + framesize)
+	jr	$31			; return
+	.export check
+check:
+	sub	$29,$29,16		; sp <- sp - frame size
+	stw	$25,$29,12		; fp alt speichern relativ zu sp
+	add	$25,$29,16		; fp neu <- sp neu + framesize
+	stw	$31,$25,-8		; return adr speichern relativ zu fp
+	add	$8,$25,0
+	ldw	$8,$8,0
+	add	$9,$25,8
+	ldw	$9,$9,0
+	beq	$8,$9,L11
+	add	$8,$25,0
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,8
+	ldw	$8,$8,0
+	stw	$8,$29,4		; Save arg 1
+L11:
+	add	$8,$25,4
+	ldw	$8,$8,0
+	add	$9,$25,12
+	ldw	$9,$9,0
+	beq	$8,$9,L12
+	add	$8,$25,4
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,12
+	ldw	$8,$8,0
+	stw	$8,$29,4		; Save arg 1
+L12:
+	ldw	$31,$25,-8		; wiederherstellen return
+	ldw	$31,$29,12		; wiederherstellen fp
+	add	$29,$29,16		; release frame (sp <- sp + framesize)
+	jr	$31			; return
+	.export error
+error:
+	sub	$29,$29,12		; sp <- sp - frame size
+	stw	$25,$29,8		; fp alt speichern relativ zu sp
+	add	$25,$29,12		; fp neu <- sp neu + framesize
+	stw	$31,$25,-8		; return adr speichern relativ zu fp
+	add	$8,$0,69
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,114
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,114
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,111
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,114
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,58
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,105
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,61
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,0
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,44
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,69
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,120
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,112
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,101
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,99
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,116
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,101
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,100
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,58
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$25,4
+	ldw	$8,$8,0
+	stw	$8,$29,0		; Save arg 0
+	add	$8,$0,10
+	stw	$8,$29,0		; Save arg 0
+	ldw	$31,$25,-8		; wiederherstellen return
+	ldw	$31,$29,8		; wiederherstellen fp
+	add	$29,$29,12		; release frame (sp <- sp + framesize)
+	jr	$31			; return

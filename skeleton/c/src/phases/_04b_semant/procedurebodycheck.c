@@ -88,6 +88,7 @@ Type * checkVarExp(Variable * variable, SymbolTable * table) {
         if (varType != intType) {
             indexingWithNonInteger(variable->position);
         }
+        variable->dataType = arr->u.arrayType.baseType; //save datatype to variable
         return arr->u.arrayType.baseType;
     }
     else if(variable->kind == VARIABLE_NAMEDVARIABLE) {
@@ -98,6 +99,7 @@ Type * checkVarExp(Variable * variable, SymbolTable * table) {
         if (name->kind != ENTRY_KIND_VAR) {
             notAVariable(variable->position, variable->u.namedVariable.name);
         }
+        variable->dataType = name->u.varEntry.type; //save datatype to variable
         return name->u.varEntry.type;
     }
     return NULL;
