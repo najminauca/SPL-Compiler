@@ -32,7 +32,7 @@ void checkArgs(ParameterTypeList * parameterTypeList, ExpressionList * expressio
         if(expected != actual) {
             argumentTypeMismatch(expressions->head->position, name, 1, expected, actual);
         }
-        if(parameters->head->isRef && expressions->head->kind == EXPRESSION_BINARYEXPRESSION) {
+        if(parameters->head->isRef && expressions->head->kind != EXPRESSION_VARIABLEEXPRESSION) {
             argumentMustBeAVariable(expressions->head->position, name, count);
         }
         parameters = parameters->tail;
