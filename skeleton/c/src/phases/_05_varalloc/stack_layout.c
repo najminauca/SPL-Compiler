@@ -12,30 +12,41 @@ StackLayout *newStackLayout() {
 }
 
 bool isLeafProcedure(StackLayout *stackLayout) {
-    if (stackLayout->outgoingAreaSize == INT_MIN) return false;
+    if (stackLayout->outgoingAreaSize == -1) return true;
 
     //TODO (assignment 5): Implement this function properly
     return false;
 }
 
 int getFrameSize(StackLayout *stackLayout) {
-    if (stackLayout->localVarAreaSize == INT_MIN || stackLayout->outgoingAreaSize == INT_MIN) return INT_MIN;
-
+    int old = isLeafProcedure(stackLayout) ? 4 : 2 * 4;
+    int var = stackLayout->localVarAreaSize;
+    int out = stackLayout->outgoingAreaSize;
+    if (var == 0 || out == -1) {
+        if(var != 0) {
+            return var + old;
+        }
+        if(out != -1) {
+            return out + old;
+        }
+        return old;
+    }
     //TODO (assignment 5): Implement this function properly
-    return INT_MIN;
+    return stackLayout->localVarAreaSize + stackLayout->outgoingAreaSize + old;
 }
 
 int getOldFramePointerOffSet(StackLayout *stackLayout) {
-    if (stackLayout->outgoingAreaSize == INT_MIN) return INT_MIN;
-
+    if (stackLayout->outgoingAreaSize == -1) return 0;
     //TODO (assignment 5): Implement this function properly
-    return INT_MIN;
+    return stackLayout->outgoingAreaSize + 4;
 }
 
 int getOldReturnAddressOffset(StackLayout *stackLayout) {
-    if (stackLayout->localVarAreaSize == INT_MIN) return INT_MIN;
-
+    int var = stackLayout->localVarAreaSize;
+    if(var == 0) {
+        return -8;
+    }
     //TODO (assignment 5): Implement this function properly
-    return INT_MIN;
+    return -(var + 8);
 }
 

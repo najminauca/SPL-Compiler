@@ -174,10 +174,75 @@ static void showVarAllocation(Program *program, SymbolTable *globalTable) {
     }
 }
 
+int outgoingCheck(Statement * statement, SymbolTable * table) {
+    if(statement->kind == STATEMENT_IFSTATEMENT) {
+        int then = outgoingCheck(statement->u.ifStatement.thenPart, table);
+        int els = outgoingCheck(statement->u.ifStatement.thenPart, table);
+        return then > els ? then : els;
+    } else if(statement->kind == STATEMENT_CALLSTATEMENT) {
+        return lookup(table, statement->u.callStatement.procedureName)->u.procEntry.stackLayout->argumentAreaSize;
+    } else if(statement->kind == STATEMENT_WHILESTATEMENT) {
+        return outgoingCheck(statement->u.whileStatement.body, table);
+    } else if(statement->kind == STATEMENT_COMPOUNDSTATEMENT) {
+        StatementList * statementList = statement->u.compoundStatement.statements;
+        int outgoingSize = -1;
+        while(!statementList->isEmpty) {
+            int st_outgoing = outgoingCheck(statementList->head, table);
+            outgoingSize = outgoingSize > st_outgoing ? outgoingSize : st_outgoing;
+            statementList = statementList->tail;
+        }
+        return outgoingSize;
+    }
+    return -1;
+}
+
 void allocVars(Program *program, SymbolTable *globalTable, bool showVarAlloc, bool ershovOptimization) {
     //TODO (assignment 5): Allocate stack slots for all parameters and local variables
-
-    notImplemented();
+    GlobalDeclarationList * globalDeclarationList = program->declarations;
+    while(!globalDeclarationList->isEmpty) {
+        if(globalDeclarationList->head->kind == DECLARATION_PROCEDUREDECLARATION) {
+            Entry * proc = lookup(globalTable, globalDeclarationList->head->name);
+            if(proc == NULL) {
+                undefinedProcedure(globalDeclarationList->head->position, globalDeclarationList->head->name);
+            }
+            ParameterDeclarationList * parameterDeclarationList = globalDeclarationList->head->u.procedureDeclaration.parameters;
+            ParameterTypeList * parameterTypeList = proc->u.procEntry.parameterTypes;
+            int parCount = 0;
+            while(!parameterDeclarationList->isEmpty) {
+                Entry * par = lookup(proc->u.procEntry.localTable, parameterDeclarationList->head->name);
+                parameterTypeList->head->offset = parCount * REF_BYTE_SIZE;
+                par->u.varEntry.offset = parCount * REF_BYTE_SIZE;
+                parCount++;
+                parameterDeclarationList = parameterDeclarationList->tail;
+                parameterTypeList = parameterTypeList->tail;
+            }
+            proc->u.procEntry.stackLayout->argumentAreaSize = parCount * REF_BYTE_SIZE; //Save argument area size
+            VariableDeclarationList * variableDeclarationList = globalDeclarationList->head->u.procedureDeclaration.variables;
+            int varSize = 0;
+            int varCount = 0;
+            while(!variableDeclarationList->isEmpty) {
+                Entry * var = lookup(proc->u.procEntry.localTable, variableDeclarationList->head->name);
+                if(var->u.varEntry.isRef) {
+                    varSize += REF_BYTE_SIZE;   //Size of a ref;
+                } else {
+                    varSize += var->u.varEntry.type->byteSize;
+                }
+                var->u.varEntry.offset = -varSize;
+                varCount++;
+                variableDeclarationList = variableDeclarationList->tail;
+            }
+            proc->u.procEntry.stackLayout->localVarAreaSize = varSize;  //Save local variable area size
+            StatementList * statementList = globalDeclarationList->head->u.procedureDeclaration.body;
+            int outgoingAreaSize = -1;
+            while(!statementList->isEmpty) {
+                int st_outgoing = outgoingCheck(statementList->head, proc->u.procEntry.localTable);
+                outgoingAreaSize = outgoingAreaSize > st_outgoing ? outgoingAreaSize : st_outgoing;
+                statementList = statementList->tail;
+            }
+            proc->u.procEntry.stackLayout->outgoingAreaSize = outgoingAreaSize; //Save outgoing area size
+        }
+        globalDeclarationList = globalDeclarationList->tail;
+    }
 
     if (showVarAlloc) showVarAllocation(program, globalTable);
 }
