@@ -25,6 +25,5 @@ void checkIf(Statement * statement, SymbolTable * table);
 Type * checkVarExp(Variable * variable, SymbolTable * table);
 void checkAssign(Statement * statement, SymbolTable * table);
 void checkCall(Statement * statement, SymbolTable * table);
-void checkArgs(ParameterTypeList * parameterTypeList, ExpressionList * expressionList, SymbolTable * table, Identifier * name);
 
 #endif /* SPL_PROCEDUREBODYCHECK_H_ */

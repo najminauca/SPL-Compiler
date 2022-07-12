@@ -237,7 +237,7 @@ void allocVars(Program *program, SymbolTable *globalTable, bool showVarAlloc, bo
         }
         firstPassAST = firstPassAST->tail;
     }
-    //2. AST-Durchgang | Why separate passes?
+    //2. AST-Durchgang | Why? Argument area size has to be saved first
     GlobalDeclarationList * secondPassAST = program->declarations;
     while(!secondPassAST->isEmpty) {
         if(secondPassAST->head->kind == DECLARATION_PROCEDUREDECLARATION) {

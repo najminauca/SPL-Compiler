@@ -12,7 +12,7 @@
 #define FIRST_REGISTER 8
 #define LAST_REGISTER 23
 
-int label = 0;
+static int label = 0;
 /**
  * Emits needed import statements, to allow usage of the predefined functions and sets the correct settings
  * for the assembler.
@@ -52,63 +52,49 @@ void genProcedure(GlobalDeclaration * glob_dec, SymbolTable * table, FILE * out,
     Entry * proc = lookup(table, glob_dec->name);
     int offsetOldFp = getOldFramePointerOffSet(proc->u.procEntry.stackLayout);
     int framesize = getFrameSize(proc->u.procEntry.stackLayout);
-    //Prolog
-    emit(out, "\t.export %s", glob_dec->name->string);
+    emit(out, "\t.export %s", glob_dec->name->string);  //Export before procedure
     emitLabel(out, glob_dec->name->string);
-    commentRRI(out, "sub", 29, 29, framesize, "sp <- sp - frame size");
-    commentRRI(out, "stw", 25, 29, offsetOldFp, "fp alt speichern relativ zu sp");
-    commentRRI(out, "add", 25, 29, framesize, "fp neu <- sp neu + framesize");
+    commentRRI(out, "sub", 29, 29, framesize, "assemble frame, SP <- SP - frame size");
+    commentRRI(out, "stw", 25, 29, offsetOldFp, "store old FP relative to SP");
+    commentRRI(out, "add", 25, 29, framesize, "new FP <- new SP + frame size");
     if(!isLeafProcedure(proc->u.procEntry.stackLayout)) {
-        commentRRI(out, "stw", 31, 25, getOldReturnAddressOffset(proc->u.procEntry.stackLayout), "return adr speichern relativ zu fp");
+        commentRRI(out, "stw", 31, 25, getOldReturnAddressOffset(proc->u.procEntry.stackLayout), "store return address relative to FP");
     }
     StatementList * body = glob_dec->u.procedureDeclaration.body;
     while(!body->isEmpty) {
         genStatement(body->head, proc->u.procEntry.localTable, out, reg);
         body = body->tail;
     }
-    //Epilog
     if(!isLeafProcedure(proc->u.procEntry.stackLayout)) {
-        commentRRI(out, "ldw", 31, 25, getOldReturnAddressOffset(proc->u.procEntry.stackLayout), "wiederherstellen return");
+        commentRRI(out, "ldw", 31, 25, getOldReturnAddressOffset(proc->u.procEntry.stackLayout), "get return address");
     }
-    commentRRI(out, "ldw", 31, 29, offsetOldFp, "wiederherstellen fp");
-    commentRRI(out, "add", 29, 29, framesize, "release frame (sp <- sp + framesize)");
+    commentRRI(out, "ldw", 31, 29, offsetOldFp, "get old FP");
+    commentRRI(out, "add", 29, 29, framesize, "release frame (SP <- SP + frame size)");
     commentR(out, "jr", 31, "return");
 }
 
-void genIntLiteral(Expression * expression, SymbolTable * table, FILE * out, int reg) {
-    emitRRI(out, "add", reg, 0, expression->u.intLiteral.value);
-}
-
 void genBinaryExpressionArith(Expression * expression, SymbolTable * table, FILE * out, int reg, int lab) {
-    genExpression(expression->u.binaryExpression.leftOperand, table, out, reg, lab);
+    genExpression(expression->u.binaryExpression.leftOperand, table, out, reg, lab);    //left operand
     int right = reg + 1;
     if(right > LAST_REGISTER) {
         registerOverflow();
     }
-    genExpression(expression->u.binaryExpression.rightOperand, table, out, right, lab);
-    switch(expression->u.binaryExpression.operator) {
+    genExpression(expression->u.binaryExpression.rightOperand, table, out, right, lab); //right operand
+    switch(expression->u.binaryExpression.operator) {   //operation type
         case ABSYN_OP_ADD :
-            emitRRR(out, "add", reg, reg, right);
+            commentRRR(out, "add", reg, reg, right, "add operation register %d + register %d", reg, right);
             break;
         case ABSYN_OP_SUB :
-            emitRRR(out, "sub", reg, reg, right);
+            commentRRR(out, "sub", reg, reg, right, "sub operation register %d - register %d", reg, right);
             break;
         case ABSYN_OP_MUL :
-            emitRRR(out, "mul", reg, reg, right);
+            commentRRR(out, "mul", reg, reg, right, "mul operation register %d * register %d", reg, right);
             break;
         case ABSYN_OP_DIV :
-            emitRRR(out, "div", reg, reg, right);
+            commentRRR(out, "div", reg, reg, right, "mul operation register %d / register %d", reg, right);
             break;
         default :
             genBinaryExpressionComp(expression, table, out, reg, lab);
-    }
-}
-
-void genNamedVariable(Variable * variable, SymbolTable * table, FILE * out, int reg) {
-    Entry * var = lookup(table, variable->u.namedVariable.name);
-    emitRRI(out, "add", reg, 25, var->u.varEntry.offset);
-    if(var->u.varEntry.isRef) {
-        emitRRI(out, "ldw", reg, reg, 0);
     }
 }
 
@@ -116,7 +102,11 @@ void genVariable(Variable * variable, SymbolTable * table, FILE * out, int reg) 
     Entry * var;
     switch(variable->kind) {
         case VARIABLE_NAMEDVARIABLE :
-            genNamedVariable(variable, table, out, reg);
+            var = lookup(table, variable->u.namedVariable.name);
+            commentRRI(out, "add", reg, 25, var->u.varEntry.offset, "save variable offset relative to FP into register %d", reg);
+            if(var->u.varEntry.isRef) {
+                commentRRI(out, "ldw", reg, reg, 0, "load reference variable value into register %d", reg);
+            }
             break;
         case VARIABLE_ARRAYACCESS : ;
             genArrayAccess(variable, table, out, reg);
@@ -126,11 +116,11 @@ void genVariable(Variable * variable, SymbolTable * table, FILE * out, int reg) 
 void genExpression(Expression * expression, SymbolTable * table, FILE * out, int reg, int lab) {
     switch(expression->kind) {
         case EXPRESSION_INTLITERAL :
-            emitRRI(out, "add", reg, 0, expression->u.intLiteral.value);
+            commentRRI(out, "add", reg, 0, expression->u.intLiteral.value, "save intlit value to register %d", reg);
             break;
         case EXPRESSION_VARIABLEEXPRESSION :
             genVariable(expression->u.variableExpression.variable, table, out, reg);
-            emitRRI(out, "ldw", reg, reg, 0);
+            commentRRI(out, "ldw", reg, reg, 0, "load variable expression value to register %d", reg);
             break;
         case EXPRESSION_BINARYEXPRESSION :
             genBinaryExpressionArith(expression, table, out, reg, lab);
@@ -138,28 +128,28 @@ void genExpression(Expression * expression, SymbolTable * table, FILE * out, int
 }
 
 void genAssign(Statement * statement, SymbolTable * table, FILE * out) {
-    //add $8, $25, offset
+    //target
     genVariable(statement->u.assignStatement.target, table, out, 8);
-    //add $9, $0, value
+    //value
     genExpression(statement->u.assignStatement.value, table, out, 9, 0);
     //stw $9, $8, 0
-    emitRRI(out, "stw", 9, 8, 0);
+    commentRRI(out, "stw", 9, 8, 0, "store register 8 value to register 9");
 }
 
 void genArrayAccess(Variable * variable, SymbolTable * table, FILE * out, int reg) {
     int temp = reg;
     genVariable(variable->u.arrayAccess.array, table, out, reg);
-    reg++;
+    reg += 1;
     genExpression(variable->u.arrayAccess.index, table, out, reg, 0);   //no label
-    reg++;
-    emitRRI(out, "add", reg, 0, variable->dataType->byteSize);
-    emitRRL(out, "bgeu", reg - 1, reg, "index error");
-    emitRRI(out, "mul", reg - 1, reg - 1, variable->dataType->byteSize);
-    emitRRR(out, "add", temp, temp, reg - 1);
+    reg += 1;
+    commentRRI(out, "add", reg, 0, variable->dataType->byteSize, "save component byte size into register %d", reg);
+    emitRRL(out, "bgeu", reg - 1, reg, "_indexError");
+    commentRRI(out, "mul", reg - 1, reg - 1, variable->dataType->byteSize, "multiply index with component byte size");
+    commentRRR(out, "add", temp, temp, reg - 1, "save offset for index into register %d", temp);
 }
 
 void genBinaryExpressionComp(Expression * expression, SymbolTable * table, FILE * out, int reg, int lab) {
-    switch(expression->u.binaryExpression.operator) {
+    switch(expression->u.binaryExpression.operator) {   //operation type
         case ABSYN_OP_EQU :
             emitRRL(out, "bne", reg, reg + 1, "L%d", lab);
             break;
@@ -181,9 +171,9 @@ void genBinaryExpressionComp(Expression * expression, SymbolTable * table, FILE 
 }
 
 void genWhile(Statement * statement, SymbolTable * table, FILE * out, int reg) {
-    label++;
+    label += 1;
     int loopL = label;
-    label++;
+    label += 1;
     int falseL = label;
     emitLabel(out, "L%d", loopL); //L0:
     genExpression(statement->u.whileStatement.condition, table, out, reg, label);
@@ -193,13 +183,13 @@ void genWhile(Statement * statement, SymbolTable * table, FILE * out, int reg) {
 }
 
 void genIf(Statement * statement, SymbolTable * table, FILE * out, int reg) {
-    label++;
+    label += 1;
     int trueL = label;
     int falseL;
     genExpression(statement->u.ifStatement.condition, table, out, reg, label);
     genStatement(statement->u.ifStatement.thenPart, table, out, reg);
     if(statement->u.ifStatement.elsePart->kind != STATEMENT_EMPTYSTATEMENT) {
-        label++;
+        label += 1;
         falseL = label;
         emitJump(out, "L%d", falseL); //jump L1
     }
@@ -221,7 +211,7 @@ void genCall(Statement * statement, SymbolTable * table, FILE * out) {
         } else {
             genExpression(args->head, table, out, 8, 0);
         }
-        commentRRI(out, "stw", 8, 29, params->head->offset, "Save arg %d", count);
+        commentRRI(out, "stw", 8, 29, params->head->offset, "store argument offset relative to SP into register 8");
         count++;
         args = args->tail;
         params = params->tail;

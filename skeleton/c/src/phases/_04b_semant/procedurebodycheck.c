@@ -18,31 +18,6 @@ void checkWhile(Statement * statement, SymbolTable * table) {
     checkEachStatement(statement->u.whileStatement.body, table);
 }
 
-void checkArgs(ParameterTypeList * parameterTypeList, ExpressionList * expressionList, SymbolTable * table, Identifier * name) {
-    int count = 0;
-    ParameterTypeList * parameters = parameterTypeList;
-    ExpressionList * expressions = expressionList;
-    while(!parameters->isEmpty) {
-        if(expressions->isEmpty) {
-            tooFewArguments(expressions->head->position, name);
-        }
-        count = count + 1;
-        Type * expected = parameters->head->type;
-        Type * actual = checkExpression(expressions->head, table);
-        if(expected != actual) {
-            argumentTypeMismatch(expressions->head->position, name, 1, expected, actual);
-        }
-        if(parameters->head->isRef && expressions->head->kind != EXPRESSION_VARIABLEEXPRESSION) {
-            argumentMustBeAVariable(expressions->head->position, name, count);
-        }
-        parameters = parameters->tail;
-        expressions = expressions->tail;
-    }
-    if(!expressions->isEmpty) {
-        tooManyArguments(expressions->head->position, name);
-    }
-}
-
 void checkCall(Statement * statement, SymbolTable * table) {
     Entry * procedure = lookup(table, statement->u.callStatement.procedureName);
 
@@ -52,7 +27,28 @@ void checkCall(Statement * statement, SymbolTable * table) {
     if(procedure->kind != ENTRY_KIND_PROC) {
         callOfNonProcedure(statement->position, statement->u.callStatement.procedureName);
     }
-    checkArgs(procedure->u.procEntry.parameterTypes, statement->u.callStatement.arguments, table, statement->u.callStatement.procedureName);
+    int count = 0;
+    ParameterTypeList * parameters = procedure->u.procEntry.parameterTypes;
+    ExpressionList * args = statement->u.callStatement.arguments;
+    while(!parameters->isEmpty) {
+        if(args->isEmpty) {
+            tooFewArguments(args->head->position, statement->u.callStatement.procedureName);
+        }
+        count = count + 1;
+        Type * expected = parameters->head->type;
+        Type * actual = checkExpression(args->head, table);
+        if(expected != actual) {
+            argumentTypeMismatch(args->head->position, statement->u.callStatement.procedureName, 1, expected, actual);
+        }
+        if(parameters->head->isRef && args->head->kind != EXPRESSION_VARIABLEEXPRESSION) {
+            argumentMustBeAVariable(args->head->position, statement->u.callStatement.procedureName, count);
+        }
+        parameters = parameters->tail;
+        args = args->tail;
+    }
+    if(!args->isEmpty) {
+        tooManyArguments(args->head->position, statement->u.callStatement.procedureName);
+    }
 }
 
 void checkAssign(Statement * statement, SymbolTable * table) {
