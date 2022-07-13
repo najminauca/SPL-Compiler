@@ -68,7 +68,7 @@ void genProcedure(GlobalDeclaration * glob_dec, SymbolTable * table, FILE * out,
     if(!isLeafProcedure(proc->u.procEntry.stackLayout)) {
         commentRRI(out, "ldw", 31, 25, getOldReturnAddressOffset(proc->u.procEntry.stackLayout), "get return address");
     }
-    commentRRI(out, "ldw", 31, 29, offsetOldFp, "get old FP");
+    commentRRI(out, "ldw", 25, 29, offsetOldFp, "get old FP");
     commentRRI(out, "add", 29, 29, framesize, "release frame (SP <- SP + frame size)");
     commentR(out, "jr", 31, "return");
 }
@@ -93,13 +93,29 @@ void genBinaryExpressionArith(Expression * expression, SymbolTable * table, FILE
         case ABSYN_OP_DIV :
             commentRRR(out, "div", reg, reg, right, "mul operation register %d / register %d", reg, right);
             break;
-        default :
-            genBinaryExpressionComp(expression, table, out, reg, lab);
+        case ABSYN_OP_EQU :
+            emitRRL(out, "bne", reg, right, "L%d", lab);
+            break;
+        case ABSYN_OP_NEQ :
+            emitRRL(out, "beq", reg, right, "L%d", lab);
+            break;
+        case ABSYN_OP_GRT :
+            emitRRL(out, "ble", reg, right, "L%d", lab);
+            break;
+        case ABSYN_OP_GRE :
+            emitRRL(out, "blt", reg, right, "L%d", lab);
+            break;
+        case ABSYN_OP_LST :
+            emitRRL(out, "bge", reg, reg + 1, "L%d", lab);
+            break;
+        case ABSYN_OP_LSE :
+            emitRRL(out, "bgt", reg, reg + 1, "L%d", lab);
     }
 }
 
 void genVariable(Variable * variable, SymbolTable * table, FILE * out, int reg) {
     Entry * var;
+    int tempReg;
     switch(variable->kind) {
         case VARIABLE_NAMEDVARIABLE :
             var = lookup(table, variable->u.namedVariable.name);
@@ -109,7 +125,15 @@ void genVariable(Variable * variable, SymbolTable * table, FILE * out, int reg) 
             }
             break;
         case VARIABLE_ARRAYACCESS : ;
-            genArrayAccess(variable, table, out, reg);
+            tempReg = reg;
+            genVariable(variable->u.arrayAccess.array, table, out, reg);
+            reg += 1;
+            genExpression(variable->u.arrayAccess.index, table, out, reg, 0);   //no label
+            reg += 1;
+            commentRRI(out, "add", reg, 0, variable->dataType->byteSize, "save component byte size into register %d", reg);
+            emitRRL(out, "bgeu", reg - 1, reg, "_indexError");
+            commentRRI(out, "mul", reg - 1, reg - 1, variable->dataType->byteSize, "multiply index with component byte size");
+            commentRRR(out, "add", tempReg, tempReg, reg - 1, "save offset for index into register %d", tempReg);
     }
 }
 
@@ -134,40 +158,6 @@ void genAssign(Statement * statement, SymbolTable * table, FILE * out) {
     genExpression(statement->u.assignStatement.value, table, out, 9, 0);
     //stw $9, $8, 0
     commentRRI(out, "stw", 9, 8, 0, "store register 8 value to register 9");
-}
-
-void genArrayAccess(Variable * variable, SymbolTable * table, FILE * out, int reg) {
-    int temp = reg;
-    genVariable(variable->u.arrayAccess.array, table, out, reg);
-    reg += 1;
-    genExpression(variable->u.arrayAccess.index, table, out, reg, 0);   //no label
-    reg += 1;
-    commentRRI(out, "add", reg, 0, variable->dataType->byteSize, "save component byte size into register %d", reg);
-    emitRRL(out, "bgeu", reg - 1, reg, "_indexError");
-    commentRRI(out, "mul", reg - 1, reg - 1, variable->dataType->byteSize, "multiply index with component byte size");
-    commentRRR(out, "add", temp, temp, reg - 1, "save offset for index into register %d", temp);
-}
-
-void genBinaryExpressionComp(Expression * expression, SymbolTable * table, FILE * out, int reg, int lab) {
-    switch(expression->u.binaryExpression.operator) {   //operation type
-        case ABSYN_OP_EQU :
-            emitRRL(out, "bne", reg, reg + 1, "L%d", lab);
-            break;
-        case ABSYN_OP_NEQ :
-            emitRRL(out, "beq", reg, reg + 1, "L%d", lab);
-            break;
-        case ABSYN_OP_GRT :
-            emitRRL(out, "ble", reg, reg + 1, "L%d", lab);
-            break;
-        case ABSYN_OP_GRE :
-            emitRRL(out, "blt", reg, reg + 1, "L%d", lab);
-            break;
-        case ABSYN_OP_LST :
-            emitRRL(out, "bge", reg, reg + 1, "L%d", lab);
-            break;
-        case ABSYN_OP_LSE :
-            emitRRL(out, "bgt", reg, reg + 1, "L%d", lab);
-    }
 }
 
 void genWhile(Statement * statement, SymbolTable * table, FILE * out, int reg) {
@@ -196,7 +186,7 @@ void genIf(Statement * statement, SymbolTable * table, FILE * out, int reg) {
     emitLabel(out, "L%d", trueL);    //L0:
     if(statement->u.ifStatement.elsePart->kind != STATEMENT_EMPTYSTATEMENT) {
         genStatement(statement->u.ifStatement.elsePart, table, out, reg);
-        emitJump(out, "L%d", trueL); //L1:
+        emitLabel(out, "L%d", falseL); //L1:
     }
 }
 
@@ -204,7 +194,6 @@ void genCall(Statement * statement, SymbolTable * table, FILE * out) {
     Entry * call = lookup(table, statement->u.callStatement.procedureName);
     ExpressionList * args = statement->u.callStatement.arguments;
     ParameterTypeList * params = call->u.procEntry.parameterTypes;
-    int count = 0;
     while(!args->isEmpty) {
         if(params->head->isRef) {
             genVariable(args->head->u.variableExpression.variable, table, out, 8);
@@ -212,10 +201,10 @@ void genCall(Statement * statement, SymbolTable * table, FILE * out) {
             genExpression(args->head, table, out, 8, 0);
         }
         commentRRI(out, "stw", 8, 29, params->head->offset, "store argument offset relative to SP into register 8");
-        count++;
         args = args->tail;
         params = params->tail;
     }
+    fprintf(out, "\tjal\t%s\n", statement->u.callStatement.procedureName->string);  //Jump to procedure
 }
 
 void genStatement(Statement * statement, SymbolTable * table, FILE * out, int reg) {

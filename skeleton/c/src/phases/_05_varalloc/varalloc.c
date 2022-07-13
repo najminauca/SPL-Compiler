@@ -177,7 +177,7 @@ static void showVarAllocation(Program *program, SymbolTable *globalTable) {
 int outgoingCheck(Statement * statement, SymbolTable * table) {
     if(statement->kind == STATEMENT_IFSTATEMENT) {  //check the compound statement part of if stm
         int then = outgoingCheck(statement->u.ifStatement.thenPart, table);
-        int els = outgoingCheck(statement->u.ifStatement.thenPart, table);
+        int els = outgoingCheck(statement->u.ifStatement.elsePart, table);
         return (then > els) ? then : els;
     } else if(statement->kind == STATEMENT_WHILESTATEMENT) {    //check the compound statement part of while stm
         return outgoingCheck(statement->u.whileStatement.body, table);
@@ -191,7 +191,8 @@ int outgoingCheck(Statement * statement, SymbolTable * table) {
         }
         return outgoingSize;
     } else if(statement->kind == STATEMENT_CALLSTATEMENT) { //return call statement arg area size
-        return lookup(table, statement->u.callStatement.procedureName)->u.procEntry.stackLayout->argumentAreaSize;
+        Entry * call = lookup(table, statement->u.callStatement.procedureName);
+        return call->u.procEntry.stackLayout->argumentAreaSize;
     }
     return -1;
 }
@@ -204,9 +205,6 @@ void allocVars(Program *program, SymbolTable *globalTable, bool showVarAlloc, bo
     while(!firstPassAST->isEmpty) {
         if(firstPassAST->head->kind == DECLARATION_PROCEDUREDECLARATION) {
             Entry * proc = lookup(globalTable, firstPassAST->head->name);
-            if(proc == NULL) {
-                undefinedProcedure(firstPassAST->head->position, firstPassAST->head->name);
-            }
             ParameterDeclarationList * parameterDeclarationList = firstPassAST->head->u.procedureDeclaration.parameters;
             ParameterTypeList * parameterTypeList = proc->u.procEntry.parameterTypes;
             int parCount = 0;
