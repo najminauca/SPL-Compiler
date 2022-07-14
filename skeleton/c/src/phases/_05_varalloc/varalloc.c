@@ -219,7 +219,6 @@ void allocVars(Program *program, SymbolTable *globalTable, bool showVarAlloc, bo
             proc->u.procEntry.stackLayout->argumentAreaSize = parCount * REF_BYTE_SIZE; //Save argument area size
             VariableDeclarationList * variableDeclarationList = firstPassAST->head->u.procedureDeclaration.variables;
             int varSize = 0;
-            int varCount = 0;
             while(!variableDeclarationList->isEmpty) {
                 Entry * var = lookup(proc->u.procEntry.localTable, variableDeclarationList->head->name);
                 if(var->u.varEntry.isRef) {
@@ -228,7 +227,6 @@ void allocVars(Program *program, SymbolTable *globalTable, bool showVarAlloc, bo
                     varSize += var->u.varEntry.type->byteSize;
                 }
                 var->u.varEntry.offset = -varSize;  //minus so the offset is correct in --vars
-                varCount++;
                 variableDeclarationList = variableDeclarationList->tail;
             }
             proc->u.procEntry.stackLayout->localVarAreaSize = varSize;  //Save local variable area size

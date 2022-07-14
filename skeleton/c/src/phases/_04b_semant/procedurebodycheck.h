@@ -19,7 +19,7 @@
  */
 void checkProcedures(Program *program, SymbolTable *globalTable);
 Type * checkExpression(Expression * expression, SymbolTable * table);
-void checkStatements(StatementList * statementList, SymbolTable * table);
+void checkCompound(StatementList * statementList, SymbolTable * table);
 void checkEachStatement(Statement * statement, SymbolTable * table);
 void checkIf(Statement * statement, SymbolTable * table);
 Type * checkVarExp(Variable * variable, SymbolTable * table);

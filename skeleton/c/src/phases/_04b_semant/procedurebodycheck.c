@@ -72,6 +72,7 @@ void checkIf(Statement * statement, SymbolTable * table) {
     checkEachStatement(statement->u.ifStatement.thenPart, table);
     checkEachStatement(statement->u.ifStatement.elsePart, table);
 }
+
 Type * checkVarExp(Variable * variable, SymbolTable * table) {
     Entry * name;
     Type * arr;
@@ -132,13 +133,13 @@ Type * checkExpression(Expression * expression, SymbolTable * table) {
 void checkEachStatement(Statement * statement, SymbolTable * table) {
     if(statement->kind == STATEMENT_ASSIGNSTATEMENT) checkAssign(statement, table);
     else if(statement->kind == STATEMENT_CALLSTATEMENT) checkCall(statement, table);
-    else if(statement->kind == STATEMENT_COMPOUNDSTATEMENT) checkStatements(statement->u.compoundStatement.statements, table);
+    else if(statement->kind == STATEMENT_COMPOUNDSTATEMENT) checkCompound(statement->u.compoundStatement.statements, table);
     else if(statement->kind == STATEMENT_EMPTYSTATEMENT);
     else if(statement->kind == STATEMENT_IFSTATEMENT) checkIf(statement, table);
     else if(statement->kind == STATEMENT_WHILESTATEMENT) checkWhile(statement, table);
 }
 
-void checkStatements(StatementList * statementList, SymbolTable * table) {
+void checkCompound(StatementList * statementList, SymbolTable * table) {
     StatementList * statements = statementList;
     while(!statements->isEmpty) {
         checkEachStatement(statements->head, table);
@@ -152,7 +153,7 @@ void checkProcedures(Program *program, SymbolTable *globalTable) {
     while(!globalDeclarationList->isEmpty) {
         if(globalDeclarationList->head->kind == DECLARATION_PROCEDUREDECLARATION) {
             Entry * proc = lookup(globalTable, globalDeclarationList->head->name);
-            checkStatements(globalDeclarationList->head->u.procedureDeclaration.body, proc->u.procEntry.localTable);
+            checkCompound(globalDeclarationList->head->u.procedureDeclaration.body, proc->u.procEntry.localTable);
         }
         globalDeclarationList = globalDeclarationList->tail;
     }

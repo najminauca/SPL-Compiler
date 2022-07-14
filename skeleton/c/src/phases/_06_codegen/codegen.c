@@ -12,7 +12,7 @@
 #define FIRST_REGISTER 8
 #define LAST_REGISTER 23
 
-static int label = 0;
+int label = 0;
 /**
  * Emits needed import statements, to allow usage of the predefined functions and sets the correct settings
  * for the assembler.
@@ -73,7 +73,7 @@ void genProcedure(GlobalDeclaration * glob_dec, SymbolTable * table, FILE * out,
     commentR(out, "jr", 31, "return");
 }
 
-void genBinaryExpressionArith(Expression * expression, SymbolTable * table, FILE * out, int reg, int lab) {
+void genBinaryExpression(Expression * expression, SymbolTable * table, FILE * out, int reg, int lab) {
     genExpression(expression->u.binaryExpression.leftOperand, table, out, reg, lab);    //left operand
     int right = reg + 1;
     if(right > LAST_REGISTER) {
@@ -147,7 +147,7 @@ void genExpression(Expression * expression, SymbolTable * table, FILE * out, int
             commentRRI(out, "ldw", reg, reg, 0, "load variable expression value to register %d", reg);
             break;
         case EXPRESSION_BINARYEXPRESSION :
-            genBinaryExpressionArith(expression, table, out, reg, lab);
+            genBinaryExpression(expression, table, out, reg, lab);
     }
 }
 
@@ -175,16 +175,17 @@ void genWhile(Statement * statement, SymbolTable * table, FILE * out, int reg) {
 void genIf(Statement * statement, SymbolTable * table, FILE * out, int reg) {
     label += 1;
     int trueL = label;
-    int falseL;
     genExpression(statement->u.ifStatement.condition, table, out, reg, label);
     genStatement(statement->u.ifStatement.thenPart, table, out, reg);
-    if(statement->u.ifStatement.elsePart->kind != STATEMENT_EMPTYSTATEMENT) {
+    int falseL;
+    bool elseBool = statement->u.ifStatement.elsePart->kind != STATEMENT_EMPTYSTATEMENT;
+    if(elseBool) {
         label += 1;
         falseL = label;
         emitJump(out, "L%d", falseL); //jump L1
     }
     emitLabel(out, "L%d", trueL);    //L0:
-    if(statement->u.ifStatement.elsePart->kind != STATEMENT_EMPTYSTATEMENT) {
+    if(elseBool) {
         genStatement(statement->u.ifStatement.elsePart, table, out, reg);
         emitLabel(out, "L%d", falseL); //L1:
     }
@@ -220,6 +221,12 @@ void genStatement(Statement * statement, SymbolTable * table, FILE * out, int re
             break;
         case STATEMENT_CALLSTATEMENT :
             genCall(statement, table, out);
+            break;
+        case STATEMENT_COMPOUNDSTATEMENT :
+            while(!statement->u.compoundStatement.statements->isEmpty) {
+                genStatement(statement->u.compoundStatement.statements->head, table, out, reg);
+                statement->u.compoundStatement.statements = statement->u.compoundStatement.statements->tail;
+            }
     }
 }
 

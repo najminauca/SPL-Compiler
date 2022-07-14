@@ -23,7 +23,5 @@ void genProcedure(GlobalDeclaration * glob_dec, SymbolTable * table, FILE * out,
 void genStatement(Statement * statement, SymbolTable * table, FILE * out, int reg);
 void genVariable(Variable * variable, SymbolTable * table, FILE * out, int reg);
 void genExpression(Expression * expression, SymbolTable * table, FILE * out, int reg, int lab);
-void genArrayAccess(Variable * variable, SymbolTable * table, FILE * out, int reg);
-void genBinaryExpressionArith(Expression * expression, SymbolTable * table, FILE * out, int reg, int lab);
-void genBinaryExpressionComp(Expression * expression, SymbolTable * table, FILE * out, int reg, int lab);
+void genBinaryExpression(Expression * expression, SymbolTable * table, FILE * out, int reg, int lab);
 #endif /* SPL_CODEGEN_H_ */
