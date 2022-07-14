@@ -1,0 +1,23 @@
+{
+    "accepted": true,
+    "immediate_evaluation": true,
+    "log": "[2022-07-14 11:33:55.363351] Received submission 1c965fd3-9356-44f0-9207-6984fc41e97b\n[2022-07-14 11:33:55.363806] Ip: 10.192.106.83\n[2022-07-14 11:33:55.364034] Team members: [('Antariksa', 'Najmi', '5311215'), ('Ahadriu', 'Hicham', '5337972')]\n[2022-07-14 11:33:55.707844] Your submission was ACCEPTED for course 'Compilerbau-ss22', assignment 'Aufgabe-2'.\n[2022-07-14 11:33:55.708245] Your submission has the id 1c965fd3-9356-44f0-9207-6984fc41e97b.\n[2022-07-14 11:33:55.709069] It will be evaluated shortly. Please check back soon for your results.\n",
+    "submission": {
+        "authors": [
+            {
+                "first_name": "Najmi",
+                "last_name": "Antariksa",
+                "matriculation_number": "5311215"
+            },
+            {
+                "first_name": "Hicham",
+                "last_name": "Ahadriu",
+                "matriculation_number": "5337972"
+            }
+        ],
+        "evaluation_result": null,
+        "id": "1c965fd3-9356-44f0-9207-6984fc41e97b",
+        "timestamp_ns": 1657791235368223133,
+        "upload_log": "[2022-07-14 11:33:55.363351] Received submission 1c965fd3-9356-44f0-9207-6984fc41e97b\n[2022-07-14 11:33:55.363806] Ip: 10.192.106.83\n[2022-07-14 11:33:55.364034] Team members: [('Antariksa', 'Najmi', '5311215'), ('Ahadriu', 'Hicham', '5337972')]\n[2022-07-14 11:33:55.707844] Your submission was ACCEPTED for course 'Compilerbau-ss22', assignment 'Aufgabe-2'.\n[2022-07-14 11:33:55.708245] Your submission has the id 1c965fd3-9356-44f0-9207-6984fc41e97b.\n[2022-07-14 11:33:55.709069] It will be evaluated shortly. Please check back soon for your results.\n\n"
+    }
+}

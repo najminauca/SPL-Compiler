@@ -130,9 +130,9 @@ void genVariable(Variable * variable, SymbolTable * table, FILE * out, int reg) 
             reg += 1;
             genExpression(variable->u.arrayAccess.index, table, out, reg, 0);   //no label
             reg += 1;
-            commentRRI(out, "add", reg, 0, variable->dataType->byteSize, "save component byte size into register %d", reg);
+            commentRRI(out, "add", reg, 0, variable->u.arrayAccess.array->dataType->byteSize, "save component byte size into register %d", reg);
             emitRRL(out, "bgeu", reg - 1, reg, "_indexError");
-            commentRRI(out, "mul", reg - 1, reg - 1, variable->dataType->byteSize, "multiply index with component byte size");
+            commentRRI(out, "mul", reg - 1, reg - 1, variable->u.arrayAccess.array->dataType->byteSize, "multiply index with component byte size");
             commentRRR(out, "add", tempReg, tempReg, reg - 1, "save offset for index into register %d", tempReg);
     }
 }

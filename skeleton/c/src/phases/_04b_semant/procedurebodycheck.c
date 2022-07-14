@@ -32,22 +32,22 @@ void checkCall(Statement * statement, SymbolTable * table) {
     ExpressionList * args = statement->u.callStatement.arguments;
     while(!parameters->isEmpty) {
         if(args->isEmpty) {
-            tooFewArguments(args->head->position, statement->u.callStatement.procedureName);
+            tooFewArguments(statement->position, statement->u.callStatement.procedureName);
         }
         count = count + 1;
         Type * expected = parameters->head->type;
         Type * actual = checkExpression(args->head, table);
         if(expected != actual) {
-            argumentTypeMismatch(args->head->position, statement->u.callStatement.procedureName, 1, expected, actual);
+            argumentTypeMismatch(statement->position, statement->u.callStatement.procedureName, 1, expected, actual);
         }
         if(parameters->head->isRef && args->head->kind != EXPRESSION_VARIABLEEXPRESSION) {
-            argumentMustBeAVariable(args->head->position, statement->u.callStatement.procedureName, count);
+            argumentMustBeAVariable(statement->position, statement->u.callStatement.procedureName, count);
         }
         parameters = parameters->tail;
         args = args->tail;
     }
     if(!args->isEmpty) {
-        tooManyArguments(args->head->position, statement->u.callStatement.procedureName);
+        tooManyArguments(statement->position, statement->u.callStatement.procedureName);
     }
 }
 

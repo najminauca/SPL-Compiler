@@ -64,7 +64,7 @@ void checkVariable(VariableDeclaration *variableDeclaration, SymbolTable *table)
     varEntry = newVarEntry(checkType(variableDeclaration->typeExpression, table), false);
     Entry * enterVar = enter(table, name, varEntry);
     if(enterVar == NULL) {
-        redeclarationAsParameter(position, name);
+        redeclarationAsVariable(position, name);
     }
 }
 
@@ -79,8 +79,10 @@ ParameterTypeList * checkParam(ParameterDeclarationList *parameterDeclarationLis
     if(lookup(table, name) != NULL) {
         redeclarationAsParameter(position, name);
     }
-
     Entry * param = newVarEntry(checkType(parameterDeclarationList->head->typeExpression, table), parameterDeclarationList->head->isReference);
+    if(param->u.varEntry.type->kind == TYPE_KIND_ARRAY && !param->u.varEntry.isRef) {
+        mustBeAReferenceParameter(position, name);
+    }
     Entry * enterParam = enter(table, name, param);
     if(enterParam == NULL) {
         redeclarationAsParameter(position, name);

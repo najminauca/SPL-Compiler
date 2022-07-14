@@ -1,0 +1,458 @@
+[2022-07-14 11:05:45.842419] Start of evaluation log for submission 'a7a28fd0-95d7-47ac-afa5-9f92b0827b37'.
+[2022-07-14 11:05:45.843404] Team member: ('Antariksa', 'Najmi', '5311215')
+[2022-07-14 11:05:45.843673] Team member: ('Ahadriu', 'Hicham', '5337972')
+[2022-07-14 11:05:45.875658] Preparing the sandbox
+[2022-07-14 11:05:47.106861] Unpacking submission in sandbox
+[2022-07-14 11:05:47.555027] Building the test subject
+[2022-07-14 11:05:47.555404] Identified the C variant.
+[2022-07-14 11:05:47.707384] Preparing C solution for building with cmake
+[2022-07-14 11:05:48.672262] CMake log:
+-- The C compiler identification is GNU 9.4.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Found BISON: /usr/bin/bison (found version "3.5.1") 
+-- Found FLEX: /usr/bin/flex (found version "2.6.4") 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/solution/c/build
+[2022-07-14 11:05:48.672364] Building C solution with make
+[2022-07-14 11:05:50.919173] Make log:
+Scanning dependencies of target _generated_source_folder_dummy_target
+[  0%] Built target _generated_source_folder_dummy_target
+[  3%] [FLEX][SCANNER] Building scanner with flex 2.6.4
+[  6%] [BISON][PARSER] Building parser with bison 3.5.1
+Scanning dependencies of target spl
+[  6%] [BISON][PARSER] Building parser with bison 3.5.1
+[  9%] Building C object CMakeFiles/spl.dir/generated-sources/phases/_02_03_parser/parser.c.o
+[  9%] [FLEX][SCANNER] Building scanner with flex 2.6.4
+[ 12%] Building C object CMakeFiles/spl.dir/generated-sources/phases/_01_scanner/scanner.c.o
+[ 15%] Building C object CMakeFiles/spl.dir/src/absyn/expressions.c.o
+/home/solution/c/src/absyn/expressions.c: In function 'isOperatorArithmetic':
+/home/solution/c/src/absyn/expressions.c:14:42: warning: unused parameter 'operator' [-Wunused-parameter]
+   14 | bool isOperatorArithmetic(BinaryOperator operator) {
+      |                           ~~~~~~~~~~~~~~~^~~~~~~~
+/home/solution/c/src/absyn/expressions.c: In function 'isOperatorComparison':
+/home/solution/c/src/absyn/expressions.c:18:42: warning: unused parameter 'operator' [-Wunused-parameter]
+   18 | bool isOperatorComparison(BinaryOperator operator) {
+      |                           ~~~~~~~~~~~~~~~^~~~~~~~
+/home/solution/c/src/absyn/expressions.c: In function 'flipComparisonOperator':
+/home/solution/c/src/absyn/expressions.c:22:54: warning: unused parameter 'operator' [-Wunused-parameter]
+   22 | BinaryOperator flipComparisonOperator(BinaryOperator operator) {
+      |                                       ~~~~~~~~~~~~~~~^~~~~~~~
+[ 18%] Building C object CMakeFiles/spl.dir/src/absyn/global_declarations.c.o
+[ 21%] Building C object CMakeFiles/spl.dir/src/absyn/lists.c.o
+[ 25%] Building C object CMakeFiles/spl.dir/src/absyn/parameter_declaration.c.o
+[ 28%] Building C object CMakeFiles/spl.dir/src/absyn/position.c.o
+[ 31%] Building C object CMakeFiles/spl.dir/src/absyn/program.c.o
+[ 34%] Building C object CMakeFiles/spl.dir/src/absyn/statements.c.o
+[ 37%] Building C object CMakeFiles/spl.dir/src/absyn/type_expressions.c.o
+[ 40%] Building C object CMakeFiles/spl.dir/src/absyn/variable_declaration.c.o
+[ 43%] Building C object CMakeFiles/spl.dir/src/absyn/variables.c.o
+[ 46%] Building C object CMakeFiles/spl.dir/src/absyn/printing/printing_helpers.c.o
+[ 50%] Building C object CMakeFiles/spl.dir/src/phases/_04a_tablebuild/tablebuild.c.o
+/home/solution/c/src/phases/_04a_tablebuild/tablebuild.c: In function 'checkVariable':
+/home/solution/c/src/phases/_04a_tablebuild/tablebuild.c:60:60: warning: comparison between 'type_kind' {aka 'enum <anonymous>'} and 'enum <anonymous>' [-Wenum-compare]
+   60 |     if(varEntry != NULL && varEntry->u.varEntry.type->kind == ENTRY_KIND_VAR) {
+      |                                                            ^~
+/home/solution/c/src/phases/_04a_tablebuild/tablebuild.c: In function 'checkType':
+/home/solution/c/src/phases/_04a_tablebuild/tablebuild.c:52:1: warning: control reaches end of non-void function [-Wreturn-type]
+   52 | }
+      | ^
+[ 53%] Building C object CMakeFiles/spl.dir/src/phases/_04b_semant/procedurebodycheck.c.o
+/home/solution/c/src/phases/_04b_semant/procedurebodycheck.c: In function 'checkExpression':
+/home/solution/c/src/phases/_04b_semant/procedurebodycheck.c:131:1: warning: control reaches end of non-void function [-Wreturn-type]
+  131 | }
+      | ^
+[ 56%] Building C object CMakeFiles/spl.dir/src/phases/_05_varalloc/varalloc.c.o
+/home/solution/c/src/phases/_05_varalloc/varalloc.c: In function 'allocVars':
+/home/solution/c/src/phases/_05_varalloc/varalloc.c:200:84: warning: unused parameter 'ershovOptimization' [-Wunused-parameter]
+  200 | void allocVars(Program *program, SymbolTable *globalTable, bool showVarAlloc, bool ershovOptimization) {
+      |                                                                                    ^
+[ 59%] Building C object CMakeFiles/spl.dir/src/phases/_05_varalloc/stack_layout.c.o
+[ 62%] Building C object CMakeFiles/spl.dir/src/phases/_06_codegen/codegen.c.o
+/home/solution/c/src/phases/_06_codegen/codegen.c: In function 'genCode':
+/home/solution/c/src/phases/_06_codegen/codegen.c:39:74: warning: unused parameter 'ershovOptimization' [-Wunused-parameter]
+   39 | void genCode(Program *program, SymbolTable *globalTable, FILE *out, bool ershovOptimization) {
+      |                                                                          ^
+/home/solution/c/src/phases/_06_codegen/codegen.c: In function 'genStatement':
+/home/solution/c/src/phases/_06_codegen/codegen.c:212:5: warning: enumeration value 'STATEMENT_EMPTYSTATEMENT' not handled in switch [-Wswitch]
+  212 |     switch(statement->kind) {
+      |     ^~~~~~
+[ 65%] Building C object CMakeFiles/spl.dir/src/phases/_06_codegen/codeprint.c.o
+[ 68%] Building C object CMakeFiles/spl.dir/src/main.c.o
+[ 71%] Building C object CMakeFiles/spl.dir/src/command_line_options.c.o
+[ 75%] Building C object CMakeFiles/spl.dir/src/table/identifier.c.o
+[ 78%] Building C object CMakeFiles/spl.dir/src/table/table.c.o
+[ 81%] Building C object CMakeFiles/spl.dir/src/table/entry.c.o
+[ 84%] Building C object CMakeFiles/spl.dir/src/types/types.c.o
+[ 87%] Building C object CMakeFiles/spl.dir/src/util/errors.c.o
+[ 90%] Building C object CMakeFiles/spl.dir/src/util/memory.c.o
+[ 93%] Building C object CMakeFiles/spl.dir/src/util/ascii_table.c.o
+[ 96%] Building C object CMakeFiles/spl.dir/src/util/string_ops.c.o
+[100%] Linking C executable spl
+[100%] Built target spl
+[2022-07-14 11:05:51.070239] Beginning evaluation.
+[2022-07-14 11:05:51.070559] Evaluating 101_undefined_type.spl with the submitted solution.
+[2022-07-14 11:05:51.220361] Test subject results match (Compiler Failure).
+[2022-07-14 11:05:51.220410] Exit code matches the expected exit code (101).
+[2022-07-14 11:05:51.220442] Test passed.
+[2022-07-14 11:05:51.220459] Running Score: 1/1
+
+[2022-07-14 11:05:51.220489] Evaluating 102_not_a_type.spl with the submitted solution.
+[2022-07-14 11:05:51.366047] Test subject results match (Compiler Failure).
+[2022-07-14 11:05:51.366094] Exit code matches the expected exit code (102).
+[2022-07-14 11:05:51.366126] Test passed.
+[2022-07-14 11:05:51.366186] Running Score: 2/2
+
+[2022-07-14 11:05:51.366357] Evaluating 103_redeclaration_as_type.spl with the submitted solution.
+[2022-07-14 11:05:51.522388] Test subject results match (Compiler Failure).
+[2022-07-14 11:05:51.522639] Exit code matches the expected exit code (103).
+[2022-07-14 11:05:51.522684] Test passed.
+[2022-07-14 11:05:51.522705] Running Score: 3/3
+
+[2022-07-14 11:05:51.522740] Evaluating 104_must_be_reference_parameter.spl with the submitted solution.
+[2022-07-14 11:05:52.527226] Results do not match. Expected Compiler Failure(104), but got Success(0).
+[2022-07-14 11:05:52.527292] Output (stdout) of 'xvfb-run -a /home/tools/sim -x -l /home/temp/104_must_be_reference_parameter.spl.bin -s 1 -t 0' (Limited to 50 lines/10000 characters):
+SPL/RTS: main() started
+
+SPL/RTS: main() finished
+[2022-07-14 11:05:52.527344] Test not passed.
+[2022-07-14 11:05:52.527360] Running Score: 3/4
+
+[2022-07-14 11:05:52.527394] Evaluating 105_redeclaration_as_procedure.spl with the submitted solution.
+[2022-07-14 11:05:52.690115] Test subject results match (Compiler Failure).
+[2022-07-14 11:05:52.690161] Exit code matches the expected exit code (105).
+[2022-07-14 11:05:52.690192] Test passed.
+[2022-07-14 11:05:52.690211] Running Score: 4/5
+
+[2022-07-14 11:05:52.690242] Evaluating 106_redeclaration_as_parameter.spl with the submitted solution.
+[2022-07-14 11:05:52.849045] Test subject results match (Compiler Failure).
+[2022-07-14 11:05:52.849089] Exit code matches the expected exit code (106).
+[2022-07-14 11:05:52.849119] Test passed.
+[2022-07-14 11:05:52.849135] Running Score: 5/6
+
+[2022-07-14 11:05:52.849189] Evaluating 107_redeclaration_as_variable.spl with the submitted solution.
+[2022-07-14 11:05:52.994242] Test subject results match (Compiler Failure).
+[2022-07-14 11:05:52.994394] Exit code matches the expected exit code (107).
+[2022-07-14 11:05:52.994436] Test passed.
+[2022-07-14 11:05:52.994453] Running Score: 6/7
+
+[2022-07-14 11:05:52.994485] Evaluating 112_undefined_procedure.spl with the submitted solution.
+[2022-07-14 11:05:53.145519] Test subject results match (Compiler Failure).
+[2022-07-14 11:05:53.145565] Exit code matches the expected exit code (112).
+[2022-07-14 11:05:53.145596] Test passed.
+[2022-07-14 11:05:53.145616] Running Score: 7/8
+
+[2022-07-14 11:05:53.145649] Evaluating 113_call_of_non_procedure.spl with the submitted solution.
+[2022-07-14 11:05:53.293192] Test subject results match (Compiler Failure).
+[2022-07-14 11:05:53.293235] Exit code matches the expected exit code (113).
+[2022-07-14 11:05:53.293269] Test passed.
+[2022-07-14 11:05:53.293286] Running Score: 8/9
+
+[2022-07-14 11:05:53.293317] Evaluating 114_argument_type_mismatch.spl with the submitted solution.
+[2022-07-14 11:05:53.454890] Test subject results match (Compiler Failure).
+[2022-07-14 11:05:53.454982] Exit code matches the expected exit code (114).
+[2022-07-14 11:05:53.455140] Test passed.
+[2022-07-14 11:05:53.455170] Running Score: 9/10
+
+[2022-07-14 11:05:53.455204] Evaluating 115_argument_must_be_variable.spl with the submitted solution.
+[2022-07-14 11:05:53.600921] Test subject results match (Compiler Failure).
+[2022-07-14 11:05:53.601074] Exit code matches the expected exit code (115).
+[2022-07-14 11:05:53.601117] Test passed.
+[2022-07-14 11:05:53.601134] Running Score: 10/11
+
+[2022-07-14 11:05:53.601187] Evaluating 116_procedure_too_few_arguments.spl with the submitted solution.
+[2022-07-14 11:05:54.049020] Submission exited with exit code 139, which is not allowed. Allowed: [0, 99, 140, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127]
+[2022-07-14 11:05:54.049068] No output (stdout + stderr) for '/home/solution/c/build/spl /home/tests/116_procedure_too_few_arguments.spl /home/temp/116_procedure_too_few_arguments.spl.s' available.
+[2022-07-14 11:05:54.049103] Test not passed.
+[2022-07-14 11:05:54.049118] Running Score: 10/12
+
+[2022-07-14 11:05:54.049148] Evaluating 117_procedure_too_many_arguments.spl with the submitted solution.
+[2022-07-14 11:05:54.219953] Test subject results match (Compiler Failure).
+[2022-07-14 11:05:54.220095] Exit code matches the expected exit code (117).
+[2022-07-14 11:05:54.220139] Test passed.
+[2022-07-14 11:05:54.220155] Running Score: 11/13
+
+[2022-07-14 11:05:54.220190] Evaluating 121_undefined_variable.spl with the submitted solution.
+[2022-07-14 11:05:54.371518] Test subject results match (Compiler Failure).
+[2022-07-14 11:05:54.371714] Exit code matches the expected exit code (121).
+[2022-07-14 11:05:54.371756] Test passed.
+[2022-07-14 11:05:54.371773] Running Score: 12/14
+
+[2022-07-14 11:05:54.371805] Evaluating 122_not_a_variable.spl with the submitted solution.
+[2022-07-14 11:05:54.522341] Test subject results match (Compiler Failure).
+[2022-07-14 11:05:54.522501] Exit code matches the expected exit code (122).
+[2022-07-14 11:05:54.522548] Test passed.
+[2022-07-14 11:05:54.522565] Running Score: 13/15
+
+[2022-07-14 11:05:54.522598] Evaluating 123_indexing_non_array.spl with the submitted solution.
+[2022-07-14 11:05:54.678345] Test subject results match (Compiler Failure).
+[2022-07-14 11:05:54.678499] Exit code matches the expected exit code (123).
+[2022-07-14 11:05:54.678542] Test passed.
+[2022-07-14 11:05:54.678558] Running Score: 14/16
+
+[2022-07-14 11:05:54.678596] Evaluating 124_indexing_with_non_integer.spl with the submitted solution.
+[2022-07-14 11:05:54.836219] Test subject results match (Compiler Failure).
+[2022-07-14 11:05:54.836261] Exit code matches the expected exit code (124).
+[2022-07-14 11:05:54.836291] Test passed.
+[2022-07-14 11:05:54.836309] Running Score: 15/17
+
+[2022-07-14 11:05:54.836339] Evaluating 126_main_not_a_procedure.spl with the submitted solution.
+[2022-07-14 11:05:55.023929] Test subject results match (Compiler Failure).
+[2022-07-14 11:05:55.024006] Exit code matches the expected exit code (126).
+[2022-07-14 11:05:55.024043] Test passed.
+[2022-07-14 11:05:55.024060] Running Score: 16/18
+
+[2022-07-14 11:05:55.024092] Evaluating 127_main_must_not_have_parameters.spl with the submitted solution.
+[2022-07-14 11:05:55.187787] Test subject results match (Compiler Failure).
+[2022-07-14 11:05:55.189252] Exit code matches the expected exit code (127).
+[2022-07-14 11:05:55.189314] Test passed.
+[2022-07-14 11:05:55.189334] Running Score: 17/19
+
+[2022-07-14 11:05:55.189371] Evaluating acker.spl with the submitted solution.
+[2022-07-14 11:05:58.192904] Test subject results match (Success).
+[2022-07-14 11:05:58.203422] Outputs match.
+[2022-07-14 11:05:58.204074] Test passed.
+[2022-07-14 11:05:58.204108] Running Score: 18/20
+
+[2022-07-14 11:05:58.204147] Evaluating bigtest.spl with the submitted solution.
+[2022-07-14 11:05:59.234366] Test subject results match (Success).
+[2022-07-14 11:05:59.244690] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+8,30c8
+< -2 135
+< 
+< Test 2
+< ========
+< -1 32
+< 0 33
+< 99 66
+< 1 67
+< 
+< Test 3
+< ========
+< 0 10
+< 1 27
+< 2 65
+< 3 119
+< ok
+< 
+< Test 4
+< ========
+< 0 67
+< 1 69
+< 
+< SPL/RTS: main() finished
+---
+> SPL/RTS: index out of bounds
+[2022-07-14 11:05:59.245344] Test not passed.
+[2022-07-14 11:05:59.246059] Running Score: 18/21
+
+[2022-07-14 11:05:59.246120] Evaluating bits.spl with the submitted solution.
+[2022-07-14 11:06:00.256266] Test subject results match (Success).
+[2022-07-14 11:06:00.262443] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+3,4c3
+< 0000 0111 0101 1011 1100 1101 0001 0101
+< SPL/RTS: main() finished
+---
+> SPL/RTS: index out of bounds
+[2022-07-14 11:06:00.263311] Test not passed.
+[2022-07-14 11:06:00.263488] Running Score: 18/22
+
+[2022-07-14 11:06:00.263795] Evaluating gcd.spl with the submitted solution.
+[2022-07-14 11:06:01.385875] Test subject results match (Success).
+[2022-07-14 11:06:01.406005] Outputs match.
+[2022-07-14 11:06:01.406304] Test passed.
+[2022-07-14 11:06:01.406496] Running Score: 19/23
+
+[2022-07-14 11:06:01.406789] Evaluating inttest.spl with the submitted solution.
+[2022-07-14 11:06:03.203964] Test subject results match (Success).
+[2022-07-14 11:06:03.214835] Outputs match.
+[2022-07-14 11:06:03.215177] Test passed.
+[2022-07-14 11:06:03.215367] Running Score: 20/24
+
+[2022-07-14 11:06:03.215799] Evaluating multiply.spl with the submitted solution.
+[2022-07-14 11:06:04.589895] Test subject results match (Success).
+[2022-07-14 11:06:04.598467] Outputs match.
+[2022-07-14 11:06:04.598771] Test passed.
+[2022-07-14 11:06:04.598954] Running Score: 21/25
+
+[2022-07-14 11:06:04.599276] Evaluating partind1.spl with the submitted solution.
+[2022-07-14 11:06:05.624891] Test subject results match (Success).
+[2022-07-14 11:06:05.635691] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+3,8c3
+< 0 0 0 0 0 0 0 
+< 0 0 0 0 0 0 0 
+< 0 1 2 3 4 5 6 
+< 0 0 0 0 0 0 0 
+< 0 0 0 0 0 0 0 
+< SPL/RTS: main() finished
+---
+> SPL/RTS: index out of bounds
+[2022-07-14 11:06:05.635841] Test not passed.
+[2022-07-14 11:06:05.635857] Running Score: 21/26
+
+[2022-07-14 11:06:05.635893] Evaluating partind2.spl with the submitted solution.
+[2022-07-14 11:06:06.681995] Test subject results match (Success).
+[2022-07-14 11:06:06.690741] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+3,21c3
+< 0 0 0 0 0 0 0 
+< 0 0 0 0 0 0 0 
+< 0 0 0 0 0 0 0 
+< 0 0 0 0 0 0 0 
+< 0 0 0 0 0 0 0 
+< 
+< 0 0 0 0 0 0 0 
+< 0 2 0 0 0 0 0 
+< 0 0 4 0 0 0 0 
+< 0 0 0 6 0 0 0 
+< 0 0 0 0 8 0 0 
+< 
+< 0 0 0 0 0 0 0 
+< 0 0 0 0 0 0 0 
+< 0 0 0 0 0 0 0 
+< 0 0 0 0 0 0 0 
+< 0 0 0 0 0 0 0 
+< 
+< SPL/RTS: main() finished
+---
+> SPL/RTS: index out of bounds
+[2022-07-14 11:06:06.692942] Test not passed.
+[2022-07-14 11:06:06.693274] Running Score: 21/27
+
+[2022-07-14 11:06:06.693380] Evaluating swap.spl with the submitted solution.
+[2022-07-14 11:06:07.695281] Test subject results match (Success).
+[2022-07-14 11:06:07.704155] Outputs match.
+[2022-07-14 11:06:07.704455] Test passed.
+[2022-07-14 11:06:07.704674] Running Score: 22/28
+
+[2022-07-14 11:06:07.704998] Evaluating test1.spl with the submitted solution.
+[2022-07-14 11:06:08.687535] Test subject results match (Success).
+[2022-07-14 11:06:08.699597] Outputs match.
+[2022-07-14 11:06:08.699787] Test passed.
+[2022-07-14 11:06:08.699811] Running Score: 23/29
+
+[2022-07-14 11:06:08.699848] Evaluating test2.spl with the submitted solution.
+[2022-07-14 11:06:09.715412] Test subject results match (Success).
+[2022-07-14 11:06:09.726426] Outputs match.
+[2022-07-14 11:06:09.726660] Test passed.
+[2022-07-14 11:06:09.726686] Running Score: 24/30
+
+[2022-07-14 11:06:09.726879] Evaluating test3.spl with the submitted solution.
+[2022-07-14 11:06:10.759112] Test subject results match (Success).
+[2022-07-14 11:06:10.769267] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+3,13c3
+< 0
+< 1
+< 2
+< 3
+< 4
+< 5
+< 6
+< 7
+< 8
+< 9
+< SPL/RTS: main() finished
+---
+> SPL/RTS: index out of bounds
+[2022-07-14 11:06:10.770325] Test not passed.
+[2022-07-14 11:06:10.770559] Running Score: 24/31
+
+[2022-07-14 11:06:10.770621] Evaluating test4.spl with the submitted solution.
+[2022-07-14 11:06:11.781500] Test subject results match (Success).
+[2022-07-14 11:06:11.790714] Outputs match.
+[2022-07-14 11:06:11.791013] Test passed.
+[2022-07-14 11:06:11.791244] Running Score: 25/32
+
+[2022-07-14 11:06:11.791532] Evaluating test5.spl with the submitted solution.
+[2022-07-14 11:06:12.782009] Test subject results match (Success).
+[2022-07-14 11:06:12.791587] Outputs match.
+[2022-07-14 11:06:12.791878] Test passed.
+[2022-07-14 11:06:12.792117] Running Score: 26/33
+
+[2022-07-14 11:06:12.792373] Evaluating test7.spl with the submitted solution.
+[2022-07-14 11:06:13.778753] Test subject results match (Success).
+[2022-07-14 11:06:13.788229] Outputs match.
+[2022-07-14 11:06:13.788842] Test passed.
+[2022-07-14 11:06:13.788874] Running Score: 27/34
+
+[2022-07-14 11:06:13.788913] Evaluating test8.spl with the submitted solution.
+[2022-07-14 11:06:14.823309] Test subject results match (Success).
+[2022-07-14 11:06:14.831620] Outputs match.
+[2022-07-14 11:06:14.832043] Test passed.
+[2022-07-14 11:06:14.832327] Running Score: 28/35
+
+[2022-07-14 11:06:14.832718] Evaluating test9.spl with the submitted solution.
+[2022-07-14 11:06:15.861076] Test subject results match (Success).
+[2022-07-14 11:06:15.871365] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+3c3,4
+< SPL/RTS: index out of bounds
+---
+> ok
+> SPL/RTS: main() finished
+[2022-07-14 11:06:15.871495] Test not passed.
+[2022-07-14 11:06:15.871512] Running Score: 28/36
+
+[2022-07-14 11:06:15.871547] Evaluating threedim.spl with the submitted solution.
+[2022-07-14 11:06:16.857733] Test subject results match (Success).
+[2022-07-14 11:06:16.864044] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+3,33c3
+< 10000
+< 00000
+< 00000
+< 00000
+< 00000
+< 
+< 00000
+< 01000
+< 00000
+< 00000
+< 00000
+< 
+< 00000
+< 00000
+< 00100
+< 00000
+< 00000
+< 
+< 00000
+< 00000
+< 00000
+< 00010
+< 00000
+< 
+< 00000
+< 00000
+< 00000
+< 00000
+< 00001
+< 
+< SPL/RTS: main() finished
+---
+> SPL/RTS: index out of bounds
+[2022-07-14 11:06:16.867034] Test not passed.
+[2022-07-14 11:06:16.867248] Running Score: 28/37
+
+[2022-07-14 11:06:16.867306] Evaluating twodim.spl with the submitted solution.
+[2022-07-14 11:06:17.850382] Test subject results match (Success).
+[2022-07-14 11:06:17.861913] Outputs differ. 'diff'-log (Expected output first, Limited to 50 lines/10000 characters):
+3,8c3
+< 10000
+< 01000
+< 00100
+< 00010
+< 00001
+< SPL/RTS: main() finished
+---
+> SPL/RTS: index out of bounds
+[2022-07-14 11:06:17.862064] Test not passed.
+[2022-07-14 11:06:17.862083] Running Score: 28/38
+
+[2022-07-14 11:06:17.863235] Final score: 28/38 (73%). 
+[2022-07-14 11:06:17.866039] 80% are needed to pass.
+[2022-07-14 11:06:18.154827] You have NOT PASSED this assignment.
+[2022-07-14 11:06:18.155158] You can try again. Deadline: 31.07.2022 23:59
+
