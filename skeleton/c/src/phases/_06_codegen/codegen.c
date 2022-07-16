@@ -157,7 +157,7 @@ void genAssign(Statement * statement, SymbolTable * table, FILE * out) {
     //value
     genExpression(statement->u.assignStatement.value, table, out, 9, 0);
     //stw $9, $8, 0
-    commentRRI(out, "stw", 9, 8, 0, "store register 8 value to register 9");
+    commentRRI(out, "stw", 9, 8, 0, "store register 9 value to register 8");
 }
 
 void genWhile(Statement * statement, SymbolTable * table, FILE * out, int reg) {

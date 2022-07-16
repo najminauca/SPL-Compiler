@@ -12,140 +12,157 @@
 
 	.code
 	.align	4
-	.export ackermann
-ackermann:
-	sub	$29,$29,24		; assemble frame, SP <- SP - frame size
-	stw	$25,$29,16		; store old FP relative to SP
-	add	$25,$29,24		; new FP <- new SP + frame size
-	stw	$31,$25,-12		; store return address relative to FP
-	add	$8,$25,0		; save variable offset relative to FP into register 8
-	ldw	$8,$8,0		; load variable expression value to register 8
+	.export p
+p:
+	sub	$29,$29,8		; assemble frame, SP <- SP - frame size
+	stw	$25,$29,0		; store old FP relative to SP
+	add	$25,$29,8		; new FP <- new SP + frame size
+	add	$8,$25,-4		; save variable offset relative to FP into register 8
 	add	$9,$0,0		; save intlit value to register 9
-	bne	$8,$9,L1
-	add	$8,$25,8		; save variable offset relative to FP into register 8
-	ldw	$8,$8,0		; load reference variable value into register 8
-	add	$9,$25,4		; save variable offset relative to FP into register 9
-	ldw	$9,$9,0		; load variable expression value to register 9
-	add	$10,$0,1		; save intlit value to register 10
-	add	$9,$9,$10		; add operation register 9 + register 10
 	stw	$9,$8,0		; store register 8 value to register 9
-	j	L2
 L1:
-	add	$8,$25,4		; save variable offset relative to FP into register 8
+	add	$8,$25,-4		; save variable offset relative to FP into register 8
 	ldw	$8,$8,0		; load variable expression value to register 8
-	add	$9,$0,0		; save intlit value to register 9
-	bne	$8,$9,L3
+	add	$9,$0,7		; save intlit value to register 9
+	bge	$8,$9,L2
 	add	$8,$25,0		; save variable offset relative to FP into register 8
-	ldw	$8,$8,0		; load variable expression value to register 8
-	add	$9,$0,1		; save intlit value to register 9
-	sub	$8,$8,$9		; sub operation register 8 - register 9
-	stw	$8,$29,0		; store argument offset relative to SP into register 8
-	add	$8,$0,1		; save intlit value to register 8
-	stw	$8,$29,4		; store argument offset relative to SP into register 8
-	add	$8,$25,8		; save variable offset relative to FP into register 8
 	ldw	$8,$8,0		; load reference variable value into register 8
-	stw	$8,$29,8		; store argument offset relative to SP into register 8
-	jal	ackermann
-	j	L4
-L3:
-	add	$8,$25,0		; save variable offset relative to FP into register 8
-	ldw	$8,$8,0		; load variable expression value to register 8
-	stw	$8,$29,0		; store argument offset relative to SP into register 8
-	add	$8,$25,4		; save variable offset relative to FP into register 8
-	ldw	$8,$8,0		; load variable expression value to register 8
-	add	$9,$0,1		; save intlit value to register 9
-	sub	$8,$8,$9		; sub operation register 8 - register 9
-	stw	$8,$29,4		; store argument offset relative to SP into register 8
-	add	$8,$25,-4		; save variable offset relative to FP into register 8
-	stw	$8,$29,8		; store argument offset relative to SP into register 8
-	jal	ackermann
-	add	$8,$25,0		; save variable offset relative to FP into register 8
-	ldw	$8,$8,0		; load variable expression value to register 8
-	add	$9,$0,1		; save intlit value to register 9
-	sub	$8,$8,$9		; sub operation register 8 - register 9
-	stw	$8,$29,0		; store argument offset relative to SP into register 8
-	add	$8,$25,-4		; save variable offset relative to FP into register 8
-	ldw	$8,$8,0		; load variable expression value to register 8
-	stw	$8,$29,4		; store argument offset relative to SP into register 8
-	add	$8,$25,8		; save variable offset relative to FP into register 8
-	ldw	$8,$8,0		; load reference variable value into register 8
-	stw	$8,$29,8		; store argument offset relative to SP into register 8
-	jal	ackermann
-L4:
-L2:
-	ldw	$31,$25,-12		; get return address
-	ldw	$25,$29,16		; get old FP
-	add	$29,$29,24		; release frame (SP <- SP + frame size)
-	jr	$31			; return
-	.export main
-main:
-	sub	$29,$29,32		; assemble frame, SP <- SP - frame size
-	stw	$25,$29,16		; store old FP relative to SP
-	add	$25,$29,32		; new FP <- new SP + frame size
-	stw	$31,$25,-20		; store return address relative to FP
-	add	$8,$25,-4		; save variable offset relative to FP into register 8
-	add	$9,$0,0		; save intlit value to register 9
-	stw	$9,$8,0		; store register 8 value to register 9
-L5:
-	add	$8,$25,-4		; save variable offset relative to FP into register 8
-	ldw	$8,$8,0		; load variable expression value to register 8
-	add	$9,$0,3		; save intlit value to register 9
-	bgt	$8,$9,L6
-	add	$8,$25,-8		; save variable offset relative to FP into register 8
-	add	$9,$0,0		; save intlit value to register 9
-	stw	$9,$8,0		; store register 8 value to register 9
-L7:
-	add	$8,$25,-8		; save variable offset relative to FP into register 8
-	ldw	$8,$8,0		; load variable expression value to register 8
-	add	$9,$0,6		; save intlit value to register 9
-	bgt	$8,$9,L8
-	add	$8,$25,-4		; save variable offset relative to FP into register 8
-	ldw	$8,$8,0		; load variable expression value to register 8
-	stw	$8,$29,0		; store argument offset relative to SP into register 8
-	add	$8,$25,-8		; save variable offset relative to FP into register 8
-	ldw	$8,$8,0		; load variable expression value to register 8
-	stw	$8,$29,4		; store argument offset relative to SP into register 8
-	add	$8,$25,-12		; save variable offset relative to FP into register 8
-	stw	$8,$29,8		; store argument offset relative to SP into register 8
-	jal	ackermann
-	add	$8,$25,-4		; save variable offset relative to FP into register 8
-	ldw	$8,$8,0		; load variable expression value to register 8
-	stw	$8,$29,0		; store argument offset relative to SP into register 8
-	jal	printi
-	add	$8,$0,32		; save intlit value to register 8
-	stw	$8,$29,0		; store argument offset relative to SP into register 8
-	jal	printc
-	add	$8,$25,-8		; save variable offset relative to FP into register 8
-	ldw	$8,$8,0		; load variable expression value to register 8
-	stw	$8,$29,0		; store argument offset relative to SP into register 8
-	jal	printi
-	add	$8,$0,32		; save intlit value to register 8
-	stw	$8,$29,0		; store argument offset relative to SP into register 8
-	jal	printc
-	add	$8,$25,-12		; save variable offset relative to FP into register 8
-	ldw	$8,$8,0		; load variable expression value to register 8
-	stw	$8,$29,0		; store argument offset relative to SP into register 8
-	jal	printi
-	add	$8,$0,10		; save intlit value to register 8
-	stw	$8,$29,0		; store argument offset relative to SP into register 8
-	jal	printc
-	add	$8,$25,-8		; save variable offset relative to FP into register 8
-	add	$9,$25,-8		; save variable offset relative to FP into register 9
+	add	$9,$25,-4		; save variable offset relative to FP into register 9
 	ldw	$9,$9,0		; load variable expression value to register 9
-	add	$10,$0,1		; save intlit value to register 10
-	add	$9,$9,$10		; add operation register 9 + register 10
+	add	$10,$0,28		; save component byte size into register 10
+	bgeu	$9,$10,_indexError
+	mul	$9,$9,28		; multiply index with component byte size
+	add	$8,$8,$9		; save offset for index into register 8
+	add	$9,$25,-4		; save variable offset relative to FP into register 9
+	ldw	$9,$9,0		; load variable expression value to register 9
 	stw	$9,$8,0		; store register 8 value to register 9
-	j	L7
-L8:
 	add	$8,$25,-4		; save variable offset relative to FP into register 8
 	add	$9,$25,-4		; save variable offset relative to FP into register 9
 	ldw	$9,$9,0		; load variable expression value to register 9
 	add	$10,$0,1		; save intlit value to register 10
 	add	$9,$9,$10		; add operation register 9 + register 10
 	stw	$9,$8,0		; store register 8 value to register 9
+	j	L1
+L2:
+	ldw	$25,$29,0		; get old FP
+	add	$29,$29,8		; release frame (SP <- SP + frame size)
+	jr	$31			; return
+	.export main
+main:
+	sub	$29,$29,160		; assemble frame, SP <- SP - frame size
+	stw	$25,$29,8		; store old FP relative to SP
+	add	$25,$29,160		; new FP <- new SP + frame size
+	stw	$31,$25,-156		; store return address relative to FP
+	add	$8,$25,-144		; save variable offset relative to FP into register 8
+	add	$9,$0,0		; save intlit value to register 9
+	stw	$9,$8,0		; store register 8 value to register 9
+L3:
+	add	$8,$25,-144		; save variable offset relative to FP into register 8
+	ldw	$8,$8,0		; load variable expression value to register 8
+	add	$9,$0,5		; save intlit value to register 9
+	bge	$8,$9,L4
+	add	$8,$25,-148		; save variable offset relative to FP into register 8
+	add	$9,$0,0		; save intlit value to register 9
+	stw	$9,$8,0		; store register 8 value to register 9
+L5:
+	add	$8,$25,-148		; save variable offset relative to FP into register 8
+	ldw	$8,$8,0		; load variable expression value to register 8
+	add	$9,$0,7		; save intlit value to register 9
+	bge	$8,$9,L6
+	add	$8,$25,-140		; save variable offset relative to FP into register 8
+	add	$9,$25,-144		; save variable offset relative to FP into register 9
+	ldw	$9,$9,0		; load variable expression value to register 9
+	add	$10,$0,140		; save component byte size into register 10
+	bgeu	$9,$10,_indexError
+	mul	$9,$9,140		; multiply index with component byte size
+	add	$8,$8,$9		; save offset for index into register 8
+	add	$9,$25,-148		; save variable offset relative to FP into register 9
+	ldw	$9,$9,0		; load variable expression value to register 9
+	add	$10,$0,28		; save component byte size into register 10
+	bgeu	$9,$10,_indexError
+	mul	$9,$9,28		; multiply index with component byte size
+	add	$8,$8,$9		; save offset for index into register 8
+	add	$9,$0,0		; save intlit value to register 9
+	stw	$9,$8,0		; store register 8 value to register 9
+	add	$8,$25,-148		; save variable offset relative to FP into register 8
+	add	$9,$25,-148		; save variable offset relative to FP into register 9
+	ldw	$9,$9,0		; load variable expression value to register 9
+	add	$10,$0,1		; save intlit value to register 10
+	add	$9,$9,$10		; add operation register 9 + register 10
+	stw	$9,$8,0		; store register 8 value to register 9
 	j	L5
 L6:
-	ldw	$31,$25,-20		; get return address
-	ldw	$25,$29,16		; get old FP
-	add	$29,$29,32		; release frame (SP <- SP + frame size)
+	add	$8,$25,-144		; save variable offset relative to FP into register 8
+	add	$9,$25,-144		; save variable offset relative to FP into register 9
+	ldw	$9,$9,0		; load variable expression value to register 9
+	add	$10,$0,1		; save intlit value to register 10
+	add	$9,$9,$10		; add operation register 9 + register 10
+	stw	$9,$8,0		; store register 8 value to register 9
+	j	L3
+L4:
+	add	$8,$25,-140		; save variable offset relative to FP into register 8
+	add	$9,$0,2		; save intlit value to register 9
+	add	$10,$0,140		; save component byte size into register 10
+	bgeu	$9,$10,_indexError
+	mul	$9,$9,140		; multiply index with component byte size
+	add	$8,$8,$9		; save offset for index into register 8
+	stw	$8,$29,0		; store argument offset relative to SP into register 8
+	jal	p
+	add	$8,$25,-144		; save variable offset relative to FP into register 8
+	add	$9,$0,0		; save intlit value to register 9
+	stw	$9,$8,0		; store register 8 value to register 9
+L7:
+	add	$8,$25,-144		; save variable offset relative to FP into register 8
+	ldw	$8,$8,0		; load variable expression value to register 8
+	add	$9,$0,5		; save intlit value to register 9
+	bge	$8,$9,L8
+	add	$8,$25,-148		; save variable offset relative to FP into register 8
+	add	$9,$0,0		; save intlit value to register 9
+	stw	$9,$8,0		; store register 8 value to register 9
+L9:
+	add	$8,$25,-148		; save variable offset relative to FP into register 8
+	ldw	$8,$8,0		; load variable expression value to register 8
+	add	$9,$0,7		; save intlit value to register 9
+	bge	$8,$9,L10
+	add	$8,$25,-140		; save variable offset relative to FP into register 8
+	add	$9,$25,-144		; save variable offset relative to FP into register 9
+	ldw	$9,$9,0		; load variable expression value to register 9
+	add	$10,$0,140		; save component byte size into register 10
+	bgeu	$9,$10,_indexError
+	mul	$9,$9,140		; multiply index with component byte size
+	add	$8,$8,$9		; save offset for index into register 8
+	add	$9,$25,-148		; save variable offset relative to FP into register 9
+	ldw	$9,$9,0		; load variable expression value to register 9
+	add	$10,$0,28		; save component byte size into register 10
+	bgeu	$9,$10,_indexError
+	mul	$9,$9,28		; multiply index with component byte size
+	add	$8,$8,$9		; save offset for index into register 8
+	ldw	$8,$8,0		; load variable expression value to register 8
+	stw	$8,$29,0		; store argument offset relative to SP into register 8
+	jal	printi
+	add	$8,$0,32		; save intlit value to register 8
+	stw	$8,$29,0		; store argument offset relative to SP into register 8
+	jal	printc
+	add	$8,$25,-148		; save variable offset relative to FP into register 8
+	add	$9,$25,-148		; save variable offset relative to FP into register 9
+	ldw	$9,$9,0		; load variable expression value to register 9
+	add	$10,$0,1		; save intlit value to register 10
+	add	$9,$9,$10		; add operation register 9 + register 10
+	stw	$9,$8,0		; store register 8 value to register 9
+	j	L9
+L10:
+	add	$8,$0,10		; save intlit value to register 8
+	stw	$8,$29,0		; store argument offset relative to SP into register 8
+	jal	printc
+	add	$8,$25,-144		; save variable offset relative to FP into register 8
+	add	$9,$25,-144		; save variable offset relative to FP into register 9
+	ldw	$9,$9,0		; load variable expression value to register 9
+	add	$10,$0,1		; save intlit value to register 10
+	add	$9,$9,$10		; add operation register 9 + register 10
+	stw	$9,$8,0		; store register 8 value to register 9
+	j	L7
+L8:
+	ldw	$31,$25,-156		; get return address
+	ldw	$25,$29,8		; get old FP
+	add	$29,$29,160		; release frame (SP <- SP + frame size)
 	jr	$31			; return

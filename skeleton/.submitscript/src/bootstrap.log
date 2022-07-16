@@ -43,4 +43,6 @@ Polling for results (Press CTRL + C to abort)..............................
 === Evaluation results for submission '38627b60-3de2-45d9-b2f2-07018050e18d' retrieved. ===
 You achieved the score 35/38 (92%).
 You have PASSED this assignment.
-Do you want to view the evaluation log now? [Y/n] 
+Do you want to view the evaluation log now? [Y/n] NOTE: This evaluation log is also available at '/home/tokimpoi/compilerbau/skeleton/.submitscript/data/assignments/Aufgabe-2/submissions/[evaluated] 38627b60-3de2-45d9-b2f2-07018050e18d/evaluation.log'
+
+Do you want to submit another solution? [Y/n] 

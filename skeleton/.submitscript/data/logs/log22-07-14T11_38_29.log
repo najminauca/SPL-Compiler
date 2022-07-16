@@ -72,3 +72,5 @@ Alternatively, run a command inside the virtualenv with pipenv run.
 === Evaluation results for submission '38627b60-3de2-45d9-b2f2-07018050e18d' retrieved. ===
 [2022-07-14 11:39:16.724974] You achieved the score 35/38 (92%).
 [2022-07-14 11:39:16.725021] You have PASSED this assignment.
+[2022-07-14 11:39:39.596658] NOTE: This evaluation log is also available at '/home/tokimpoi/compilerbau/skeleton/.submitscript/data/assignments/Aufgabe-2/submissions/[evaluated] 38627b60-3de2-45d9-b2f2-07018050e18d/evaluation.log'
+[2022-07-14 11:39:39.596763] 
