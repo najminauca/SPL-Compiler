@@ -4,6 +4,6 @@ Phases :
 1. Tokens
 2. Parser
 3. Table
-4. Syntax analysis (semantic, type)
+4. Semantic and type analysis
 5. Variable allocation
 6. Code generator
